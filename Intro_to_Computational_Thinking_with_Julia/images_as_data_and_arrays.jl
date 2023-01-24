@@ -20,6 +20,12 @@ ryujin_filename = download(url) # download to a local file. The filename is retu
 # ╔═╡ 512d7b5c-2453-4dbe-91c9-7cc9b8a7b3c2
 ryujin = load(ryujin_filename)
 
+# ╔═╡ a2808d4e-2e7b-4855-bb74-2e615fec8cca
+
+
+# ╔═╡ 6522711a-9bc7-484f-8ecc-f078c45db0fe
+
+
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
 [deps]
@@ -638,5 +644,7 @@ version = "17.4.0+0"
 # ╠═dfc8ad22-d791-4f3c-b92c-a42f08973c66
 # ╠═2c0b4b4d-80a5-4dc2-a74d-0a6829585ddd
 # ╠═512d7b5c-2453-4dbe-91c9-7cc9b8a7b3c2
+# ╠═a2808d4e-2e7b-4855-bb74-2e615fec8cca
+# ╠═6522711a-9bc7-484f-8ecc-f078c45db0fe
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
