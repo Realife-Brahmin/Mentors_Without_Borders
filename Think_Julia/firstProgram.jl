@@ -1,5 +1,3 @@
-include("functions/dotwice.jl")
-include("functions/concat.jl")
-
-# dotwice(printtwice, "Spam")
-dofour(println, "Spam")
+for color in [:red, :cyan, :blue, :magenta]
+    printstyled("Hello World $(color)\n"; color = color)
+end
