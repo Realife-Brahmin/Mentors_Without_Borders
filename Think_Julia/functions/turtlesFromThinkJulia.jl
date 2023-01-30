@@ -11,7 +11,7 @@ function polyline(t, n, a, angle)
     numSides = trunc(n*angle/360);
         for i = 1:numSides
             forward(t, a)
-            turn(t, -360/n)
+            turn(t, 360/n)
         end
         truncatedAngle = mod(angle, trunc(360/n));
         if truncatedAngle != 0
@@ -80,7 +80,20 @@ function turtlePie(t, n, r)
     end
 end
 
+function petal(t, r, theta)
+    R = r/sin(theta*π/360);
+    turn(t, theta/2);
+    forward(t, R);
+    turn(t, 90+theta/2);
+    arc(t, R, theta);
+    turn(t, 90+theta/2);
+    forward(t, R);
+end
+
 🐫 = Turtle()
 @svg begin
-    turtlePie(🐫, 8, 100)
+    # turtlePie(🐫, 8, 100)
+    # petal(🐫, 100, 90)
+    turn(🐫, -45)
+    arc(🐫, 100, 90)
 end
