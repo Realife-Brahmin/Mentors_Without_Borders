@@ -50,29 +50,27 @@ end
 isoTriangle(t, r, theta)
 
 Draws an isosceles triangle with equal
-sides of length r with angle = theta 
-contained between them.
+sides of length r with angle = theta
+(in degrees) contained between them.
 """
-function isoTriangle(t, r, angle)
+function isoTriangle(t, r, theta)
     forward(t, r);
-    turn(t, -(90 + angle/2));
-    forward(t, 2*r*sin(angle*π/360));
-    turn(t, -(90 + angle/2));
+    turn(t, -(90 + theta/2));
+    forward(t, 2*r*sin(theta*π/360));
+    turn(t, -(90 + theta/2));
     forward(t, r);
 end
 
 function turtlePie(t, n, r)
     angle = 360/n;
+    turn(t, angle/2);
     for i = 1:n
-        turn(t, angle)
         isoTriangle(t, r, angle)
+        turn(t, 180)
     end
 end
 
 🐫 = Turtle()
 @svg begin
-    isoTriangle(🐫, 100, 72)
-    # turn(🐫, 30)
-    isoTriangle(🐫, 100, 72)
-    # turtlePie(🐫, 5, 100)
+    turtlePie(🐫, 8, 100)
 end
