@@ -24,7 +24,8 @@ end
 polygon(t, n, a)
 
 Draws an n sides regular polygon 
-with side length a.
+with side length a. 
+t is a turtle.
 """
 function polygon(t, n, a)
     polyline(t, n, a, 360);
@@ -52,6 +53,7 @@ isoTriangle(t, r, theta)
 Draws an isosceles triangle with equal
 sides of length r with angle = theta
 (in degrees) contained between them.
+t is a turtle.
 """
 function isoTriangle(t, r, theta)
     forward(t, r);
@@ -61,6 +63,14 @@ function isoTriangle(t, r, theta)
     forward(t, r);
 end
 
+"""
+turtlePie(t, n, r)
+
+Creates a Turtle Pie with n isosceles triangles
+each of side r tiling to create a regular n
+sided polygon.
+t is a turtle.
+"""
 function turtlePie(t, n, r)
     angle = 360/n;
     turn(t, angle/2);
