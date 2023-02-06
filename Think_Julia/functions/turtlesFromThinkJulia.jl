@@ -1,6 +1,7 @@
 using ThinkJulia
 
 🐢 = Turtle()
+
 """
 polyline(t, n, len, angle)
 
@@ -90,10 +91,29 @@ function petal(t, r, theta)
     forward(t, R);
 end
 
+function unknownFunction555(t, length, n)
+    if n == 0
+        return
+    end
+    angle = 50
+    forward(t, length*n)
+    turn(t, -angle)
+    unknownFunction555(t, length, n-1)
+    turn(t, 2*angle)
+    unknownFunction555(t, length, n-1)
+    turn(t, -angle)
+    forward(t, -length*n)
+end
+
 🐫 = Turtle()
+# @svg begin
+#     # turtlePie(🐫, 8, 100)
+#     # petal(🐫, 100, 90)
+#     turn(🐫, -45)
+#     arc(🐫, 100, 90)
+# end
+
+🐫 = Turtle();
 @svg begin
-    # turtlePie(🐫, 8, 100)
-    # petal(🐫, 100, 90)
-    turn(🐫, -45)
-    arc(🐫, 100, 90)
+    unknownFunction555(🐫, 10, 2)
 end
