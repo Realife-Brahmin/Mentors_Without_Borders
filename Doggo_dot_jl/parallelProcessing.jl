@@ -16,6 +16,9 @@ Threads.@threads for i in 1:Threads.nthreads()
     println("i: ", i, "\t Thread ID: ", Threads.threadid())
 end
 
+vec1 = 1:5
+@show eachindex(vec1)
+
 #Data-race example
 function multi_sum2(myvector)
     temp = 0;
@@ -26,7 +29,8 @@ function multi_sum2(myvector)
 end
 
 n = 1_000_000;
-myvector = collect(n-5:n);
-println(myvector[1:5])
-# multi_sum2(myvector)
- 
+myvector = collect(1:n);
+myvector[1:5]
+sum_dataRace = multi_sum2(myvector)
+sum_singleCore = sum(myvector)
+sum_singleCore - sum_dataRace
