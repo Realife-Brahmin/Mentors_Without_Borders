@@ -5,7 +5,8 @@ rawDataFolder = "rawData/";
 rawDataFilename = rawDataFolder*"housingdata.csv";
 data1 = CSV.File(rawDataFilename)
 houseSize = data1.size
-housePrice = round.(Int, data1.price / 1000)
+# housePrice = round.(Int, data1.price / 1000)
+housePrice = data1.price
 table1 = Table(X = houseSize, Y = housePrice)
 
 gr(size = (500, 500));

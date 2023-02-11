@@ -8,4 +8,4 @@ function printgrid(boxWidth, boxHeight, numRows, numCols)
     println(strBoxes);
 end
 
-printgrid(4, 4, 4, 4)
+printgrid(4, 4, 1, 7)
