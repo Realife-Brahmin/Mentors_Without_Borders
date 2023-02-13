@@ -1,0 +1,10 @@
+{
+    "editor.acceptSuggestionOnEnter": "off",
+    "editor.fontSize": 15,
+    "editor.matchBrackets": "never",
+    "editor.parameterHints.enabled": false,
+    "editor.rulers": [
+        80
+    ],
+    "editor.minimap.maxColumn": 80
+}
