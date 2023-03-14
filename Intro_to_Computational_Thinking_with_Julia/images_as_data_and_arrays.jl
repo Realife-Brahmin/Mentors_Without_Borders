@@ -32,7 +32,7 @@ ryujin_filename = download(url) # download to a local file. The filename is retu
 ryujin = load(ryujin_filename);
 
 # ╔═╡ a2808d4e-2e7b-4855-bb74-2e615fec8cca
-size(ryujin, 2)
+size(ryujin)
 
 # ╔═╡ 0b21f084-db0b-40fc-9c0b-39ca9a58b091
 md"## Plot a section of the image"
@@ -59,12 +59,11 @@ md"## Plot a section of the image"
 
 # ╔═╡ e96a76ef-ac09-4585-aa46-edecde69a3a6
 begin
-	r = 100
+	r = 200
 	thickness = 35
 	row = rand(r : size(ryujin, 1) - 2r)
 	col = rand(r : size(ryujin, 2) - 2r)
-	ryujin2 = draw(ryujin, Ellipse(CirclePointRadius(row, col, r; thickness = thickness, fill = false)))
-
+	ryujin2 = draw(ryujin, Polygon(RectanglePoints(Point(row, col), Point(row - r, col - r))), RGB{N0f8}(1))
 end
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
