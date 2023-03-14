@@ -4,6 +4,16 @@
 using Markdown
 using InteractiveUtils
 
+# This Pluto notebook uses @bind for interactivity. When running this notebook outside of Pluto, the following 'mock version' of @bind gives bound variables a default value (instead of an error).
+macro bind(def, element)
+    quote
+        local iv = try Base.loaded_modules[Base.PkgId(Base.UUID("6e696c72-6542-2067-7265-42206c756150"), "AbstractPlutoDingetjes")].Bonds.initial_value catch; b -> missing; end
+        local el = $(esc(element))
+        global $(esc(def)) = Core.applicable(Base.get, el) ? Base.get(el) : iv(el)
+        el
+    end
+end
+
 # ╔═╡ 8a320b70-9b83-11ed-2f95-e52f5427cb5c
 begin
 	using Colors, ColorVectorSpace, ImageShow, FileIO, ImageIO
@@ -22,20 +32,30 @@ ryujin_filename = download(url) # download to a local file. The filename is retu
 ryujin = load(ryujin_filename)
 
 # ╔═╡ a2808d4e-2e7b-4855-bb74-2e615fec8cca
-size(ryujin)
+size(ryujin, 2)
 
 # ╔═╡ 0b21f084-db0b-40fc-9c0b-39ca9a58b091
 md"## Plot a section of the image"
 
 # ╔═╡ 950536a1-4f6f-4583-88fa-142ff7152f73
-begin
-	row = rand(1:size(ryujin, 1))
-	col = rand(1:size(ryujin, 2))
-	section1 = ryujin[max(row-100, 1):min(row+100, size(ryujin, 1)), max(col-100, 1): min(col+100, size(ryujin, 2))]
-end
+# begin
+# 	row = rand(1:size(ryujin, 1))
+# 	col = rand(1:size(ryujin, 2))
+# 	section1 = ryujin[max(row-100, 1):min(row+100, size(ryujin, 1)), max(col-100, 1): min(col+100, size(ryujin, 2))]
+# end
+
+# ╔═╡ 14490706-da90-417d-a05f-0934e25122cd
+@bind row Slider(1:size(ryujin, 1), show_value = true)
+# row = rand(1:size(ryujin, 1))
+
+# ╔═╡ ea905927-1dd0-4edf-bc49-79283e7b6f06
+@bind col Slider(1:size(ryujin, 2), show_value = true)
+# col = rand(1:size(ryujin, 2))
 
 # ╔═╡ 6522711a-9bc7-484f-8ecc-f078c45db0fe
-
+begin
+	section1 = ryujin[max(row-200, 1):min(row+200, size(ryujin, 1)), max(col-200, 1): min(col+200, size(ryujin, 2))]
+end
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -658,6 +678,8 @@ version = "17.4.0+0"
 # ╠═a2808d4e-2e7b-4855-bb74-2e615fec8cca
 # ╠═0b21f084-db0b-40fc-9c0b-39ca9a58b091
 # ╠═950536a1-4f6f-4583-88fa-142ff7152f73
+# ╠═14490706-da90-417d-a05f-0934e25122cd
+# ╠═ea905927-1dd0-4edf-bc49-79283e7b6f06
 # ╠═6522711a-9bc7-484f-8ecc-f078c45db0fe
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
