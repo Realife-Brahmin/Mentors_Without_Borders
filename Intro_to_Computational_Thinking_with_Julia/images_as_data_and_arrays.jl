@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.19.19
+# v0.19.22
 
 using Markdown
 using InteractiveUtils
@@ -12,7 +12,8 @@ begin
 end
 
 # ╔═╡ dfc8ad22-d791-4f3c-b92c-a42f08973c66
-url = "https://lh3.googleusercontent.com/4RtSy8rScY9INrYqtibqVeA_GvzE-n-oufMTGASBM0xnCzRGC2O9KFgYPUv9vaoJrWvIq-m9Db4k4CYj9fExJVzuAayfQOsftnH5rBI1tqRA3_do=w1600-rj-l80-nu-e365";
+# url = "https://lh3.googleusercontent.com/4RtSy8rScY9INrYqtibqVeA_GvzE-n-oufMTGASBM0xnCzRGC2O9KFgYPUv9vaoJrWvIq-m9Db4k4CYj9fExJVzuAayfQOsftnH5rBI1tqRA3_do=w1600-rj-l80-nu-e365"
+url = "https://lh3.googleusercontent.com/NpByKDbjN3sUnmhZygtqUmPS7ntzvM5uXKm5DFOqEQmVNp9Uxqq1EwZQRuKTkbHDlgHyTIy4w141qikdNwN6WPNaID-9bvTM6Jn2JFCe3kHMmQ=w1600-rj-l80-nu-e365"
 
 # ╔═╡ 2c0b4b4d-80a5-4dc2-a74d-0a6829585ddd
 ryujin_filename = download(url) # download to a local file. The filename is returned
@@ -21,7 +22,17 @@ ryujin_filename = download(url) # download to a local file. The filename is retu
 ryujin = load(ryujin_filename)
 
 # ╔═╡ a2808d4e-2e7b-4855-bb74-2e615fec8cca
+size(ryujin)
 
+# ╔═╡ 0b21f084-db0b-40fc-9c0b-39ca9a58b091
+md"## Plot a section of the image"
+
+# ╔═╡ 950536a1-4f6f-4583-88fa-142ff7152f73
+begin
+	row = rand(1:size(ryujin, 1))
+	col = rand(1:size(ryujin, 2))
+	section1 = ryujin[max(row-100, 1):min(row+100, size(ryujin, 1)), max(col-100, 1): min(col+100, size(ryujin, 2))]
+end
 
 # ╔═╡ 6522711a-9bc7-484f-8ecc-f078c45db0fe
 
@@ -53,7 +64,7 @@ PLUTO_MANIFEST_TOML_CONTENTS = """
 
 julia_version = "1.8.5"
 manifest_format = "2.0"
-project_hash = "59843a47ae4c6b6c2f4deda234320ab100e2b438"
+project_hash = "0afe402eadc700086e3eab73b8df9fef74000286"
 
 [[deps.AbstractFFTs]]
 deps = ["ChainRulesCore", "LinearAlgebra"]
@@ -645,6 +656,8 @@ version = "17.4.0+0"
 # ╠═2c0b4b4d-80a5-4dc2-a74d-0a6829585ddd
 # ╠═512d7b5c-2453-4dbe-91c9-7cc9b8a7b3c2
 # ╠═a2808d4e-2e7b-4855-bb74-2e615fec8cca
+# ╠═0b21f084-db0b-40fc-9c0b-39ca9a58b091
+# ╠═950536a1-4f6f-4583-88fa-142ff7152f73
 # ╠═6522711a-9bc7-484f-8ecc-f078c45db0fe
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
