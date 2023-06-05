@@ -37,9 +37,9 @@ Symbolics.solve_for(ex0, y)
 
 # ╔═╡ 53715caf-4838-4ee7-b478-6e5ed5a3fc29
 begin
-	ex1 = 3*x + 2*y - z ~ 1
-	ex2 = 2*x - 2*y + 4*z ~ -2
-	ex3 = -x + 1//2*y -1*z ~ 0
+	ex1 = 3x + 2y - 1z ~ 1
+	ex2 = 2x - 2y + 4z ~ -2
+	ex3 = -1x + 1//2*y -1z ~ 0
 	Symbolics.solve_for([ex1, ex2, ex3], [x, y, z])
 end
 
