@@ -19,6 +19,31 @@ md"## Define Symbolic Variables"
 # ╔═╡ b3f69ccf-ed9e-4700-a3b0-38819b5f6738
 @variables t x y z
 
+# ╔═╡ 7ccab015-31c3-4731-8207-e367ba9becf0
+md"## Examples"
+
+# ╔═╡ e031d7b7-8214-4f86-bb78-4eef72a211ce
+md"### Algebra"
+
+# ╔═╡ c1c903b3-2ff4-41f0-b3e2-fccd4b5e6db3
+ex0 = -4//3 * x + y ~ 2 #~ is like the == in MATLAB.
+#Symbolics.jl uses MathJAX
+
+# ╔═╡ c27871ad-1b43-4ded-af36-6e97c6df5ec9
+Symbolics.solve_for(ex0, x)
+
+# ╔═╡ e3b2ce71-b8c4-4da0-9c08-31e849683204
+Symbolics.solve_for(ex0, y)
+
+# ╔═╡ 53715caf-4838-4ee7-b478-6e5ed5a3fc29
+begin
+	ex1 = 3*x + 2*y - z ~ 1
+	ex2 = 2*x - 2*y + 4*z ~ -2
+	ex3 = -x + 1//2*y -1*z ~ 0
+	Symbolics.solve_for([ex1, ex2, ex3], [x, y, z])
+end
+
+
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
 [deps]
@@ -893,5 +918,11 @@ version = "17.4.0+0"
 # ╠═a7144ce9-92b8-4a1d-963b-96a0b015a5b1
 # ╠═98290b7f-2d43-4cb3-b556-9f9e0e236220
 # ╠═b3f69ccf-ed9e-4700-a3b0-38819b5f6738
+# ╠═7ccab015-31c3-4731-8207-e367ba9becf0
+# ╠═e031d7b7-8214-4f86-bb78-4eef72a211ce
+# ╠═c1c903b3-2ff4-41f0-b3e2-fccd4b5e6db3
+# ╠═c27871ad-1b43-4ded-af36-6e97c6df5ec9
+# ╠═e3b2ce71-b8c4-4da0-9c08-31e849683204
+# ╠═53715caf-4838-4ee7-b478-6e5ed5a3fc29
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
