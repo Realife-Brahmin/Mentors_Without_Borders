@@ -43,6 +43,24 @@ begin
 	Symbolics.solve_for([ex1, ex2, ex3], [x, y, z])
 end
 
+# ╔═╡ 0382bc3a-8133-4099-91b6-f6488a920f34
+md"### Differential Calculus"
+
+# ╔═╡ 451ab6b4-69db-47dc-9a5a-5a8ee5b3a8b2
+pos = -16t^2 + 16t + 32
+
+# ╔═╡ 87b33e55-a9d3-4614-ad82-51714ff27690
+begin
+	D = Differential(t)
+	pos_dot = D(pos)
+	velocity = expand_derivatives(pos_dot) # first derivative
+end
+
+# ╔═╡ be6282a2-00df-4ed8-aed4-47a4817a81e1
+begin
+		velocity_dot = D(velocity)
+		acceleration = expand_derivatives(velocity_dot)
+end
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -924,5 +942,9 @@ version = "17.4.0+0"
 # ╠═c27871ad-1b43-4ded-af36-6e97c6df5ec9
 # ╠═e3b2ce71-b8c4-4da0-9c08-31e849683204
 # ╠═53715caf-4838-4ee7-b478-6e5ed5a3fc29
+# ╠═0382bc3a-8133-4099-91b6-f6488a920f34
+# ╠═451ab6b4-69db-47dc-9a5a-5a8ee5b3a8b2
+# ╠═87b33e55-a9d3-4614-ad82-51714ff27690
+# ╠═be6282a2-00df-4ed8-aed4-47a4817a81e1
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
