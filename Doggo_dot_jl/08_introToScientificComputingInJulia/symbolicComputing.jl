@@ -4,6 +4,16 @@
 using Markdown
 using InteractiveUtils
 
+# This Pluto notebook uses @bind for interactivity. When running this notebook outside of Pluto, the following 'mock version' of @bind gives bound variables a default value (instead of an error).
+macro bind(def, element)
+    quote
+        local iv = try Base.loaded_modules[Base.PkgId(Base.UUID("6e696c72-6542-2067-7265-42206c756150"), "AbstractPlutoDingetjes")].Bonds.initial_value catch; b -> missing; end
+        local el = $(esc(element))
+        global $(esc(def)) = Core.applicable(Base.get, el) ? Base.get(el) : iv(el)
+        el
+    end
+end
+
 # ╔═╡ a7144ce9-92b8-4a1d-963b-96a0b015a5b1
 using Symbolics, PlutoUI
 
@@ -61,6 +71,15 @@ begin
 		velocity_dot = D(velocity)
 		acceleration = expand_derivatives(velocity_dot)
 end
+
+# ╔═╡ 4f686716-aadd-4154-8dfe-4bf004a82018
+md"Time: $(@bind time Slider(0:10, 0, true))"
+
+# ╔═╡ 79ee48aa-3a02-4f68-ab67-904ace440b45
+position_at_time_t = substitute(pos, Dict(t => time))
+
+# ╔═╡ 1fbdef59-9941-47f0-9d84-2d117fd0fb5c
+velocity_at_time_t = substitute(velocity, Dict(t => time))
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -946,5 +965,8 @@ version = "17.4.0+0"
 # ╠═451ab6b4-69db-47dc-9a5a-5a8ee5b3a8b2
 # ╠═87b33e55-a9d3-4614-ad82-51714ff27690
 # ╠═be6282a2-00df-4ed8-aed4-47a4817a81e1
+# ╠═4f686716-aadd-4154-8dfe-4bf004a82018
+# ╠═79ee48aa-3a02-4f68-ab67-904ace440b45
+# ╠═1fbdef59-9941-47f0-9d84-2d117fd0fb5c
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
