@@ -1,3 +1,0 @@
-Threads.nthreads()
-
-Threads.threadid()
