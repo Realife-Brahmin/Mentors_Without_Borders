@@ -40,7 +40,7 @@ print(t)
 function addall(t)
     total = 0
     for x ∈ t
-        total += x
+        total 
     end
     return total
 end
@@ -48,6 +48,23 @@ end
 t = 1:4
 addall(t)
 
+"""
+    capitalizeAll(t::Vector{Char})
+ Converts all characters in the input vector `t` to uppercase.
+ # Arguments
+- `t::Vector{Char}`: The input vector of characters.
+ # Returns
+A new vector with all characters converted to uppercase.
+ # Examples
+ julia 
+julia> capitalizeAll(['h', 'e', 'l', 'l', 'o']) 
+5-element Vector{Char}: 
+ 'H': ASCII/Unicode U+0048 (category Lu: Letter, uppercase) 
+ 'E': ASCII/Unicode U+0045 (category Lu: Letter, uppercase) 
+ 'L': ASCII/Unicode U+004C (category Lu: Letter, uppercase) 
+ 'L': ASCII/Unicode U+004C (category Lu: Letter, uppercase) 
+ 'O': ASCII/Unicode U+004F (category Lu: Letter, uppercase)
+ """
 function capitalizeAll(t::Vector{Char})
     answer = []
     for character ∈ t
@@ -89,4 +106,70 @@ end
 
 t3 = ['a', 'B', 'C', 'p', 'I', 'K', 'A', 'c', 'H', 'u']
 onlyUpper(t3)
+
+print([1, 2, 3].^3)
+
+t = uppercase.(["abc", "der", "pv", "wind"])
+
+"""
+    capitalizeAll2(t::Vector{Char})
+ Converts all characters in the input vector `t` to uppercase.
+ # Arguments
+- `t::Vector{Char}`: The input vector of characters.
+ # Returns
+A new vector with all characters converted to uppercase.
+ # Examples
+ julia> capitalizeAll2(['h', 'e', 'l', 'l', 'o'])
+5-element Vector{Char}:
+ 'H': ASCII/Unicode U+0048 (category Lu: Letter, uppercase)
+ 'E': ASCII/Unicode U+0045 (category Lu: Letter, uppercase)
+ 'L': ASCII/Unicode U+004C (category Lu: Letter, uppercase)
+ 'L': ASCII/Unicode U+004C (category Lu: Letter, uppercase)
+ 'O': ASCII/Unicode U+004F (category Lu: Letter, uppercase)
+ """
+function capitalizeAll2(t::Vector{Char})
+    return uppercase.(t)
+end
+
+capitalizeAll2(t3)
+
+t4 = ['a', 'b', 'c']
+splice!(t4, 2)
+pop!(t4)
+print(t4)
+pop!(t4)
+print(t4)
+t = ['a', 'c', 'd', 'f']
+popfirst!(t)
+pushfirst!(t, 'w')
+push!(t, 'r')
+print(t)
+print(deleteat!(t, 2))
+insert!(t, 3, 'y')
+print(t)
+t = collect("Spam")
+print(t)
+t = split("Pining for the fjords")
+typeof(t)
+
+t = split("spam-spam-spam", '-')
+print(t)
+s = join(t, ' ')
+print(s)
+
+collect(s)
+join(collect("Pining for the fjords"), ' ')
+
+a = "banana"
+b = "banana"
+a ≡ b
+
+c = [1, 2, 3]
+d = [1, 2, 3]
+c ≡ d
+
+e = [1, 2, 3]
+f = e
+push!(e, 420)
+popfirst!(f)
 
