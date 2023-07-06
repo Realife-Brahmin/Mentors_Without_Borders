@@ -415,8 +415,9 @@ end
 @time listOfWords(method="copyAndAdd", verbose=true)
 
 words1 = sort!(listOfWords())
-function inBisect(arr::Vector{Any}=sort!(listOfWords());
-    targetStr::String="baby",
+
+function inBisect(arr::Vector{Any},
+    targetStr::String;
     verbose = false)
     
     if sort(arr) != arr
@@ -425,17 +426,17 @@ function inBisect(arr::Vector{Any}=sort!(listOfWords());
         lookups = 0;
         left = 1
         right = length(arr)
-        while left != right
+        while left ≤ right
             lookups += 1;
-            mid = (left+right)÷2 + 1
+            mid = (left+right)÷2
             if arr[mid] == targetStr
                 myprint(verbose, "Target found! At index $mid \n")
                 myprint(verbose, "using only $lookups lookups!\n")
                 return true, mid
             elseif arr[mid] > targetStr
-                right = mid
+                right = mid - 1
             elseif arr[mid] < targetStr
-                left = mid
+                left = mid + 1
             else
                 error("Didn't see that coming.")
             end
@@ -446,4 +447,4 @@ function inBisect(arr::Vector{Any}=sort!(listOfWords());
 end
 
 arr1 = ["a", "b", "c", "d", "e"]
-inBisect(arr1, targetStr="hello", verbose=true)
+inBisect(arr1, "c", verbose=true)
