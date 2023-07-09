@@ -1,42 +1,3 @@
-[10, 20, 30, 40]
-["crunchy frog", "ram bladder", "lark vomit"]
-x22 = ["spam", 2.0, 5, [10, 20]]
-cheeses = ["cheddar", "edam", "gouda"]
-numbers = [42, 123];
-empty = [];
-print(cheeses, " ", numbers, " ", empty)
-typeof(empty)
-numbers[2] = 5
-println(numbers)
-"Edam" ∈ cheeses
-for cheese ∈ cheeses
-    println(cheese)
-end
-
-for i in eachindex(numbers)
-    numbers[i] *= 2
-end
-
-for x ∈ x22
-    println("This can never happen?")
-end
-
-t = ['a', 'b', 'c', 'd', 'e', 'f']
-
-
-print(t[1:3])
-print(t[4:end])
-print(t[:])
-t[2:3] = ['x', 'y']
-t = ['a', 'b', 'c']
-push!(t, 'd')
-print(t)
-t2 = ['d', 'e']
-append!(t, t2)
-print(t)
-sort!(t)
-print(t)
-
 function addall(t)
     total = 0
     for x ∈ t
@@ -133,54 +94,6 @@ end
 
 capitalizeAll2(t3)
 
-t4 = ['a', 'b', 'c']
-splice!(t4, 2)
-pop!(t4)
-print(t4)
-pop!(t4)
-print(t4)
-t = ['a', 'c', 'd', 'f']
-popfirst!(t)
-pushfirst!(t, 'w')
-push!(t, 'r')
-print(t)
-print(deleteat!(t, 2))
-insert!(t, 3, 'y')
-print(t)
-t = collect("Spam")
-print(t)
-t = split("Pining for the fjords")
-typeof(t)
-
-t = split("spam-spam-spam", '-')
-print(t)
-s = join(t, ' ')
-print(s)
-
-collect(s)
-join(collect("Pining for the fjords"), ' ')
-
-a = "banana"
-b = "banana"
-a ≡ b
-
-c = [1, 2, 3]
-d = [1, 2, 3]
-c ≡ d
-
-e = [1, 2, 3]
-f = e
-push!(e, 420)
-popfirst!(f)
-
-t1 = [1, 2]
-t2 = push!(t1, 3)
-print(t1)
-
-t3 = vcat(t1, 4)
-print(t1)
-print(t3)
-
 function badDeleteHead(t)
     t = t[2:end]
 end
@@ -190,20 +103,6 @@ badDeleteHead(e)
 function tail(t::Vector{})
     return t[2:end]
 end
-
-e1 = tail(e)
-print(e)
-print(e1)
-
-t = [3, 1, 2]
-t2 = deepcopy(t)
-t2 ≡ t
-
-insert!(e1, 2, 22)
-
-insert!(e1, 3, 50)
-insert!(e1, 5, 50)
-insert!(e1, 6, 80)
 
 """
     nestedSum(arr::Vector{Vector{Int64}})
@@ -301,11 +200,6 @@ function isSort(arr)
         return false
     end
 end
-
-arr1 = [1, 2, 3]
-arr2 = ['b', 'a']
-isSort(arr1)
-isSort(arr2)
 
 function isAnagram(str1::String, str2::String)
     orderedChars1 = sort!(collect(str1))
@@ -448,3 +342,12 @@ end
 
 arr1 = ["a", "b", "c", "d", "e"]
 inBisect(arr1, "c", verbose=true)
+
+function findReversePairs(arr::Vector{Any};
+    verbose=false)
+end
+
+function printlyrics()
+    println("I'm a lumberjack, and I'm okay.")
+    println("I sleep all night and I work all day.")
+end
