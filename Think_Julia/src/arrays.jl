@@ -313,6 +313,40 @@ end
 
 arr1 = listOfWords()
 
+"""
+    inBisect(arr::Vector{String}, targetStr::String;
+        verbose::Bool = false,
+        sortingCheck::Bool = false)::Tuple{Bool, Int64}
+
+Exercise 10-10 in Arrays in Think Julia
+Check if a target string exists in a sorted array using the binary search algorithm.
+
+This function performs a binary search on a sorted array of strings `arr` to determine if a target string `targetStr` is present in the array.
+
+## Arguments
+- `arr::Vector{String}`: The sorted input array of strings.
+- `targetStr::String`: The target string to be searched in the array.
+- `verbose::Bool`: Optional. If set to `true`, print verbose output. Default is `false`.
+- `sortingCheck::Bool`: Optional. If set to `true`, perform a sorting check on the input array to ensure it is sorted. Default is `false`.
+
+## Returns
+- `result::Tuple{Bool, Int64}`: A tuple containing the search result.
+- The first element is a boolean indicating whether the `targetStr` is found (`true`) or not found (`false`).
+- The second element is an integer representing the index of the `targetStr` in the array if found, or `-1` if not found.
+
+## Details
+The function assumes that the input array `arr` is sorted in ascending order. If `sortingCheck` is set to `true`, it performs a check to ensure that the array is sorted before proceeding with the binary search. If the array is not sorted, the function raises an error.
+
+The binary search algorithm efficiently searches for the `targetStr` by repeatedly dividing the search interval in half. It compares the middle element of the interval to the `targetStr` and narrows down the search to the left or right half accordingly.
+
+If the `targetStr` is found in the array, the function returns `true` along with the index of the `targetStr`. If the `targetStr` is not found, the function returns `false` along with `-1`.
+
+## Example
+```julia
+arr = ["apple", "banana", "cherry", "grape", "orange"]
+target = "cherry"
+result = inBisect(arr, target)  # Returns (true, 3)
+"""
 function inBisect(arr::Vector{String},
     targetStr::String;
     verbose::Bool = false,
@@ -347,6 +381,48 @@ end
 
 inBisect(arr1, "apple", verbose=false)
 
+"""
+    findReversePairs(arr::Vector{String};
+        verbose::Bool=false,
+        saveToFile::Bool=true,
+        filename::String="words",
+        processedDataFolder::String="processedData/",
+        extension::String=".csv")::DataFrame
+
+Exercise 10-11 in Arrays in Think Julia
+Find reverse pairs in an array of strings.
+
+This function takes an array of strings `arr` and finds reverse pairs (palindromes and their non-palindromic reverse pairs).
+A reverse pair is a pair of strings where one is the reverse of the other. For example, "abc" and "cba" form a reverse pair.
+
+## Arguments
+- `arr::Vector{String}`: The input array of strings.
+- `verbose::Bool`: Optional. If set to `true`, print verbose output. Default is `false`.
+- `saveToFile::Bool`: Optional. If set to `true`, save the result to a CSV file. Default is `true`.
+- `filename::String`: Optional. The base name of the CSV file to save. Default is "words".
+- `processedDataFolder::String`: Optional. The location to save the CSV file. Default is "processedData/".
+- `extension::String`: Optional. The file extension of the CSV file. Default is ".csv".
+
+## Returns
+- `listOfReversePairs::DataFrame`: A DataFrame containing the reverse pairs found in the input array.
+The DataFrame has columns: `Word1`, `Word2`, `Idx1`, `Idx2`, and `Palindrome`.
+
+The `Word1` and `Word2` columns contain the strings forming the reverse pair.
+The `Idx1` and `Idx2` columns contain the indices of the words in the input array.
+The `Palindrome` column is a boolean indicating whether the pair is a palindrome.
+
+## Details
+The function checks each word in the input array and determines if it has a reverse pair (either a palindrome or a non-palindromic reverse pair).
+For palindromes, the function marks the word as a palindrome and records its index.
+For non-palindromic reverse pairs, the function searches for the reverse word after the current word in the array and records its index.
+
+If `saveToFile` is set to `true` and the number of words in the input array (`N`) is greater than 10000, the result is saved to a CSV file with the specified `filename` in the `processedDataFolder`.
+
+## Example
+```julia
+arr = ["abc", "def", "abba", "cba", "xyz", "aabaa"]
+result = findReversePairs(arr)
+"""
 function findReversePairs(arr::Vector{String};
     verbose::Bool=false,
     saveToFile::Bool=true,
