@@ -1,3 +1,5 @@
+using DataFrames
+
 function addall(t)
     total = 0
     for x ∈ t
@@ -33,8 +35,6 @@ function capitalizeAll(t::Vector{Char})
     end
     return answer
 end
-
-capitalizeAll(t2)
 
 """
     onlyUpper(t::Vector{Char})
@@ -97,8 +97,6 @@ capitalizeAll2(t3)
 function badDeleteHead(t)
     t = t[2:end]
 end
-
-badDeleteHead(e)
 
 function tail(t::Vector{})
     return t[2:end]
@@ -278,7 +276,7 @@ function listOfWords(filename::String="words.txt";
     method::String="push!",
     rawDataFolder::String="rawData/",
     extension::String=".txt",
-    verbose::Bool=false)
+    verbose::Bool=false)::Vector{String}
     if !contains(filename, ".")
         myprint(verbose, "filename does not have extension embedded.\n
         adding extension $extension at its end.\n")
@@ -292,7 +290,7 @@ function listOfWords(filename::String="words.txt";
             word = line
             push!(words, word);
         end
-    elseif method == "copyAndAdd"
+    elseif method == "copyAndAdd" #Don't do it for big arrays like words.txt
         myprint(verbose, "Supposedly the slower and space-inefficient method.\n")
         for line ∈ eachline(fin)
             word = line
@@ -305,16 +303,22 @@ function listOfWords(filename::String="words.txt";
     return words
 end
 
+# Supposedly the faster and space-efficient method.
+#   0.019763 seconds (113.87 k allocations: 4.935 MiB)
+# Supposedly the slower and space-inefficient method.
+# 103.316894 seconds (566.53 k allocations: 96.528 GiB, 7.30% gc time)
 @time listOfWords(verbose=true)
-@time listOfWords(method="copyAndAdd", verbose=true)
+# @time listOfWords(method="copyAndAdd", verbose=true)
 
-words1 = sort!(listOfWords())
+arr1 = listOfWords()
 
-function inBisect(arr::Vector{Any},
+function inBisect(arr::Vector{String},
     targetStr::String;
-    verbose = false)
+    verbose::Bool = false,
+    sortingCheck::Bool = false)::Tuple{Bool, Int64}
     
-    if sort(arr) != arr
+    # @show length(arr)
+    if sortingCheck && sort(arr) != arr
         error("Array is NOT sorted.")
     else
         lookups = 0;
@@ -337,17 +341,52 @@ function inBisect(arr::Vector{Any},
         end
     end
     
-    return false
+    return false, -1
 end
 
-arr1 = ["a", "b", "c", "d", "e"]
-inBisect(arr1, "c", verbose=true)
+# arr1 = ["apple", "b", "c", "d", "e"]
+arr2 = ["abc", "bac", "bca", "cab", "cba"]
+inBisect(arr1, "apple", verbose=false)
 
-function findReversePairs(arr::Vector{Any};
-    verbose=false)
+function findReversePairs(arr::Vector{String};
+    verbose=false)::DataFrame
+    
+    # Define the column names and types
+    column_names = [:Word1, :Word2, :Idx1, :Idx2, :Palindrome]
+    column_types = [String, String, Int64, Int64, Bool]
+    named_tuple = (; zip(column_names, type[] for type in column_types )...)
+    listOfReversePairs = DataFrame(named_tuple)
+
+    @show N = length(arr)
+    for i = 1:N
+        word = arr[i]
+        drow = word[end:-1:1]
+        newReversePairRow = DataFrame(Word1 = word, Word2 = drow, Idx1 = i, Idx2 = -1, Palindrome = false)
+        newReversePairRow = newReversePairRow[1, :]
+        foundFlag = false
+
+        if word == drow
+            newReversePairRow.Idx2 = i
+            newReversePairRow.Palindrome = true
+            myprint(verbose, "A Palindrome found!\n")
+            myprint(verbose, "$word at index $(i).\n")
+            foundFlag = true
+        else
+            foundFlag, idx = inBisect(arr[i+1:end], drow)
+            idx += i
+            if foundFlag
+                myprint(verbose, "A Reverse Pair found!\n")
+                myprint(verbose, "$word at index $i and $drow at index $(idx).\n")
+                newReversePairRow.Idx2 = idx
+            end
+        end
+
+        if foundFlag
+            push!(listOfReversePairs, newReversePairRow)
+        end
+    end
+    
+    return listOfReversePairs
 end
 
-function printlyrics()
-    println("I'm a lumberjack, and I'm okay.")
-    println("I sleep all night and I work all day.")
-end
+@time df1 = findReversePairs(arr1, verbose=true)
