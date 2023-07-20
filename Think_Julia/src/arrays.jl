@@ -1,3 +1,4 @@
+using CSV
 using DataFrames
 
 function addall(t)
@@ -344,12 +345,14 @@ function inBisect(arr::Vector{String},
     return false, -1
 end
 
-# arr1 = ["apple", "b", "c", "d", "e"]
-arr2 = ["abc", "bac", "bca", "cab", "cba"]
 inBisect(arr1, "apple", verbose=false)
 
 function findReversePairs(arr::Vector{String};
-    verbose=false)::DataFrame
+    verbose::Bool=false,
+    saveToFile::Bool=true,
+    filename::String="words",
+    processedDataFolder::String="processedData/",
+    extension::String=".csv")::DataFrame
     
     # Define the column names and types
     column_names = [:Word1, :Word2, :Idx1, :Idx2, :Palindrome]
@@ -357,7 +360,7 @@ function findReversePairs(arr::Vector{String};
     named_tuple = (; zip(column_names, type[] for type in column_types )...)
     listOfReversePairs = DataFrame(named_tuple)
 
-    @show N = length(arr)
+    N = length(arr)
     for i = 1:N
         word = arr[i]
         drow = word[end:-1:1]
@@ -386,7 +389,15 @@ function findReversePairs(arr::Vector{String};
         end
     end
     
+    if saveToFile && N > 10000 
+        # Don't accidentally overwrite reverse pairs of words.txt
+        # for a small testcase
+        filename_output = processedDataFolder*filename*extension
+        CSV.write(filename_output, listOfReversePairs)
+    end
+
+
     return listOfReversePairs
 end
 
-@time df1 = findReversePairs(arr1, verbose=true)
+@time df1 = findReversePairs(arr1, verbose=false, saveToFile = true)
