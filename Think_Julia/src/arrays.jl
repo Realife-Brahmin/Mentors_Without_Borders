@@ -9,25 +9,25 @@ function addall(t)
     return total
 end
 
-t = 1:4
-addall(t)
+# t = 1:4
+# addall(t)
 
 """
     capitalizeAll(t::Vector{Char})
- Converts all characters in the input vector `t` to uppercase.
- # Arguments
+Converts all characters in the input vector `t` to uppercase.
+# Arguments
 - `t::Vector{Char}`: The input vector of characters.
- # Returns
+# Returns
 A new vector with all characters converted to uppercase.
- # Examples
- julia 
+# Examples
+julia 
 julia> capitalizeAll(['h', 'e', 'l', 'l', 'o']) 
 5-element Vector{Char}: 
- 'H': ASCII/Unicode U+0048 (category Lu: Letter, uppercase) 
- 'E': ASCII/Unicode U+0045 (category Lu: Letter, uppercase) 
- 'L': ASCII/Unicode U+004C (category Lu: Letter, uppercase) 
- 'L': ASCII/Unicode U+004C (category Lu: Letter, uppercase) 
- 'O': ASCII/Unicode U+004F (category Lu: Letter, uppercase)
+'H': ASCII/Unicode U+0048 (category Lu: Letter, uppercase) 
+'E': ASCII/Unicode U+0045 (category Lu: Letter, uppercase) 
+'L': ASCII/Unicode U+004C (category Lu: Letter, uppercase) 
+'L': ASCII/Unicode U+004C (category Lu: Letter, uppercase) 
+'O': ASCII/Unicode U+004F (category Lu: Letter, uppercase)
  """
 function capitalizeAll(t::Vector{Char})
     answer = []
@@ -52,9 +52,9 @@ A new vector containing only the uppercase characters from `t`.
 ```julia
 julia> onlyUpper(['A', 'b', 'C', 'd'])
 3-element Vector{Char}:
- 'A'
- 'C'
- 'D'
+'A'
+'C'
+'D'
 """
 function onlyUpper(t::Vector{Char})
     answer = []
@@ -66,29 +66,29 @@ function onlyUpper(t::Vector{Char})
     return answer
 end
 
-t3 = ['a', 'B', 'C', 'p', 'I', 'K', 'A', 'c', 'H', 'u']
-onlyUpper(t3)
+# t3 = ['a', 'B', 'C', 'p', 'I', 'K', 'A', 'c', 'H', 'u']
+# onlyUpper(t3)
 
-print([1, 2, 3].^3)
+# print([1, 2, 3].^3)
 
-t = uppercase.(["abc", "der", "pv", "wind"])
+# t = uppercase.(["abc", "der", "pv", "wind"])
 
 """
     capitalizeAll2(t::Vector{Char})
- Converts all characters in the input vector `t` to uppercase.
- # Arguments
+Converts all characters in the input vector `t` to uppercase.
+# Arguments
 - `t::Vector{Char}`: The input vector of characters.
- # Returns
+# Returns
 A new vector with all characters converted to uppercase.
- # Examples
- julia> capitalizeAll2(['h', 'e', 'l', 'l', 'o'])
+# Examples
+julia> capitalizeAll2(['h', 'e', 'l', 'l', 'o'])
 5-element Vector{Char}:
- 'H': ASCII/Unicode U+0048 (category Lu: Letter, uppercase)
- 'E': ASCII/Unicode U+0045 (category Lu: Letter, uppercase)
- 'L': ASCII/Unicode U+004C (category Lu: Letter, uppercase)
- 'L': ASCII/Unicode U+004C (category Lu: Letter, uppercase)
- 'O': ASCII/Unicode U+004F (category Lu: Letter, uppercase)
- """
+'H': ASCII/Unicode U+0048 (category Lu: Letter, uppercase)
+'E': ASCII/Unicode U+0045 (category Lu: Letter, uppercase)
+'L': ASCII/Unicode U+004C (category Lu: Letter, uppercase)
+'L': ASCII/Unicode U+004C (category Lu: Letter, uppercase)
+'O': ASCII/Unicode U+004F (category Lu: Letter, uppercase)
+"""
 function capitalizeAll2(t::Vector{Char})
     return uppercase.(t)
 end
@@ -105,19 +105,19 @@ end
 
 """
     nestedSum(arr::Vector{Vector{Int64}})
- Calculate the sum of all elements in a nested vector of integers.
- # Arguments
+Calculate the sum of all elements in a nested vector of integers.
+# Arguments
 - `arr::Vector{Vector{Int64}}`: The input vector containing nested vectors of integers.
- # Returns
+# Returns
 The sum of all elements in the nested vector.
- # Examples
- julia 
+# Examples
+julia 
 # Example 1 
 nestedSum([[1, 2, 3], [4, 5, 6], [7, 8, 9]])  # Output: 45 
- 
+
 # Example 2 
 nestedSum([[10, 20], [30, 40, 50]])  # Output: 150
- """
+"""
 function nestedSum(arr::Vector{Vector{Int64}})
     sum = 0
     for subArr ∈ arr
@@ -128,9 +128,9 @@ function nestedSum(arr::Vector{Vector{Int64}})
     return sum
 end
 
-t = [[1, 2], [3], [4, 5, 6]]
-t1 = [2, 3, 4, [5, 6]]
-nestedSum(t)
+# t = [[1, 2], [3], [4, 5, 6]]
+# t1 = [2, 3, 4, [5, 6]]
+# nestedSum(t)
 
 function nestedSum2(arr)
     sum = 0
@@ -152,8 +152,8 @@ function nestedSum2(arr)
     return sum
 end
 
-t1 = [2, 3, 4, [5, 6]]
-result = nestedSum2(t1)
+# t1 = [2, 3, 4, [5, 6]]
+# result = nestedSum2(t1)
 
 function cumulSum(arr)
     n = length(arr)
@@ -172,15 +172,15 @@ function cumulSum(arr)
     return sums[2:end]
 end
             
-cumulSum(t1)
-t2 = [1, 2, 3]
-cumulSum(t2)
+# cumulSum(t1)
+# t2 = [1, 2, 3]
+# cumulSum(t2)
 
 function interior(arr)
     return arr[2:end-1]
 end
 
-interior(cumulSum(t1))
+# interior(cumulSum(t1))
 
 function interior!(arr)
     pop!(arr);
@@ -188,9 +188,9 @@ function interior!(arr)
     return 
 end
 
-t1 = [1, 2, 3, 5, [3, 5], 4]
-interior(t1)
-interior!(t1)
+# t1 = [1, 2, 3, 5, [3, 5], 4]
+# interior(t1)
+# interior!(t1)
 
 function isSort(arr)
     if sort(arr) == arr
@@ -218,12 +218,12 @@ function isAnagram(str1::String, str2::String)
     return true
 end
 
-str1 = "anagrams"
-str2 = "nagrmsaa"
-str3 = "hello"
-str4 = "helo"
-isAnagram(str1, str2)
-isAnagram(str3, str4)
+# str1 = "anagrams"
+# str2 = "nagrmsaa"
+# str3 = "hello"
+# str4 = "helo"
+# isAnagram(str1, str2)
+# isAnagram(str3, str4)
 
 function myprint(verbose, args)
     if verbose == true
@@ -246,11 +246,11 @@ function hasDuplicates(arr; verbose = false)
     end
 end
 
-hasDuplicates(str1)
-hasDuplicates(str2)
-hasDuplicates(str3)
-hasDuplicates(str4, verbose=true)
-hasDuplicates(t1, verbose=true)
+# hasDuplicates(str1)
+# hasDuplicates(str2)
+# hasDuplicates(str3)
+# hasDuplicates(str4, verbose=true)
+# hasDuplicates(t1, verbose=true)
 
 function birthdayParadox(n::Int64=23; 
     numSims::Int64=1000, 
@@ -271,7 +271,7 @@ function birthdayParadox(n::Int64=23;
     return prob
 end
 
-birthdayParadox(61, verbose=true)
+# birthdayParadox(61, verbose=true)
 
 function listOfWords(filename::String="words.txt";
     method::String="push!",
@@ -379,101 +379,106 @@ function inBisect(arr::Vector{String},
     return false, -1
 end
 
-inBisect(arr1, "apple", verbose=false)
+# inBisect(arr1, "apple", verbose=false)
 
-"""
-    findReversePairs(arr::Vector{String};
-        verbose::Bool=false,
-        saveToFile::Bool=true,
-        filename::String="words",
-        processedDataFolder::String="processedData/",
-        extension::String=".csv")::DataFrame
 
-Exercise 10-11 in Arrays in Think Julia
-Find reverse pairs in an array of strings.
-
-This function takes an array of strings `arr` and finds reverse pairs (palindromes and their non-palindromic reverse pairs).
-A reverse pair is a pair of strings where one is the reverse of the other. For example, "abc" and "cba" form a reverse pair.
-
-## Arguments
-- `arr::Vector{String}`: The input array of strings.
-- `verbose::Bool`: Optional. If set to `true`, print verbose output. Default is `false`.
-- `saveToFile::Bool`: Optional. If set to `true`, save the result to a CSV file. Default is `true`.
-- `filename::String`: Optional. The base name of the CSV file to save. Default is "words".
-- `processedDataFolder::String`: Optional. The location to save the CSV file. Default is "processedData/".
-- `extension::String`: Optional. The file extension of the CSV file. Default is ".csv".
-
-## Returns
-- `listOfReversePairs::DataFrame`: A DataFrame containing the reverse pairs found in the input array.
-The DataFrame has columns: `Word1`, `Word2`, `Idx1`, `Idx2`, and `Palindrome`.
-
-The `Word1` and `Word2` columns contain the strings forming the reverse pair.
-The `Idx1` and `Idx2` columns contain the indices of the words in the input array.
-The `Palindrome` column is a boolean indicating whether the pair is a palindrome.
-
-## Details
-The function checks each word in the input array and determines if it has a reverse pair (either a palindrome or a non-palindromic reverse pair).
-For palindromes, the function marks the word as a palindrome and records its index.
-For non-palindromic reverse pairs, the function searches for the reverse word after the current word in the array and records its index.
-
-If `saveToFile` is set to `true` and the number of words in the input array (`N`) is greater than 10000, the result is saved to a CSV file with the specified `filename` in the `processedDataFolder`.
-
-## Example
-```julia
-arr = ["abc", "def", "abba", "cba", "xyz", "aabaa"]
-result = findReversePairs(arr)
-"""
 function findReversePairs(arr::Vector{String};
     verbose::Bool=false,
     saveToFile::Bool=true,
     filename::String="words",
     processedDataFolder::String="processedData/",
     extension::String=".csv")::DataFrame
-    
-    # Define the column names and types
-    column_names = [:Word1, :Word2, :Idx1, :Idx2, :Palindrome]
-    column_types = [String, String, Int64, Int64, Bool]
-    named_tuple = (; zip(column_names, type[] for type in column_types )...)
-    listOfReversePairs = DataFrame(named_tuple)
+
+    colNames = (:Word1, :Word2, :Idx1, :Idx2, :Palindrome)
+    colTypes = (String, String, Int64, Int64, Bool)
+    reversePairs = Vector{NamedTuple{colNames , colTypes }}()
 
     N = length(arr)
-    for i = 1:N
-        word = arr[i]
-        drow = word[end:-1:1]
-        newReversePairRow = DataFrame(Word1 = word, Word2 = drow, Idx1 = i, Idx2 = -1, Palindrome = false)
-        newReversePairRow = newReversePairRow[1, :]
-        foundFlag = false
-
-        if word == drow
-            newReversePairRow.Idx2 = i
-            newReversePairRow.Palindrome = true
-            myprint(verbose, "A Palindrome found!\n")
-            myprint(verbose, "$word at index $(i).\n")
-            foundFlag = true
-        else
-            foundFlag, idx = inBisect(arr[i+1:end], drow)
-            idx += i
-            if foundFlag
-                myprint(verbose, "A Reverse Pair found!\n")
-                myprint(verbose, "$word at index $i and $drow at index $(idx).\n")
-                newReversePairRow.Idx2 = idx
+    
+    function binarySearchReverse(word::String, left::Int, right::Int)::Tuple{Bool, Int64}
+        while left <= right
+            mid = (left + right) ÷ 2
+            if arr[mid] == word
+                return true, mid
+            elseif arr[mid] < word
+                left = mid + 1
+            else
+                right = mid - 1
             end
         end
+        return false, left
+    end
 
-        if foundFlag
-            push!(listOfReversePairs, newReversePairRow)
+    for i = 1:N
+        word = arr[i]
+        drow = reverse(word)
+
+        if word == drow
+            push!(reversePairs, (Word1 = word, Word2 = drow, Idx1 = i, Idx2 = i, Palindrome = true))
+
+            myprint(verbose, "A Palindrome found!")
+            myprint(verbose, "$word at index $i.")
+        else
+            foundFlag, idx = binarySearchReverse(drow, i+1, N)
+            if foundFlag
+                push!(reversePairs, (Word1 = word, Word2 = drow, Idx1 = i, Idx2 = idx, Palindrome = false))
+
+                myprint(verbose, "A Reverse Pair found!")
+                myprint(verbose, "$word at index $i and $drow at index $idx.")
+            end
         end
     end
-    
+    df = DataFrame(reversePairs)
+
+    if saveToFile && N > 10000
+        # Don't accidentally overwrite reverse pairs of words.txt
+        # for a small testcase
+        filename_output = processedDataFolder*filename*"_reversePairs"*extension
+        CSV.write(filename_output, df)
+    end
+
+    return df
+end
+
+@time dfReversePairs = findReversePairs2(arr1, verbose=false, saveToFile=true);
+
+function findInterlocks(arr::Vector{String};
+    verbose::Bool=false,
+    saveToFile::Bool=true,
+    filename::String="words",
+    processedDataFolder::String="processedData/",
+    extension::String=".csv")::DataFrame
+
+    df = DataFrame(ID=Int64[], Word1=String[], Word2=String[], 
+    Interlock=String[], Idx1=Int64[], Idx2=Int64[], Idx12=Int64[])
+
+    interlocks = 0
+    N = length(arr1)
+    for i = 1:N
+        word = arr[i]
+        word1 = word[1:2:end]
+        searchVal1, idx1 = inBisect(arr1, word1)
+        if searchVal1
+            word2 = word[2:2:end]
+            searchVal2, idx2 = inBisect(arr1, word2)
+            if searchVal2
+                interlocks += 1
+                myprint(verbose, "Interlocking words found! $word can be formed using $word1 and $word2 .\n")
+                push!(df, (ID = interlocks, Word1 = word1, 
+                Word2 = word2, Interlock = word, Idx1 = idx1, Idx2 = idx2,
+                Idx12 = i))
+            end
+        end
+    end
+
     if saveToFile && N > 10000 
         # Don't accidentally overwrite reverse pairs of words.txt
         # for a small testcase
-        filename_output = processedDataFolder*filename*extension
-        CSV.write(filename_output, listOfReversePairs)
+        filename_output = processedDataFolder*filename*"_interlocks"*extension
+        CSV.write(filename_output, df)
     end
 
-
-    return listOfReversePairs
+    return df
 end
 
-@time df1 = findReversePairs(arr1, verbose=false, saveToFile = true)
+@time dfInterlocks = findInterlocks(arr1, verbose=false, saveToFile=true);
