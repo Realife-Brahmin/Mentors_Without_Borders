@@ -137,5 +137,18 @@ function reverseLookup(d::Dict, v)
     return arr
 end 
 
-@btime reverseLookup(hD2, 3)
-@btime findall(isequal(3), hD2)
+@btime reverseLookup(hD2, 3);
+@btime findall(x -> x == 3, hD2);
+
+function invertDict(d::Dict{Tk, Tv}) where {Tk, Tv}
+    ks = keys(d)
+    vs = values(d)
+    dinv = Dict{Tv, Vector{Tk}}()
+    for k ∈ ks
+        v = d[k]
+        dinv[v] = push!(get(dinv, v, Vector{Tk}()), k)
+    end
+    return dinv
+end
+
+invertDict(hD2)
