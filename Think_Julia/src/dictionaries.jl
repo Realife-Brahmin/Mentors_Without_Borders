@@ -1,6 +1,8 @@
 # dictionaries.jl
+include("./HelperFunctions.jl");
 
 using BenchmarkTools
+using Test
 
 function histogramViaVectors(str::String)
     h = zeros(Int64, 26)
@@ -140,6 +142,19 @@ end
 @btime reverseLookup(hD2, 3);
 @btime findall(x -> x == 3, hD2);
 
+function invertDict0(d)
+    inverse = Dict()
+    for key in keys(d)
+        val = d[key]
+        if val ∉ keys(inverse)
+            inverse[val] = [key]
+        else
+            push!(inverse[val], key)
+        end
+    end
+    inverse
+end
+
 function invertDict(d::Dict{Tk, Tv}) where {Tk, Tv}
     ks = keys(d)
     vs = values(d)
@@ -151,4 +166,27 @@ function invertDict(d::Dict{Tk, Tv}) where {Tk, Tv}
     return dinv
 end
 
-invertDict(hD2)
+
+@btime global hD2inv1 = invertDict0(hD2);
+@btime global hD2inv = invertDict(hD2);
+
+
+
+function fib(x::Int64, fibMemo::Dict{Int64, Int128}=Dict(0=>0, 1=>1);
+    verbose::Bool=false)
+    myprintln(verbose, "Checking for presence of $(x) in memory.")
+    # myprintln(verbose, "Current Dictionary: $(fibMemo)") 
+    #= To highlight that fibMemo is indeed has a 'global' scope within the 
+    fib function =#
+    if x ∈ keys(fibMemo)
+        myprintln(verbose, "$(x) is indeed memoized, returning its value.")
+        return fibMemo[x]
+    else
+        myprintln(verbose, "$(x) not memoized, going into $(x-1) and $(x-2).")
+        fibMemo[x] = fib(x-1, fibMemo, verbose=verbose) + fib(x-2, fibMemo, verbose=verbose)
+    end 
+end
+fibMemo = Dict{Int64, Int128}(0=>0, 1=>1)  # Clearing the memoization cache
+
+@test fib(50, fibMemo, verbose=false) == 12586269025
+@test fib(100, fibMemo) == 354224848179261915075
