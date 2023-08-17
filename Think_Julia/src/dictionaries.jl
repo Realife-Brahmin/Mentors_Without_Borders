@@ -1,20 +1,6 @@
 # dictionaries.jl
 
 using BenchmarkTools
-eng2sp = Dict();
-eng2sp["one"] = "uno";
-eng2sp = Dict("one" => "uno", "two" => "dos", "three" => "tres");
-
-eng2sp["two"]
-l = length(eng2sp)
-ks = keys(eng2sp);
-print(ks)
-"one" ∈ ks
-"two" ∈ ks
-"uno" ∈ ks
-vs = values(eng2sp);
-"uno" ∈ vs # hash table
-"one" ∈ vs
 
 function histogramViaVectors(str::String)
     h = zeros(Int64, 26)
@@ -55,7 +41,98 @@ function histogramViaDictionaries2(str::String)
 end
 
 testString = "pZbXvJUxqQKdYrMzVcsgaAeBnOhLjRkDyFmCwTtGpIuHlSfNiWvEoX";
-@btime hV = histogramViaVectors(testString)
-@btime hD1 = histogramViaDictionaries1(testString)
-@btime hD2 = histogramViaDictionaries2(testString)
+@btime begin
+    global hV = histogramViaVectors(testString);
+end;
+@btime begin 
+    global hD1 = histogramViaDictionaries1(testString);
+end;
 
+@btime begin
+    global hD2 = histogramViaDictionaries2(testString);
+end;
+
+function printhist(h)
+    for c in keys(h)
+        println(c, " ", h[c])
+    end
+end
+
+function printDict2Matrix(a::Union{Dict, Matrix})
+    if a isa Dict
+        a = printDictSorted(a, returnType="valuesOnly")
+    end
+    N = size(a, 1)
+    for i = 1:N
+        println(a[i, 1], " ", a[i, 2])
+    end
+end
+
+function printDictSorted(h::Dict; returnType::String="printOnly")
+    N = length(h)
+    arrChar = fill(Char(0), N);
+    arrNum = zeros(Int64, N);
+    keysInserted = 0
+    for c in keys(h)
+        keysInserted += 1
+        arrChar[keysInserted] = c
+        arrNum[keysInserted] = h[c]
+    end
+    perm_indices = sortperm(arrChar)
+    arrCharSorted = arrChar[perm_indices]
+    arrNumSorted = arrNum[perm_indices]
+    hmat = hcat(arrCharSorted, arrNumSorted)
+
+    if returnType == "printOnly"
+        printDict2Matrix(hmat)
+    elseif returnType == "valuesOnly"
+        return hmat
+    elseif returnType == "valuesAndPrint"
+        printDict2Matrix(hmat)
+        return hmat
+    else
+        error("Undefined return type.")
+    end
+end
+
+function printDictSorted2(h::Dict; returnType::String="printOnly")
+    ks = keys(h)
+    ksSorted = sort!(collect(ks)) # collect 'collects' all keys in KeySet ks into a vector of type eltype(ks)
+    N = length(ksSorted)
+    arrNum = zeros(Int64, N)
+    for i = 1:N
+        arrNum[i] = h[ksSorted[i]]
+    end
+    hmat = hcat(ksSorted, arrNum)
+
+    if returnType == "printOnly"
+        printDict2Matrix(hmat)
+    elseif returnType == "valuesOnly"
+        return hmat
+    elseif returnType == "valuesAndPrint"
+        printDict2Matrix(hmat)
+        return hmat
+    else
+        error("Undefined return type.")
+    end
+
+end
+
+# printhist(hD2)
+
+@btime global d2Mat1 = printDictSorted(hD2, returnType="valuesOnly");
+
+@btime global d2Mat2 = printDictSorted2(hD2, returnType="valuesOnly");
+
+function reverseLookup(d::Dict, v)
+    ks = keys(d)
+    for c ∈ ks
+        if d[c] == v
+            return c
+        end
+    end
+    @error "No key matching that value found"
+    return Nothing
+end 
+
+reverseLookup(hD2, 4)
