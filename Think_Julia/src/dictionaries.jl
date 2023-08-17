@@ -25,8 +25,6 @@ function histogramViaDictionaries1(str::String)
     return h
 end
 
-
-
 """
     Ex 11-1
 """
@@ -126,13 +124,18 @@ end
 
 function reverseLookup(d::Dict, v)
     ks = keys(d)
+    arr = Vector()
+    validKeys = 0
     for c ∈ ks
         if d[c] == v
-            return c
+            push!(arr, c)
         end
     end
-    @error "No key matching that value found"
-    return Nothing
+    if length(arr) == 0
+        @warn "No key matching that value found"
+    end
+    return arr
 end 
 
-reverseLookup(hD2, 4)
+@btime reverseLookup(hD2, 3)
+@btime findall(isequal(3), hD2)
