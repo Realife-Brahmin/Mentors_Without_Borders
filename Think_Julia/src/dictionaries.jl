@@ -170,8 +170,6 @@ end
 @btime global hD2inv1 = invertDict0(hD2);
 @btime global hD2inv = invertDict(hD2);
 
-
-
 function fib(x::Int64, fibMemo::Dict{Int64, Int128}=Dict(0=>0, 1=>1);
     verbose::Bool=false)
     myprintln(verbose, "Checking for presence of $(x) in memory.")
@@ -186,7 +184,9 @@ function fib(x::Int64, fibMemo::Dict{Int64, Int128}=Dict(0=>0, 1=>1);
         fibMemo[x] = fib(x-1, fibMemo, verbose=verbose) + fib(x-2, fibMemo, verbose=verbose)
     end 
 end
-fibMemo = Dict{Int64, Int128}(0=>0, 1=>1)  # Clearing the memoization cache
+fibMemo = Dict{Int64, Int128}(0=>0, 1=>1);  # Clearing the memoization cache
 
 @test fib(50, fibMemo, verbose=false) == 12586269025
 @test fib(100, fibMemo) == 354224848179261915075
+
+# Start from Ex 11-2
