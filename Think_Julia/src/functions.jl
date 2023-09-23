@@ -1,0 +1,5 @@
+println("Hello, World!")
+parse(Int64, "32")
+parse(Float64, "3.14159")
+parse(Int64, "Hello")
+trunc(Int64, 3.9999)
