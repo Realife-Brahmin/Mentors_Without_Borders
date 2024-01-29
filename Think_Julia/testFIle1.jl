@@ -8,4 +8,3 @@ end
 
 #type Int64, FLoat64, String
 printlyrics()
-typeof(printlyrics())
