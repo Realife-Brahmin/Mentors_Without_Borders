@@ -1,5 +1,6 @@
 # dictionaries.jl
 include("./HelperFunctions.jl");
+include("./arrays.jl") # for speed comparision with array implementations
 
 using BenchmarkTools
 using Test
@@ -118,16 +119,18 @@ function histogramViaDictionaries2(str::String)
 end
 
 testString = "pZbXvJUxqQKdYrMzVcsgaAeBnOhLjRkDyFmCwTtGpIuHlSfNiWvEoX";
-@btime begin
-    global hV = histogramViaVectors(testString)
-end;
-@btime begin
-    global hD1 = histogramViaDictionaries1(testString)
-end;
+# @btime begin
+#     global hV = histogramViaVectors(testString)
+# end;
+# @btime begin
+#     global hD1 = histogramViaDictionaries1(testString)
+# end;
 
-@btime begin
-    global hD2 = histogramViaDictionaries2(testString)
-end;
+# @btime begin
+    # global hD2 = histogramViaDictionaries2(testString)
+# end;
+
+hD2 = histogramViaDictionaries2(testString);
 
 """
     printhist(h::Dict)
@@ -302,9 +305,9 @@ end
 
 # printhist(hD2)
 
-@btime global d2Mat1 = printDictSorted(hD2, returnType="valuesOnly");
+# @btime global d2Mat1 = printDictSorted(hD2, returnType="valuesOnly");
 
-@btime global d2Mat2 = printDictSorted2(hD2, returnType="valuesOnly");
+# @btime global d2Mat2 = printDictSorted2(hD2, returnType="valuesOnly");
 
 """
     reverseLookup(d::Dict, v)
@@ -350,8 +353,8 @@ function reverseLookup(d::Dict, v)
     return arr
 end
 
-@btime reverseLookup(hD2, 3);
-@btime findall(x -> x == 3, hD2);
+# @btime reverseLookup(hD2, 3);
+# @btime findall(x -> x == 3, hD2);
 
 """
     invertDict0(d)
@@ -424,8 +427,8 @@ function invertDict(d::Dict{Tk,Tv}) where {Tk,Tv}
 end
 
 
-@btime global hD2inv1 = invertDict0(hD2);
-@btime global hD2inv = invertDict(hD2);
+# @btime global hD2inv1 = invertDict0(hD2);
+# @btime global hD2inv = invertDict(hD2);
 
 """
     fib(x::Int64, fibMemo::Dict{Int64,Int128}=Dict(0 => 0, 1 => 1); verbose::Bool=false)
@@ -474,3 +477,33 @@ fibMemo = Dict{Int64,Int128}(0 => 0, 1 => 1);  # Clearing the memoization cache
 @test fib(100, fibMemo) == 354224848179261915075
 
 # Start from Ex 11-2
+
+function txt2Dict(filename::String="words.txt";
+    rawDataFolder::String="rawData/",
+    extension::String=".txt",
+    verbose::Bool=false)::Dict{String, Int64}
+    if !contains(filename, ".")
+        myprint(
+            verbose,
+            "filename does not have extension embedded.\n
+adding extension $extension at its end.\n"
+        )
+        filename = filename * extension
+    end
+    fin = open(rawDataFolder * filename)
+
+    words = Dict{String,Int64}()
+
+    # words = Dict()
+
+    for line ∈ eachline(fin)
+        word = line
+        words[word] = 1
+    end
+
+    return words
+end
+
+# @btime begin
+txt2Dict()
+# end
