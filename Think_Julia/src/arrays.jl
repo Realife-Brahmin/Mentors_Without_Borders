@@ -20,7 +20,7 @@ Converts all characters in the input vector `t` to uppercase.
 # Returns
 A new vector with all characters converted to uppercase.
 # Examples
-julia 
+```julia 
 julia> capitalizeAll(['h', 'e', 'l', 'l', 'o']) 
 5-element Vector{Char}: 
 'H': ASCII/Unicode U+0048 (category Lu: Letter, uppercase) 
@@ -28,7 +28,8 @@ julia> capitalizeAll(['h', 'e', 'l', 'l', 'o'])
 'L': ASCII/Unicode U+004C (category Lu: Letter, uppercase) 
 'L': ASCII/Unicode U+004C (category Lu: Letter, uppercase) 
 'O': ASCII/Unicode U+004F (category Lu: Letter, uppercase)
- """
+```
+"""
 function capitalizeAll(t::Vector{Char})
     answer = []
     for character ∈ t
@@ -93,7 +94,7 @@ function capitalizeAll2(t::Vector{Char})
     return uppercase.(t)
 end
 
-capitalizeAll2(t3)
+# capitalizeAll2(t3)
 
 function badDeleteHead(t)
     t = t[2:end]
@@ -308,10 +309,10 @@ end
 #   0.019763 seconds (113.87 k allocations: 4.935 MiB)
 # Supposedly the slower and space-inefficient method.
 # 103.316894 seconds (566.53 k allocations: 96.528 GiB, 7.30% gc time)
-@time listOfWords(verbose=true)
+# @time listOfWords(verbose=true)
 # @time listOfWords(method="copyAndAdd", verbose=true)
 
-arr1 = listOfWords()
+# arr1 = listOfWords()
 
 """
     inBisect(arr::Vector{String}, targetStr::String;
@@ -440,7 +441,7 @@ function findReversePairs(arr::Vector{String};
     return df
 end
 
-@time dfReversePairs = findReversePairs2(arr1, verbose=false, saveToFile=true);
+# @time dfReversePairs = findReversePairs2(arr1, verbose=false, saveToFile=true);
 
 function findInterlocks(arr::Vector{String};
     verbose::Bool=false,
@@ -481,4 +482,4 @@ function findInterlocks(arr::Vector{String};
     return df
 end
 
-@time dfInterlocks = findInterlocks(arr1, verbose=false, saveToFile=true);
+# @time dfInterlocks = findInterlocks(arr1, verbose=false, saveToFile=true);
