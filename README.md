@@ -1,6 +1,6 @@
 # Mentors Without Borders: Julia Programming
 
-Welcome to the **Mentors_Without_Borders** GitHub repository, a collaborative space where my students and I come together to dive into the world of programming with Julia, guided by the exercises and teachings from *Think Julia* by Ben Lawens. Our mission is to foster a global community of learners who support each other in mastering Julia programming through shared knowledge and experience.
+Welcome to the **Mentors_Without_Borders** GitHub repository, a collaborative space where my students and I come together to dive into the world of programming with Julia, guided by the exercises and teachings from *Think Julia* by Ben Lawens.
 
 ## About This Repository
 
@@ -10,8 +10,9 @@ This repository is dedicated to Julia programming exercises primarily based on t
 
 Before you begin, ensure you have the following installed:
 - Julia (latest version recommended). Visit [the official Julia website](https://julialang.org/downloads/) for installation instructions.
-- A text editor or an IDE that supports Julia (e.g., VSCode with the Julia extension, Atom with Juno, or Jupyter Notebook).
-- Students who wish to be a part of the free course may [email](mailto:aryan.r.jha@gmail.com) me for the Slack Channel link.
+- A text editor or an IDE that supports Julia (e.g., [VSCode](https://code.visualstudio.com/download) with the Julia extension).
+ 
+Students who wish to be a part of the free course may [email](mailto:aryan.r.jha@gmail.com) me for the Slack Channel link.
 
 ## How does the course work?
 - The course is almost entirely done asynchronously. While there is a weekly contact hour (12 Noon Pacific Time), it is reserved for doubts in exercise problems, troubleshooting sessions, etc.
@@ -22,5 +23,5 @@ Before you begin, ensure you have the following installed:
 
 ## Acknowledgements
 - Ben Lawens, for the invaluable resource Think Julia that inspired this course.
-- [Edmond Pruteanu](mailto:edmond@mwbtraining.net) founder of Mentors Without Borders for recruiting me for this activity.
+- [Edmond Pruteanu](mailto:edmond@mwbtraining.net) founder of Mentors Without Borders for recruiting me as a mentor.
 - Most importantly, my students, for keeping me on my toes through their inquisitiveness and inspiring me to keep learning more.
