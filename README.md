@@ -4,7 +4,7 @@ Welcome to the **Mentors_Without_Borders** GitHub repository, a collaborative sp
 
 ## About This Repository
 
-This repository is dedicated to Julia programming exercises primarily based on the book *[Think Julia: How to Think Like a Computer Scientist]([url](https://benlauwens.github.io/ThinkJulia.jl/latest/book.html))* by Ben Lawens. It serves as an interactive platform for both students and mentors to contribute solutions, share insights, and explore the vast capabilities of Julia programming. Our goal is not only to solve exercises but also to understand the underlying principles of computer science and programming paradigms as taught by Julia.
+This repository is dedicated to Julia programming exercises primarily based on the book *[Think Julia: How to Think Like a Computer Scientist](https://benlauwens.github.io/ThinkJulia.jl/latest/book.html)* by Ben Lawens. It serves as an interactive platform for both students and mentors to contribute solutions, share insights, and explore the vast capabilities of Julia programming. Our goal is not only to solve exercises but also to understand the underlying principles of computer science and programming paradigms as taught by Julia.
 
 ## Getting Started
 
