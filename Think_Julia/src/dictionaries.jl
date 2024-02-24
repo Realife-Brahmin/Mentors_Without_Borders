@@ -504,6 +504,25 @@ adding extension $extension at its end.\n"
     return words
 end
 
-# @btime begin
-txt2Dict()
-# end
+# Ex 11-2 from Think Julia
+# Comparison between Dictionary lookup and Sorted List (using Binary Search) Lookup 
+begin
+    wordsDict = txt2Dict() # gets created slightly faster 7.9 ms
+
+    wordsList = listOfWords() # gets created slightly slower 10.5 ms
+
+    nList = length(wordsList)
+
+    word = wordsList[rand(1:nList)]
+    # word = "zygote" # is in the list of words
+    # word = "zaza" # isn't in the list of words
+
+    @btime begin
+        inBisect(wordsList, word) # binary search takes abount 500 ns (sligthly variable)
+    end
+
+    @btime begin
+        word ∈ keys(wordsDict) # dict search takes about 40 ns (slightly variable)
+    end
+
+end
