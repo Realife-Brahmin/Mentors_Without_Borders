@@ -56,6 +56,7 @@ julia> onlyUpper(['A', 'b', 'C', 'd'])
 'A'
 'C'
 'D'
+```
 """
 function onlyUpper(t::Vector{Char})
     answer = []
@@ -89,6 +90,7 @@ julia> capitalizeAll2(['h', 'e', 'l', 'l', 'o'])
 'L': ASCII/Unicode U+004C (category Lu: Letter, uppercase)
 'L': ASCII/Unicode U+004C (category Lu: Letter, uppercase)
 'O': ASCII/Unicode U+004F (category Lu: Letter, uppercase)
+```
 """
 function capitalizeAll2(t::Vector{Char})
     return uppercase.(t)
@@ -112,12 +114,13 @@ Calculate the sum of all elements in a nested vector of integers.
 # Returns
 The sum of all elements in the nested vector.
 # Examples
-julia 
+```julia 
 # Example 1 
 nestedSum([[1, 2, 3], [4, 5, 6], [7, 8, 9]])  # Output: 45 
 
 # Example 2 
 nestedSum([[10, 20], [30, 40, 50]])  # Output: 150
+```
 """
 function nestedSum(arr::Vector{Vector{Int64}})
     sum = 0
@@ -347,6 +350,7 @@ If the `targetStr` is found in the array, the function returns `true` along with
 arr = ["apple", "banana", "cherry", "grape", "orange"]
 target = "cherry"
 result = inBisect(arr, target)  # Returns (true, 3)
+```
 """
 function inBisect(arr::Vector{String},
     targetStr::String;
