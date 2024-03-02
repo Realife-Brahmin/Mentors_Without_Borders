@@ -535,6 +535,44 @@ end
 
 # global ackWithMemo_calls = 0
 
+"""
+    ackWithMemo(m::Int, n::Int, memo::Dict = Dict()) -> (Int, Dict)
+
+Ex 11-3 from "Think Julia"
+
+Computes the Ackermann function, a classic example of a highly recursive mathematical function, with added memoization to improve performance by caching the results of previous computations.
+
+# Arguments
+- `m::Int`: The first parameter of the Ackermann function. Must be a non-negative integer.
+- `n::Int`: The second parameter of the Ackermann function. Must be a non-negative integer.
+- `memo::Dict`: (Optional) A dictionary used to memoize results of the Ackermann function to avoid redundant computations. Defaults to an empty dictionary.
+
+# Returns
+- `(Int, Dict)`: A tuple containing two elements:
+    - The first element is the result of the Ackermann function for the given `m` and `n`.
+    - The second element is the updated memoization dictionary containing all computed `(m, n)` pairs up to this point.
+
+# Notes
+- The Ackermann function is defined as follows:
+    - `A(m, n) = n + 1` if `m = 0`
+    - `A(m, n) = A(m - 1, 1)` if `m > 0` and `n = 0`
+    - `A(m, n) = A(m - 1, A(m, n - 1))` if `m > 0` and `n > 0`
+- Due to the highly recursive nature of the Ackermann function, memoization is used to store the results of function calls with specific `(m, n)` pairs. This significantly reduces the number of recursive calls needed, especially for inputs that would otherwise lead to many repeated calculations.
+- This implementation automatically caches results of the Ackermann function in the `memo` dictionary, which can be passed to subsequent calls to further optimize performance.
+
+# Warning
+- The Ackermann function grows extremely rapidly. Even with memoization, computing `ackWithMemo` with large `m` and `n` can result in significant memory usage due to the large size of the memoization dictionary.
+
+# Examples
+```julia
+# Compute the Ackermann function without memoization dictionary provided
+result, memo = ackWithMemo(2, 3)
+
+# Compute the Ackermann function with a pre-existing memoization dictionary
+memo = Dict((0, 1) => 2)
+result, updated_memo = ackWithMemo(2, 2, memo)
+```
+"""
 function ackWithMemo(m, n, memo=Dict())
 
     # global ackWithMemo_calls += 1
@@ -572,4 +610,3 @@ n = 4;
 # (3, 10) 1s, 1GB
 # (4, 4) SO
 @btime Awithout = ack(m, n) 
-# still blew up for (4, 4)
