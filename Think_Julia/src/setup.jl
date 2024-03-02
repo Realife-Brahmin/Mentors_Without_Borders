@@ -9,3 +9,8 @@ Pkg.instantiate()
 # Pkg.add("CSV")
 # Pkg.add("DataFrames")
 # Pkg.add("LinearAlgebra")
+
+using BenchmarkTools
+using CSV
+using DataFrames
+using LinearAlgebra
