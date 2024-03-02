@@ -396,6 +396,8 @@ end
 """
     invertDict(d::Dict{Tk,Tv}) where {Tk,Tv}
 
+Ex 11-3 from "Think Julia"
+
 Inverts a dictionary, transforming it from a mapping of keys to values into a mapping of values to lists of keys. This is useful for cases where you want to find all keys that share the same value.
 
 # Arguments
@@ -527,5 +529,3 @@ begin
     end
 
 end
-
-# Start from 11-3 next time.
