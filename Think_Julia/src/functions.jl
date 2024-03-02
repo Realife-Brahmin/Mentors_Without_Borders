@@ -50,6 +50,15 @@ function ack(m, n)
     return A
 end
 
-@btime ack(2, 2) # 500 ns, 64003554 function calls
-@btime ack(3, 4) # 25-250 mewsec, function is called 308199914 times
-@btime ack(10, 10)
+# m = 2; 
+m = 3;
+# m = 4;
+# n = 2; 
+# n = 4;
+n = 4;
+# @btime ack(m, n)
+A = ack(m, n)
+println("Ackermann value = $(A)")
+println("Ackermann calls for A($(m), $(n)) = $(ack_calls)")
+println("Trying to increase m to even 3 makes the function explode.")
+
