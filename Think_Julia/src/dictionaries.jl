@@ -1,9 +1,10 @@
 # dictionaries.jl
+include("setup.jl")
 include("./HelperFunctions.jl");
 include("./arrays.jl") # for speed comparision with array implementations
 
-using BenchmarkTools
-using Test
+# using BenchmarkTools
+# using Test
 
 """
     histogramViaVectors(str::String) -> Vector{Int64}
