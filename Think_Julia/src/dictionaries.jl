@@ -531,4 +531,32 @@ begin
 end
 
 # Ex 11-4 in ThinkJulia
-# 
+
+# global ackWithMemo_calls = 0
+
+function ackWithMemo(m, n, memo=Dict())
+
+    # global ackWithMemo_calls += 1
+    if (m, n) ∈ keys(memo)
+        A = memo[(m, n)]
+    else
+        if m == 0
+            A = n + 1
+            memo[(0, n)] = A
+        elseif m > 0 && n == 0
+            A, memo = ackWithMemo(m - 1, 1, memo)
+        elseif m > 0 && n > 0
+            arg2, memo = ackWithMemo(m, n - 1)
+            A, memo = ackWithMemo(m - 1, arg2, memo)
+        else
+            @error "floc"
+        end
+    end
+
+    memo[(m, n)] = A
+    return A, memo
+end
+
+m = 3;
+n = 4;
+A, memo = ackWithMemo(3, 4)
