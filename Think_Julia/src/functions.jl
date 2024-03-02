@@ -1,3 +1,4 @@
+include("setup.jl")
 # functions.jl
 
 function printlyrics()
