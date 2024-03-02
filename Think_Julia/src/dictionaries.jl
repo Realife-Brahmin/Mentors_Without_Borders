@@ -547,7 +547,7 @@ function ackWithMemo(m, n, memo=Dict())
         elseif m > 0 && n == 0
             A, memo = ackWithMemo(m - 1, 1, memo)
         elseif m > 0 && n > 0
-            arg2, memo = ackWithMemo(m, n - 1)
+            arg2, memo = ackWithMemo(m, n - 1, memo)
             A, memo = ackWithMemo(m - 1, arg2, memo)
         else
             @error "floc"
@@ -559,8 +559,17 @@ function ackWithMemo(m, n, memo=Dict())
 end
 
 m = 3;
+# m = 3;
+# m = 4;
 n = 4;
-A, memo = ackWithMemo(3, 4)
+# n = 10;
+# n = 4
+# (3, 4) 35 mews, 100kB
+# (3, 10) 3 ms, 5MB
+# (4, 4) SO
+@btime AwithMemo, memo = ackWithMemo(m, n) 
+# (3, 4) 200 mews , 200kB
+# (3, 10) 1s, 1GB
+# (4, 4) SO
+@btime Awithout = ack(m, n) 
 # still blew up for (4, 4)
-@btime A, memo = ackWithMemo(3, 10) # 20GiB, 11s
-@btime A = ack(3, 10) #1GiB, 1s
