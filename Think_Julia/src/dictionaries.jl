@@ -1,6 +1,7 @@
 # dictionaries.jl
 include("setup.jl")
 include("./HelperFunctions.jl");
+include("./functions.jl")
 include("./arrays.jl") # for speed comparision with array implementations
 
 # using BenchmarkTools
@@ -560,3 +561,6 @@ end
 m = 3;
 n = 4;
 A, memo = ackWithMemo(3, 4)
+# still blew up for (4, 4)
+@btime A, memo = ackWithMemo(3, 10) # 20GiB, 11s
+@btime A = ack(3, 10) #1GiB, 1s
