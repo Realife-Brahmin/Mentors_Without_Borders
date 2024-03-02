@@ -1,5 +1,6 @@
-using CSV
-using DataFrames
+include("setup.jl")
+# using CSV
+# using DataFrames
 
 function addall(t)
     total = 0
