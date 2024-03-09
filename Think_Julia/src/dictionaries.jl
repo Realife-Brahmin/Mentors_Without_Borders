@@ -690,7 +690,47 @@ end
 # @btime hasDuplicates(str) # 2 ms
 # @btime hasDuplicatesDict(str) # 1 mews wow! 
 
-wordsDict = txt2Dict() # gets created slightly faster 7.9 ms
+wordsList = listOfWords();
+
+"""
+    array2Dict(arr; verbose::Bool=false) -> Dict{String,Int64}
+
+Transforms an array of strings into a dictionary, where each unique string in the array becomes a key, and the value for each key represents the number of times that string appears in the array.
+
+# Arguments
+- `arr`: An array of strings to be converted into a dictionary.
+- `verbose::Bool=false`: If `true`, prints additional information about the process. Currently, this option does not alter the output but is included for future extensibility.
+
+# Returns
+- `Dict{String,Int64}`: A dictionary with keys representing unique strings from the array, and values indicating the frequency of each string.
+
+# Notes
+- The function efficiently tallies occurrences of each string, making it useful for counting and frequency analysis tasks.
+- The implementation ensures that each string's count is accurately incremented, regardless of its initial absence or presence in the dictionary, using the `get` function with a default value of 0.
+
+# Example
+Given an array of strings `["apple", "banana", "apple", "cherry", "banana", "cherry", "cherry"]`, the function will return a dictionary:
+```julia
+{
+    "apple" => 2,
+    "banana" => 2,
+    "cherry" => 3
+}
+```
+"""
+function array2Dict(arr;
+    verbose::Bool=false)::Dict{String,Int64}
+
+    words = Dict{String,Int64}()
+
+    for word ∈ arr
+        words[word] = 1 + get(words, word, 0)
+    end
+
+    return words
+end
+
+wordsDict = array2Dict(wordsList);
 
 function rotatePairs(arr;
     verbose::Bool = false)
