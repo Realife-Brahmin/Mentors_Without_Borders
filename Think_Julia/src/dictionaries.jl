@@ -481,7 +481,37 @@ fibMemo = Dict{Int64,Int128}(0 => 0, 1 => 1);  # Clearing the memoization cache
 @test fib(100, fibMemo) == 354224848179261915075
 
 # Start from Ex 11-2
+"""
+Exercise 11-2 of Think Julia
 
+    txt2Dict(filename::String="words.txt"; rawDataFolder::String="rawData/", extension::String=".txt", verbose::Bool=false) -> Dict{String, Int64}
+
+Reads a text file and creates a dictionary from its contents. Each line of the file is treated as a unique key in the dictionary, with all values set to 1. This can be useful for quickly indexing or identifying the presence of words in a text file.
+
+# Arguments
+- `filename::String="words.txt"`: The name of the file to be processed. If no file extension is provided, the default extension (`.txt`) is appended.
+- `rawDataFolder::String="rawData/"`: The directory path where the file is located.
+- `extension::String=".txt"`: The file extension to be appended to `filename` if it's not already present.
+- `verbose::Bool=false`: If `true`, prints additional information about the file processing, including extension additions.
+
+# Returns
+- `Dict{String, Int64}`: A dictionary where each key is a word from the file, and each value is set to 1.
+
+# Notes
+- The function assumes that each line of the file contains a single word. It does not perform any splitting or parsing of lines beyond treating each line as a separate word.
+- The dictionary's values are fixed at 1, indicating the presence of words rather than counting their occurrences.
+- If `verbose` is `true`, and the filename does not include an extension, a message is printed about appending the default `.txt` extension.
+
+# Example
+Assuming a file `words.txt` in `rawData/` directory with the content:
+hello
+world
+The following call to `txt2Dict()`:
+```julia
+julia> txt2Dict()
+
+```
+"""
 function txt2Dict(filename::String="words.txt";
     rawDataFolder::String="rawData/",
     extension::String=".txt",
@@ -497,8 +527,6 @@ adding extension $extension at its end.\n"
     fin = open(rawDataFolder * filename)
 
     words = Dict{String,Int64}()
-
-    # words = Dict()
 
     for line ∈ eachline(fin)
         word = line
@@ -661,3 +689,9 @@ end
 # str = "qwertyuipasdfjklzxcvbn"
 # @btime hasDuplicates(str) # 2 ms
 # @btime hasDuplicatesDict(str) # 1 mews wow! 
+
+wordsDict = txt2Dict() # gets created slightly faster 7.9 ms
+
+function rotatePairs(arr;
+    verbose::Bool = false)
+end
