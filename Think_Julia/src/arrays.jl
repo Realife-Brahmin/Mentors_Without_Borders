@@ -267,11 +267,11 @@ end
 # isAnagram(str1, str2)
 # isAnagram(str3, str4)
 
-function myprint(verbose, args)
-    if verbose == true
-        print(args)
-    end
-end
+# function myprint(verbose, args)
+#     if verbose == true
+#         print(args)
+#     end
+# end
 
 """
     hasDuplicates(arr; verbose = false) -> Bool
