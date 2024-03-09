@@ -1,6 +1,6 @@
 # dictionaries.jl
 include("setup.jl")
-include("./HelperFunctions.jl");
+# include("./HelperFunctions.jl");
 include("./functions.jl")
 include("./arrays.jl") # for speed comparision with array implementations
 
@@ -81,9 +81,9 @@ function histogramViaDictionaries1(str::String)
 end
 
 """
-    histogramViaDictionaries2(str::String) -> Dict{Char,Int64}
-
 Ex 11-1 from "Think Julia"
+
+    histogramViaDictionaries2(str::String) -> Dict{Char,Int64}
 
 Generates a frequency histogram of letters in a given string using a dictionary. This approach is a streamlined version of the method presented in `histogramViaDictionaries1`, utilizing the `get` function for more concise code.
 
@@ -536,9 +536,9 @@ end
 # global ackWithMemo_calls = 0
 
 """
-    ackWithMemo(m::Int, n::Int, memo::Dict = Dict()) -> (Int, Dict)
+Ex 11-4 from "Think Julia"
 
-Ex 11-3 from "Think Julia"
+    ackWithMemo(m::Int, n::Int, memo::Dict = Dict()) -> (Int, Dict)
 
 Computes the Ackermann function, a classic example of a highly recursive mathematical function, with added memoization to improve performance by caching the results of previous computations.
 
@@ -596,18 +596,21 @@ function ackWithMemo(m, n, memo=Dict())
     return A, memo
 end
 
-m = 3;
 # m = 3;
-# m = 4;
-n = 4;
-# n = 10;
-# n = 4
-# (3, 4) 35 mews, 100kB
-# (3, 10) 3 ms, 5MB
-# (4, 4) SO
-@btime AwithMemo, memo = ackWithMemo(m, n) 
-# (3, 4) 200 mews , 200kB
-# (3, 10) 1s, 1GB
-# (4, 4) SO
-@btime Awithout = ack(m, n) 
+# # m = 3;
+# # m = 4;
+# n = 4;
+# # n = 10;
+# # n = 4
+# # (3, 4) 35 mews, 100kB
+# # (3, 10) 3 ms, 5MB
+# # (4, 4) SO
+# @btime AwithMemo, memo = ackWithMemo(m, n) 
+# # (3, 4) 200 mews , 200kB
+# # (3, 10) 1s, 1GB
+# # (4, 4) SO
+# @btime Awithout = ack(m, n) 
 
+function hasDuplicatesDict(arr; verbose = false)
+
+end
