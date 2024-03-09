@@ -236,14 +236,49 @@ function myprint(verbose, args)
     end
 end
 
+"""
+    hasDuplicates(arr; verbose = false) -> Bool
+
+Checks whether the input array `arr` has duplicate elements.
+
+# Arguments
+- `arr`: An array or string to check for duplicates. If `arr` is a string, it is converted into an array of characters.
+- `verbose::Bool=false`: If `true`, additional information about the processing is printed. By default, this is set to `false`.
+
+# Returns
+- `Bool`: Returns `true` if there are duplicates in the array, `false` otherwise.
+
+# Notes
+- If the input `arr` is a string, the function first prints a message about the conversion (if `verbose` is `true`), then checks the characters of the string for duplicates.
+- The function prints the input array, the total number of elements `n`, and the number of unique elements `nUnique` as part of its operation. This function demonstrates basic type checking, optional verbose output, and the use of sets to identify unique elements in an array or string.
+
+# Examples
+The following examples illustrate how to use `hasDuplicates`:
+
+```julia
+julia> hasDuplicates([1, 2, 3, 4])
+[1, 2, 3, 4]
+n = 4
+nUnique = 4
+false
+
+julia> hasDuplicates("hello"; verbose = true)
+Argument is a String, converting into a Vector of chars.
+
+['h', 'e', 'l', 'l', 'o']
+n = 5
+nUnique = 4
+true
+```
+"""
 function hasDuplicates(arr; verbose = false)
     if isa(arr, String)
         myprint(verbose, "Argument is a String, converting into a Vector of chars.\n")
         arr = collect(arr)
     end
     println(arr)
-    @show n = length(arr)
-    @show nUnique = length(Set(arr))
+    n = length(arr)
+    nUnique = length(Set(arr))
     if n == nUnique
         return false
     else
