@@ -732,6 +732,18 @@ end
 
 wordsDict = array2Dict(wordsList);
 
-function rotatePairs(arr;
-    verbose::Bool = false)
-end
+# first write rotateWord function (8-11) in strings.jl (not created yet) then come back to implment rotatePairs here. Feeling sleeply.
+# function rotatePairs(wordsArr;
+#     verbose::Bool = false)
+
+#     wordsDict = array2Dict(wordsArr)
+#     pairs = Dict{String, Vector{Tuple{String, Int}}}()
+#     # pairs = Dict()
+#     # pairs = Dict{String, Vector{(String, Int)}}
+
+#     for words ∈ keys(wordsDict)
+#         for rotation = 1:26
+#             rotatedWord = rotateWord(word, rotation)
+
+
+# end
