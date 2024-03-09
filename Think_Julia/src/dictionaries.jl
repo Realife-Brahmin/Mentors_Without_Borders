@@ -611,6 +611,53 @@ end
 # # (4, 4) SO
 # @btime Awithout = ack(m, n) 
 
-function hasDuplicatesDict(arr; verbose = false)
+"""
+Exercise 11-5 of Think Julia
 
+    hasDuplicatesDict(arr; verbose = false) -> Bool
+
+Efficiently determines whether a string or an array of characters contains any duplicate characters by using a dictionary to track occurrences. This method is highlighted for its efficiency in comparison to an array-based implementation, with the dictionary approach generally providing better performance due to the lower computational complexity of search and insertion operations.
+
+# Arguments
+- `arr`: A string or an array of characters to be checked for duplicates.
+- `verbose::Bool=false`: If `true`, prints additional information about the process, including notification when a string argument is converted into a vector of characters.
+
+# Returns
+- `Bool`: Returns `true` if any duplicate characters are found; otherwise, returns `false`.
+
+# Notes
+- The function checks for duplicates by counting character occurrences with a dictionary, which typically allows for O(1) access time on average. This is more efficient than array-based methods, especially for large datasets.
+- If the input is a string, it is automatically converted into a vector of characters to ensure uniform processing.
+- This approach is significantly faster than the array-based method discussed in Exercise 10-7 of "Think Julia". Benchmarking results using `@btime` show this method to be quicker (e.g., 1 μs vs. 2 ms for a specific string), underlining the efficiency gains from utilizing a dictionary for occurrence tracking.
+
+# Performance Comparison
+- Compared to the array-based implementation in Exercise 10-7, this dictionary-based method is notably more efficient for detecting duplicates in strings or character arrays. The efficiency advantage is demonstrated through benchmarking, with `@btime` results indicating faster performance for the dictionary method.
+
+# Example
+```julia
+julia> hasDuplicatesDict("bananarama")
+# Output: true
+
+julia> hasDuplicatesDict("qwertyuipasdfjklzxcvbn")
+# Output: false
+```
+"""
+function hasDuplicatesDict(arr; verbose = false)
+    if isa(arr, String)
+        myprint(verbose, "Argument is a String, converting into a Vector of chars.\n")
+        arr = collect(arr)
+    end
+    counts = Dict()
+    for char ∈ arr
+        counts[char] = get(counts, char, 0) + 1
+        if counts[char] > 1
+            return true
+        end
+    end
+    return false
 end
+
+# str = "bananarama"
+# str = "qwertyuipasdfjklzxcvbn"
+# @btime hasDuplicates(str) # 2 ms
+# @btime hasDuplicatesDict(str) # 1 mews wow! 
