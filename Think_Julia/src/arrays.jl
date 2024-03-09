@@ -144,6 +144,7 @@ end
 """
     nestedSum(arr) -> Int
 
+Exercise 10-1 in Think Julia
 Recursively calculates the total sum of all integers in a nested array structure, which can contain both integers and further sub-arrays of integers. The function handles arbitrary levels of nesting by recursively summing the contents of each sub-array.
 
 # Arguments
@@ -189,14 +190,39 @@ function nestedSum(arr)
     return sum
 end
 
-t1 = [2, 3, 4, [5, 6]]
-t2 = [1, [2, 3], [4, [5, 6]]]
-t3 = [1, [2, 3], [4, [5, 6, [7]]]]
+# t1 = [2, 3, 4, [5, 6]]
+# t2 = [1, [2, 3], [4, [5, 6]]]
+# t3 = [1, [2, 3], [4, [5, 6, [7]]]]
 
-result = nestedSum(t1)
-result = nestedSum(t2)
-result = nestedSum(t3)
+# result = nestedSum(t1)
+# result = nestedSum(t2)
+# result = nestedSum(t3)
 
+"""
+Exercise 10-2 of Think Julia
+
+    cumulSum(arr) -> Vector{Float64}
+
+Computes the cumulative sums of a mixed array containing integers and possibly sub-arrays of integers. The cumulative sum at each position reflects the total of all previous elements in the input array, including the sum of integers within any sub-arrays up to that point. The function returns a vector of these cumulative sums.
+
+# Arguments
+- `arr`: An array of integers and/or sub-arrays of integers.
+
+# Returns
+- `Vector{Float64}`: A vector of cumulative sums. Each element represents the cumulative sum up to and including the corresponding element in the input array. The first element of this vector is always 0, serving as an initial value.
+
+# Process
+- The function initializes a vector of zeros one element larger than the input array to store the cumulative sums.
+- It iterates over each element in `arr`. If the element is an integer, it adds this value to the cumulative sum. If the element is a sub-array, it calculates the sum of the sub-array (using a separate function, assumed to be `nestedSum` in this context) and adds this sum to the cumulative sum.
+- It prints information about the current element or sub-array being processed, providing insight into the function's operation.
+
+# Notes
+- This function is versatile, able to process both flat arrays and nested structures, assuming a compatible `nestedSum` function is defined for calculating the sum of sub-arrays.
+- The implementation is specifically crafted as a solution to Exercise 10-2 in "Think Julia", focusing on cumulative sum calculations with support for nested array structures.
+
+# Example
+Given `arr = [1, [2, 3], 4]`, the function will return `[0, 1, 6, 10]`, where each element represents the cumulative sum up to that point in the array.
+"""
 function cumulSum(arr)
     n = length(arr)
     sums = zeros(n+1)
