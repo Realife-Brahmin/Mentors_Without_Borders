@@ -108,23 +108,24 @@ function tail(t::Vector{})
 end
 
 """
-    nestedSum0(arr::Vector{Vector{Int64}})
+    nestedSum0(arr::Vector{Vector{Int64}}) -> Int
 
-Exercise 10-1 in Think Julia
+Calculates the sum of integers within a two-dimensional array (a vector of vectors of integers). This function iterates over each sub-array and sums its integers, accumulating the total sum of all elements.
 
-Doesn't really work for truly nested arrays. Only arrays nesting (unnested) arrays or elements.
-Calculate the sum of all elements in a nested vector of integers.
 # Arguments
-- `arr::Vector{Vector{Int64}}`: The input vector containing nested vectors of integers.
-# Returns
-The sum of all elements in the nested vector.
-# Examples
-```julia 
-# Example 1 
-nestedSum([[1, 2, 3], [4, 5, 6], [7, 8, 9]])  # Output: 45 
+- `arr::Vector{Vector{Int64}}`: A two-dimensional array where each element is a vector of integers.
 
-# Example 2 
-nestedSum0([[10, 20], [30, 40, 50]])  # Output: 150
+# Returns
+- `Int`: The total sum of all integers contained within the two-dimensional array.
+
+# Limitations
+- The function only works with two-dimensional arrays, specifically vectors of vectors of integers. It cannot handle deeper nesting or mixed data structures (e.g., arrays containing both integers and further sub-arrays).
+- Unlike `nestedSum`, which can recursively handle arrays nested to any depth and mixed types within the same array, `nestedSum0` is restricted to a single level of nested arrays. This makes `nestedSum0` less versatile for applications requiring the processing of complex nested data structures.
+
+# Example
+```julia
+julia> nestedSum0([[1, 2, 3], [4, 5], [6]])
+# Output: 21
 ```
 """
 function nestedSum0(arr::Vector{Vector{Int64}})
