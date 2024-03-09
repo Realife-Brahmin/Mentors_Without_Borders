@@ -108,7 +108,11 @@ function tail(t::Vector{})
 end
 
 """
-    nestedSum(arr::Vector{Vector{Int64}})
+    nestedSum0(arr::Vector{Vector{Int64}})
+
+Exercise 10-1 in Think Julia
+
+Doesn't really work for truly nested arrays. Only arrays nesting (unnested) arrays or elements.
 Calculate the sum of all elements in a nested vector of integers.
 # Arguments
 - `arr::Vector{Vector{Int64}}`: The input vector containing nested vectors of integers.
@@ -120,10 +124,10 @@ The sum of all elements in the nested vector.
 nestedSum([[1, 2, 3], [4, 5, 6], [7, 8, 9]])  # Output: 45 
 
 # Example 2 
-nestedSum([[10, 20], [30, 40, 50]])  # Output: 150
+nestedSum0([[10, 20], [30, 40, 50]])  # Output: 150
 ```
 """
-function nestedSum(arr::Vector{Vector{Int64}})
+function nestedSum0(arr::Vector{Vector{Int64}})
     sum = 0
     for subArr ∈ arr
         for num ∈ subArr
@@ -136,16 +140,43 @@ end
 # t = [[1, 2], [3], [4, 5, 6]]
 # t1 = [2, 3, 4, [5, 6]]
 # nestedSum(t)
+"""
+    nestedSum(arr) -> Int
 
-function nestedSum2(arr)
+Recursively calculates the total sum of all integers in a nested array structure, which can contain both integers and further sub-arrays of integers. The function handles arbitrary levels of nesting by recursively summing the contents of each sub-array.
+
+# Arguments
+- `arr`: A nested array of integers and/or sub-arrays of integers.
+
+# Returns
+- `Int`: The total sum of all integers found within the nested array structure.
+
+# Process
+- For each element in `arr`, the function checks if it is an integer or a sub-array.
+    - If it is an integer, the value is added directly to the running total sum.
+    - If it is a sub-array, the function iteratively processes each element of this sub-array. For elements that are themselves arrays, `nestedSum` is called recursively to sum their contents.
+- The function prints details about its progress, including elements being added and the current sum, enhancing traceability and understanding of its operation.
+
+# Examples
+```julia
+julia> nestedSum([2, 3, 4, [5, 6]])
+# Output: 20
+
+julia> nestedSum([1, [2, 3], [4, [5, 6]]])
+# Output: 21
+
+julia> nestedSum([1, [2, 3], [4, [5, 6, [7]]]])
+# Output: 28
+```
+"""
+function nestedSum(arr)
     sum = 0
     for subArr ∈ arr
         if isa(subArr, Vector)
             println("Latest element of the array $arr is $subArr")
-            # sum += nestedSum2(subArr)
-            for num ∈ subArr
-                println("Element to be added: $num")
-                sum += num
+            for subArr_1 ∈ subArr
+                println("It's own subarray to be added: $subArr_1")
+                sum += nestedSum(subArr_1)
             end
             println("Now sum = $sum")
         elseif isa(subArr, Int)
@@ -157,8 +188,13 @@ function nestedSum2(arr)
     return sum
 end
 
-# t1 = [2, 3, 4, [5, 6]]
-# result = nestedSum2(t1)
+t1 = [2, 3, 4, [5, 6]]
+t2 = [1, [2, 3], [4, [5, 6]]]
+t3 = [1, [2, 3], [4, [5, 6, [7]]]]
+
+result = nestedSum(t1)
+result = nestedSum(t2)
+result = nestedSum(t3)
 
 function cumulSum(arr)
     n = length(arr)
@@ -168,7 +204,7 @@ function cumulSum(arr)
     for subArr ∈ arr
         if isa(subArr, Vector)
             println("Latest element of the array is $subArr")
-            sums[idx] = sums[idx-1] + nestedSum2(subArr)
+            sums[idx] = sums[idx-1] + nestedSum(subArr)
         elseif isa(subArr, Int)
             sums[idx] = sums[idx-1] + subArr
         end
@@ -239,6 +275,8 @@ end
 """
     hasDuplicates(arr; verbose = false) -> Bool
 
+Exercise 10-7 in Think Julia.
+
 Checks whether the input array `arr` has duplicate elements.
 
 # Arguments
@@ -292,6 +330,38 @@ end
 # hasDuplicates(str4, verbose=true)
 # hasDuplicates(t1, verbose=true)
 
+"""
+    birthdayParadox(n::Int64=23; numSims::Int64=1000, verbose::Bool=false) -> Float64
+
+Exercise 10-8 in Think Julia.
+
+Simulates the birthday paradox to estimate the probability that at least two people in a group of `n` share the same birthday.
+
+# Arguments
+- `n::Int64=23`: The number of individuals in the simulated group. Default is 23, which is the smallest number where the probability exceeds 50%.
+- `numSims::Int64=1000`: The number of simulations to run. More simulations increase the accuracy of the probability estimate. Default is 1000.
+- `verbose::Bool=false`: If `true`, prints additional information during the simulation, especially warnings about the adequacy of the number of simulations for large `n`. Default is `false`.
+
+# Returns
+- `Float64`: The estimated probability (as a fraction of 1) that at least two people in a group of `n` have the same birthday.
+
+# Notes
+- The function generates random birthdays for each individual in the group and checks for duplicates to determine if any two individuals share a birthday.
+- The birthday paradox demonstrates that in a group of 23 people, there is over a 50% chance that at least two people will have the same birthday, despite there being 365 possible birthdays.
+- For large `n` values (greater than 60), the function suggests increasing `numSims` for more accurate results due to the increased likelihood of shared birthdays. This simulation provides an intuitive understanding of the birthday paradox and the counterintuitive nature of probability in large groups.
+
+# Examples
+The following examples illustrate how to use `birthdayParadox`:
+
+```julia
+julia> birthdayParadox()
+0.507
+
+julia> birthdayParadox(50; verbose=true)
+Number of students large enough that the number of simulations may need to be increased to a very high number to accurately catch cases with no shared birthdays.
+0.97
+```
+"""
 function birthdayParadox(n::Int64=23; 
     numSims::Int64=1000, 
     verbose::Bool=false)
@@ -313,6 +383,27 @@ end
 
 # birthdayParadox(61, verbose=true)
 
+"""
+    listOfWords(filename::String="words.txt"; method::String="push!", rawDataFolder::String="rawData/", extension::String=".txt", verbose::Bool=false) -> Vector{String}
+
+Exercise 10-9 of Think Julia
+
+Reads a list of words from a specified file and returns them as a vector of strings. This function is designed to be flexible in terms of file location, naming, and the method used to construct the list.
+
+# Arguments
+- `filename::String="words.txt"`: The name of the file to read. If the filename does not contain an extension, `.txt` is appended by default.
+- `method::String="push!"`: The method used to construct the list of words. Options are `"push!"` for appending each word to the vector (recommended for efficiency) and `"copyAndAdd"` for creating a new vector each time (not recommended for large files).
+- `rawDataFolder::String="rawData/"`: The directory where the file is located. Defaults to a folder named `rawData/`.
+- `extension::String=".txt"`: The default file extension to append to `filename` if it does not already contain an extension.
+- `verbose::Bool=false`: If `true`, prints additional information about the file reading and list construction process.
+
+# Returns
+- `Vector{String}`: A vector containing all words read from the file.
+
+# Notes
+- The function checks if the provided `filename` includes a file extension. If not, it appends the default extension (`.txt`) to the filename.
+- The `method` argument allows the user to choose between using `push!` to efficiently build the list or `copyAndAdd`, which is less efficient and not recommended for large files.
+"""
 function listOfWords(filename::String="words.txt";
     method::String="push!",
     rawDataFolder::String="rawData/",
@@ -422,7 +513,33 @@ end
 
 # inBisect(arr1, "apple", verbose=false)
 
+"""
+    findReversePairs(arr::Vector{String}; verbose::Bool=false, saveToFile::Bool=true, filename::String="words", processedDataFolder::String="processedData/", extension::String=".csv") -> DataFrame
 
+Exercise 10-11 in Think Julia
+
+Searches a sorted array of strings for all pairs of words where one is the reverse of the other. Optionally, identifies palindromes (words that are the same when reversed). The results are returned as a DataFrame and optionally saved to a CSV file.
+
+# Arguments
+- `arr::Vector{String}`: A sorted vector of strings to search through.
+- `verbose::Bool=false`: If `true`, prints additional information about found pairs and palindromes during the search.
+- `saveToFile::Bool=true`: If `true`, saves the found pairs and palindromes to a CSV file. The saving occurs only if the array length is greater than 10,000 to avoid overwriting small test cases.
+- `filename::String="words"`: The base name for the output file when saving results. The full filename is constructed using the `processedDataFolder` and `extension`.
+- `processedDataFolder::String="processedData/"`: The folder where the output file is saved.
+- `extension::String=".csv"`: The file extension for the output file.
+
+# Returns
+- `DataFrame`: A DataFrame containing the found reverse pairs and palindromes. The columns are: `Word1`, `Word2`, `Idx1` (index of `Word1`), `Idx2` (index of `Word2` or the same as `Idx1` for palindromes), and `Palindrome` (a boolean indicating whether the pair is a palindrome).
+
+# Details
+The function implements a binary search algorithm to efficiently find reverse pairs in the sorted array. For each word, it searches for its reverse and checks if it exists in the array. If a reverse pair is found or a word is identified as a palindrome, it is added to the results.
+
+Palindromes are words that are identical to their reverse and are specially flagged in the output. The function uses a binary search to minimize the search space for each word's reverse, improving efficiency over a naive search approach.
+
+# Notes
+- The array `arr` must be sorted for the binary search to work correctly.
+- The function checks the array's size before saving to file to prevent overwriting detailed data from a large dataset with results from a smaller, test case.
+"""
 function findReversePairs(arr::Vector{String};
     verbose::Bool=false,
     saveToFile::Bool=true,
@@ -483,6 +600,32 @@ end
 
 # @time dfReversePairs = findReversePairs2(arr1, verbose=false, saveToFile=true);
 
+"""
+    findInterlocks(arr::Vector{String}; verbose::Bool=false, saveToFile::Bool=true, filename::String="words", processedDataFolder::String="processedData/", extension::String=".csv") -> DataFrame
+
+Exercise 10-12 in Think Julia
+
+Searches a sorted array of strings for interlocking words. An interlock occurs when two words can be intertwined to form a third word. For example, "shoe" and "cold" interlock to form "schooled". The results are returned as a DataFrame and optionally saved to a CSV file.
+
+# Arguments
+- `arr::Vector{String}`: A sorted vector of strings to search through for interlocks.
+- `verbose::Bool=false`: If `true`, prints information about found interlocks during the search process.
+- `saveToFile::Bool=true`: If `true`, saves the found interlocks to a CSV file. The saving occurs only if the array length is greater than 10,000 to prevent overwriting detailed data from a large dataset with results from a smaller test case.
+- `filename::String="words"`: The base name for the output file when saving results. The full filename is constructed using the `processedDataFolder` and `extension`.
+- `processedDataFolder::String="processedData/"`: The folder where the output file is saved.
+- `extension::String=".csv"`: The file extension for the output file.
+
+# Returns
+- `DataFrame`: A DataFrame containing the found interlocks. Columns include: `ID`, `Word1`, `Word2`, `Interlock`, `Idx1` (index of `Word1`), `Idx2` (index of `Word2`), and `Idx12` (index of the interlocked word in the original array).
+
+# Details
+For each word in the array, the function splits it into two components: one containing characters at odd indices and one with characters at even indices. It then searches for these two components in the array. If both components are found, it considers them as interlocking words that form the original word.
+
+# Notes
+- The array `arr` must be sorted for the binary search (`inBisect`) to work correctly.
+- The function uses a counter to assign a unique ID to each found interlock, which is included in the output DataFrame.
+- Saving to a file is conditional on the array's size and the `saveToFile` flag, providing a safeguard against overwriting valuable data with results from smaller, possibly test, datasets.
+"""
 function findInterlocks(arr::Vector{String};
     verbose::Bool=false,
     saveToFile::Bool=true,
