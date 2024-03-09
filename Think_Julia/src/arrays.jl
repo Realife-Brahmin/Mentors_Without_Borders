@@ -244,12 +244,59 @@ end
 # t2 = [1, 2, 3]
 # cumulSum(t2)
 
+"""
+Exercise 10-3 of Think Julia
+
+    interior(arr) -> Array
+
+Returns a new array consisting of all the elements of the input array except the first and last elements. This function is designed for operations where the focus is on the "interior" elements of an array, disregarding the boundary values.
+
+# Arguments
+- `arr`: An array of any type.
+
+# Returns
+- An array containing all the elements of `arr` except for the first and last ones. If `arr` has two or fewer elements, this function returns an empty array.
+
+# Notes
+- The function works with arrays of any element type but is not intended for deeply nested or multidimensional arrays. In such cases, it considers only the outermost layer.
+- This operation does not alter the original array; it generates and returns a new array with the specified elements.
+
+# Example
+```julia
+julia> interior([1, 2, 3, 4, 5])
+# Output: [2, 3, 4]
+```
+"""
 function interior(arr)
     return arr[2:end-1]
 end
 
 # interior(cumulSum(t1))
+"""
+Exercise 10-4 of Think Julia
 
+    interior!(arr) -> Nothing
+
+Modifies an array in-place by removing its first and last elements. This function is designed for direct manipulation of the array, focusing on its "interior" elements by excluding the boundary values. The original array is changed, and no value is explicitly returned.
+
+# Arguments
+- `arr`: An array of any type. The function operates on this array to remove its first and last elements.
+
+# Returns
+- Nothing. The function returns `nothing`, indicating it does not produce a separate output value but instead modifies the input array directly.
+
+# Notes
+- This function is intended for arrays with three or more elements. When applied to arrays with fewer than three elements, it will effectively empty the array.
+- Because `interior!` alters the input array, it should be used with caution to avoid unintended side effects.
+
+# Example
+```julia
+julia> arr = [1, 2, 3, 4, 5];
+julia> interior!(arr);
+julia> arr
+# Output: [2, 3, 4]
+```
+"""
 function interior!(arr)
     pop!(arr);
     popfirst!(arr);
@@ -259,7 +306,32 @@ end
 # t1 = [1, 2, 3, 5, [3, 5], 4]
 # interior(t1)
 # interior!(t1)
+"""
+Exercise 10-5 of Think Julia
 
+    isSort(arr) -> Bool
+
+Determines whether the input array is sorted in ascending order. The function compares the array with a sorted version of itself and returns a boolean value indicating whether the two are identical.
+
+# Arguments
+- `arr`: An array of comparable elements (e.g., integers, floats, strings).
+
+# Returns
+- `Bool`: Returns `true` if the array is sorted in ascending order; otherwise, it returns `false`.
+
+# Notes
+- The comparison is made by directly comparing `arr` with `sort(arr)`. This means the function checks for ascending order sorting.
+- This implementation might not be the most efficient for large arrays since it requires sorting the array to perform the check. A more efficient approach would compare adjacent elements without sorting.
+
+# Example
+```julia
+julia> isSort([1, 2, 3, 4, 5])
+# Output: true
+
+julia> isSort([5, 4, 3, 2, 1])
+# Output: false
+```
+"""
 function isSort(arr)
     if sort(arr) == arr
         return true
@@ -268,6 +340,34 @@ function isSort(arr)
     end
 end
 
+"""
+Exercise 10-6 of Think Julia
+
+    isAnagram(str1::String, str2::String) -> Bool
+
+Determines whether two strings are anagrams of each other. Two strings are considered anagrams if they contain the same characters in any order. The function is case-sensitive and does not ignore spaces or punctuation.
+
+# Arguments
+- `str1::String`: The first string to compare.
+- `str2::String`: The second string to compare.
+
+# Returns
+- `Bool`: Returns `true` if `str1` and `str2` are anagrams of each other; otherwise, returns `false`.
+
+# Notes
+- The function converts each string into a collection of characters, sorts these collections, and then compares them element by element.
+- If the strings are of different lengths, the function immediately returns `false` as they cannot be anagrams.
+- The comparison is case-sensitive, meaning 'a' and 'A' are considered different characters. Additionally, spaces and punctuation are considered part of the strings.
+
+# Example
+```julia
+julia> isAnagram("listen", "silent")
+# Output: true
+
+julia> isAnagram("hello", "world")
+# Output: false
+```
+"""
 function isAnagram(str1::String, str2::String)
     orderedChars1 = sort!(collect(str1))
     orderedChars2 = sort!(collect(str2))
