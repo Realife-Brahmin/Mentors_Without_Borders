@@ -729,8 +729,6 @@ function array2Dict(arr;
     return words
 end
 
-# wordsDict = array2Dict(wordsList);
-
 """
 Exercise 11-6 of Think Julia
 
@@ -763,7 +761,7 @@ rotatePairs(["abc", "def", "ghi"], verbose=true)
 function rotatePairs(wordsArr; 
     verbose::Bool=false)
     
-    wordsDict = array2Dict(wordsArr)
+    wordsDict = array2Dict(wordsArr);
     pairs = Dict{String,Vector{Tuple{String,Int}}}()
 
     for word ∈ keys(wordsDict)
@@ -780,6 +778,14 @@ function rotatePairs(wordsArr;
     return pairs
 end
 
-# cmuList = listOfWords(filename="cmudict-0.7b")
 rotationPairs = rotatePairs(wordsList);
 # @btime rotationPairs = rotatePairs(wordsList); # 500 ms # includes building of wordsDict from wordsList
+
+
+
+# filename = "cmudict-0.7b"
+
+fileAddr = joinpath(rawDataDir, filename); # rawDataDir defined in setup.jl
+firstWordIdx = 57; # first word (words and pronncitation combo) is at this index (manually checked)
+
+lines = readlines(fileAddr)[57:end]
