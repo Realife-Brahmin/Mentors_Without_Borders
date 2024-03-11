@@ -2,15 +2,15 @@
 include("setup.jl");
 include("./arrays.jl"); # listOfWords
 
-wordsList = listOfWords();
-n = length(wordsList);
-word = wordsList[rand(1:n)];
-rotation = rand(1:26);
+# wordsList = listOfWords();
+# n = length(wordsList);
+# word = wordsList[rand(1:n)];
+# rotation = rand(1:26);
 
 """
     rotateWords0(word, rotation; verbose::Bool = false) -> String
 
-**Deprecated**: This function rotates each lowercase alphabetic character in the given `word` by a specified number of positions in the alphabet, based solely on a 0-based index for lowercase letters. It is now recommended to use the `rotateWords` function for enhanced functionality, including support for both uppercase and lowercase letters and optional warnings for non-alphabetic characters.
+**Deprecated**: This function rotates each lowercase alphabetic character in the given `word` by a specified number of positions in the alphabet, based solely on a 0-based index for lowercase letters. It is now recommended to use the `rotateWord` function for enhanced functionality, including support for both uppercase and lowercase letters and optional warnings for non-alphabetic characters.
 
 # Arguments
 - `word`: The string of characters to be rotated. Should consist of lowercase letters only.
@@ -21,14 +21,14 @@ rotation = rand(1:26);
 - `String`: A new string with each lowercase character of `word` rotated by `rotation` positions. Non-lowercase characters will not be processed correctly.
 
 # Important Notice
-- **Use `rotateWords` instead**: `rotateWords0` is limited to lowercase letters and does not handle non-alphabetic characters gracefully. For a more comprehensive solution that supports both uppercase and lowercase letters, and provides options for handling non-alphabetic characters and verbosity, please use the `rotateWords` function.
+- **Use `rotateWord` instead**: `rotateWords0` is limited to lowercase letters and does not handle non-alphabetic characters gracefully. For a more comprehensive solution that supports both uppercase and lowercase letters, and provides options for handling non-alphabetic characters and verbosity, please use the `rotateWord` function.
 
 # Example
 Given the limitations of `rotateWords0`, for rotating "hello" by 2 positions:
 ```julia
 rotateWords0("hello", 2)
 ```
-However, for more advanced usage, including handling uppercase letters and non-alphabetic characters, refer to rotateWords.
+However, for more advanced usage, including handling uppercase letters and non-alphabetic characters, refer to rotateWord.
 
 """
 function rotateWords0(word, rotation;
@@ -103,7 +103,7 @@ end
 """
 Exercise 8-11 from Think Julia
 
-    rotateWords(word, rotation; flagNonAlphabet::Bool = true, verbose::Bool = false) -> String
+    rotateWord(word, rotation; flagNonAlphabet::Bool = true, verbose::Bool = false) -> String
 
 Rotates each character in the given `word` by a specified number of positions in the alphabet, wrapping around as necessary. This function supports both lowercase and uppercase characters, and can optionally warn about non-alphabetic characters.
 
@@ -124,12 +124,12 @@ Rotates each character in the given `word` by a specified number of positions in
 # Example
 Rotating the word "Hello, World!" by 2 positions, with warnings enabled for non-alphabetic characters, might yield:
 ```julia
-rotateWords("Hello, World!", 2, flagNonAlphabet = true, verbose = true)
+rotateWord("Hello, World!", 2, flagNonAlphabet = true, verbose = true)
 # returns "Jgnnq, Yqtnf!"
 ```
 Assuming rotateChar properly handles and warns for non-alphabetic characters like , and !, this would rotate 'H' to 'J', 'e' to 'g', etc., preserving spaces and punctuation.
 """
-function rotateWords(word, rotation;
+function rotateWord(word, rotation;
     flagNonAlphabet::Bool = true, 
     verbose::Bool=false)
 
@@ -143,4 +143,4 @@ function rotateWords(word, rotation;
 
 end
 
-# rotateWords("asklfjasjdfkjkALKJLJFLK9034af", -1)
+# rotateWord("asklfjasjdfkjkALKJLJFLK9034af", -1)
