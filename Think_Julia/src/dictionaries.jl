@@ -1,4 +1,7 @@
 # dictionaries.jl
+
+# moral of the story: Dictionaries are lightning fast when the corpus of words/numbers/mappings has already been created (and therefore, was finite in the first place), requires minimum changes, and a lot of lookups. Only tradeoff against arrays is the inital building time, which is trivial compared to lookup times (even comparing with binary search on sorted arrays)
+
 include("setup.jl")
 
 include("./arrays.jl") # for speed comparision with array implementations
