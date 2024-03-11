@@ -5,8 +5,6 @@ include("./arrays.jl") # for speed comparision with array implementations
 include("./functions.jl")
 include("./strings.jl")
 
-# using BenchmarkTools
-# using Test
 
 """
     histogramViaVectors(str::String) -> Vector{Int64}
@@ -731,35 +729,57 @@ function array2Dict(arr;
     return words
 end
 
-wordsDict = array2Dict(wordsList);
+# wordsDict = array2Dict(wordsList);
 
+"""
+Exercise 11-6 of Think Julia
 
-function rotatePairs(wordsArr;
-    verbose::Bool = false)
+    rotatePairs(wordsArr; verbose::Bool=false) -> Dict{String, Vector{Tuple{String, Int}}}
 
+Finds and records all pairs of words from the given array where one word can be transformed into another by rotating its letters through the alphabet. Each word is rotated through all possible positions (1 to 25), and if a resulting rotation matches another word in the input array, this pair is recorded alongside the rotation degree.
+
+# Arguments
+- `wordsArr`: An array of words (strings) to be analyzed for rotational pairs.
+- `verbose::Bool=false`: If set to `true`, the function provides verbose output during its execution, detailing each rotation process and found pairs.
+
+# Returns
+- A dictionary where each key is a word from the input array, and its value is a vector of tuples. Each tuple contains a word that can be formed by rotating the key word and the degree of rotation needed to do so. Only words that have at least one valid rotation pair are included as keys.
+
+# Operation
+- The function iterates over each word in the input array, then for each word, it rotates it through 1 to 25 positions. For each rotation, it checks if the rotated word exists in the original list of words.
+- If a rotated word is found in the original list, a tuple consisting of the rotated word and the rotation degree is added to the vector associated with the original word in the result dictionary.
+- Utilizes `get!` to efficiently handle the creation or update of vectors in the dictionary for each word, avoiding manual initialization checks.
+
+# Notes
+- The function is designed to work with lowercase words. Handling of uppercase or mixed-case words depends on the behavior of the `rotateWord` function.
+- Non-alphabet characters in words are handled according to the `rotateWord` function's policy. The function's behavior with such characters is documented separately in `rotateWord`.
+
+# Example
+Consider an array of words `["abc", "def", "ghi"]`. If "abc" rotated by 1 position becomes "def", which is in the array, then "abc" will have an entry in the resulting dictionary:
+```julia
+rotatePairs(["abc", "def", "ghi"], verbose=true)
+```
+"""
+function rotatePairs(wordsArr; 
+    verbose::Bool=false)
+    
     wordsDict = array2Dict(wordsArr)
-    pairs = Dict{String, Vector{Tuple{String, Int}}}()
-
+    pairs = Dict{String,Vector{Tuple{String,Int}}}()
 
     for word ∈ keys(wordsDict)
-        for rotation = 1:26
+        for rotation = 1:25 # Skipping 26 as it results in the original word
             rotatedWord = rotateWord(word, rotation, verbose=verbose)
-            if word ∈ keys(pairs)
-                myprintln(verbose, "Yes, word $(word) is already in the dictionary of known rotated pairs")
-                pairs[word] = push!(pairs[word], (rotatedWord, rotation))
-            else
-                myprintln(verbose, "No, word $(word) is not already in the dictionary of known rotated pairs")
-                pairs[word] = [(rotatedWord, rotation)]
+            if haskey(wordsDict, rotatedWord)
+                # Automatically get or create the vector, then push the new tuple
+                push!(get!(pairs, word, Vector{Tuple{String,Int}}()), (rotatedWord, rotation))
+                myprintln(verbose, "Processing rotation for word: $word with rotation $rotation resulting in $rotatedWord")
             end
-                
-            # don't search for existence, for now.
-            # wanna check data structure implementation first.
-            # push!(pairs[words], (rotatedWord, rotation))
         end
     end
 
     return pairs
-
 end
 
-rotatePairs(wordsList)
+# cmuList = listOfWords(filename="cmudict-0.7b")
+rotationPairs = rotatePairs(wordsList);
+# @btime rotationPairs = rotatePairs(wordsList); # 500 ms # includes building of wordsDict from wordsList
