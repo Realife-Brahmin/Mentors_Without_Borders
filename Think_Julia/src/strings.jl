@@ -8,7 +8,7 @@ include("./arrays.jl"); # listOfWords
 # rotation = rand(1:26);
 
 """
-    rotateWords0(word, rotation; verbose::Bool = false) -> String
+    rotateWord0(word, rotation; verbose::Bool = false) -> String
 
 **Deprecated**: This function rotates each lowercase alphabetic character in the given `word` by a specified number of positions in the alphabet, based solely on a 0-based index for lowercase letters. It is now recommended to use the `rotateWord` function for enhanced functionality, including support for both uppercase and lowercase letters and optional warnings for non-alphabetic characters.
 
@@ -21,17 +21,17 @@ include("./arrays.jl"); # listOfWords
 - `String`: A new string with each lowercase character of `word` rotated by `rotation` positions. Non-lowercase characters will not be processed correctly.
 
 # Important Notice
-- **Use `rotateWord` instead**: `rotateWords0` is limited to lowercase letters and does not handle non-alphabetic characters gracefully. For a more comprehensive solution that supports both uppercase and lowercase letters, and provides options for handling non-alphabetic characters and verbosity, please use the `rotateWord` function.
+- **Use `rotateWord` instead**: `rotateWord0` is limited to lowercase letters and does not handle non-alphabetic characters gracefully. For a more comprehensive solution that supports both uppercase and lowercase letters, and provides options for handling non-alphabetic characters and verbosity, please use the `rotateWord` function.
 
 # Example
-Given the limitations of `rotateWords0`, for rotating "hello" by 2 positions:
+Given the limitations of `rotateWord0`, for rotating "hello" by 2 positions:
 ```julia
-rotateWords0("hello", 2)
+rotateWord0("hello", 2)
 ```
 However, for more advanced usage, including handling uppercase letters and non-alphabetic characters, refer to rotateWord.
 
 """
-function rotateWords0(word, rotation;
+function rotateWord0(word, rotation;
     verbose::Bool = false)
 
     chars = collect(word)
@@ -44,7 +44,7 @@ function rotateWords0(word, rotation;
     return rotatedWord
 end
 
-rotatedWord = rotateWords0(word, rotation)
+# rotatedWord = rotateWord0(word, rotation)
 
 """
     rotateChar(c::Char, rotation::Int; flagNonAlphabet::Bool = true, verbose::Bool = false) -> Char
