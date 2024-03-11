@@ -393,7 +393,7 @@ end
 # isAnagram(str1, str2)
 # isAnagram(str3, str4)
 
-# function myprint(verbose, args)
+# function myprintln(verbose, args)
 #     if verbose == true
 #         print(args)
 #     end
@@ -438,7 +438,7 @@ true
 """
 function hasDuplicates(arr; verbose = false)
     if isa(arr, String)
-        myprint(verbose, "Argument is a String, converting into a Vector of chars.\n")
+        myprintln(verbose, "Argument is a String, converting into a Vector of chars.\n")
         arr = collect(arr)
     end
     println(arr)
@@ -494,7 +494,7 @@ function birthdayParadox(n::Int64=23;
     verbose::Bool=false)
     samesies = 0
     if n > 60
-        myprint(verbose, "Number of students large enough that the number of " *
+        myprintln(verbose, "Number of students large enough that the number of " *
         "simulations may need to be increased to a very high number to " *
         "accurately catch cases with no shared birthdays.\n")
     end
@@ -537,20 +537,20 @@ function listOfWords(filename::String="words.txt";
     extension::String=".txt",
     verbose::Bool=false)::Vector{String}
     if !contains(filename, ".")
-        myprint(verbose, "filename does not have extension embedded.\n
+        myprintln(verbose, "filename does not have extension embedded.\n
         adding extension $extension at its end.\n")
         filename = filename*extension
     end
     fin = open(rawDataFolder*filename)
     words = []
     if method == "push!"
-        myprint(verbose, "Supposedly the faster and space-efficient method.\n")
+        myprintln(verbose, "Supposedly the faster and space-efficient method.\n")
         for line ∈ eachline(fin)
             word = line
             push!(words, word);
         end
     elseif method == "copyAndAdd" #Don't do it for big arrays like words.txt
-        myprint(verbose, "Supposedly the slower and space-inefficient method.\n")
+        myprintln(verbose, "Supposedly the slower and space-inefficient method.\n")
         for line ∈ eachline(fin)
             word = line
             words = [words..., word]
@@ -622,8 +622,8 @@ function inBisect(arr::Vector{String},
             lookups += 1;
             mid = (left+right)÷2
             if arr[mid] == targetStr
-                myprint(verbose, "Target found! At index $mid \n")
-                myprint(verbose, "using only $lookups lookups!\n")
+                myprintln(verbose, "Target found! At index $mid \n")
+                myprintln(verbose, "using only $lookups lookups!\n")
                 return true, mid
             elseif arr[mid] > targetStr
                 right = mid - 1
@@ -701,15 +701,15 @@ function findReversePairs(arr::Vector{String};
         if word == drow
             push!(reversePairs, (Word1 = word, Word2 = drow, Idx1 = i, Idx2 = i, Palindrome = true))
 
-            myprint(verbose, "A Palindrome found!")
-            myprint(verbose, "$word at index $i.")
+            myprintln(verbose, "A Palindrome found!")
+            myprintln(verbose, "$word at index $i.")
         else
             foundFlag, idx = binarySearchReverse(drow, i+1, N)
             if foundFlag
                 push!(reversePairs, (Word1 = word, Word2 = drow, Idx1 = i, Idx2 = idx, Palindrome = false))
 
-                myprint(verbose, "A Reverse Pair found!")
-                myprint(verbose, "$word at index $i and $drow at index $idx.")
+                myprintln(verbose, "A Reverse Pair found!")
+                myprintln(verbose, "$word at index $i and $drow at index $idx.")
             end
         end
     end
@@ -774,7 +774,7 @@ function findInterlocks(arr::Vector{String};
             searchVal2, idx2 = inBisect(arr1, word2)
             if searchVal2
                 interlocks += 1
-                myprint(verbose, "Interlocking words found! $word can be formed using $word1 and $word2 .\n")
+                myprintln(verbose, "Interlocking words found! $word can be formed using $word1 and $word2 .\n")
                 push!(df, (ID = interlocks, Word1 = word1, 
                 Word2 = word2, Interlock = word, Idx1 = idx1, Idx2 = idx2,
                 Idx12 = i))
