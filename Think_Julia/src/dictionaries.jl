@@ -785,7 +785,7 @@ end
 # @btime rotationPairs = rotatePairs(wordsList); # 500 ms # includes building of wordsDict from wordsList
 
 
-filename = "cmudict-0.7b";
+filename = "cmudict-0.7b.txt";
 fileAddr = joinpath(rawDataDir, filename); # rawDataDir defined in setup.jl
 firstWordIdx = 57; # first word (words and pronncitation combo) is at this index (manually checked)
 cmudictList = readlines(fileAddr)[57:end];
