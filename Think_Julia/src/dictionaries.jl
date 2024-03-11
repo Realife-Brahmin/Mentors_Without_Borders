@@ -778,14 +778,61 @@ function rotatePairs(wordsArr;
     return pairs
 end
 
-rotationPairs = rotatePairs(wordsList);
+# rotationPairs = rotatePairs(wordsList);
 # @btime rotationPairs = rotatePairs(wordsList); # 500 ms # includes building of wordsDict from wordsList
 
 
-
-# filename = "cmudict-0.7b"
-
+filename = "cmudict-0.7b";
 fileAddr = joinpath(rawDataDir, filename); # rawDataDir defined in setup.jl
 firstWordIdx = 57; # first word (words and pronncitation combo) is at this index (manually checked)
+cmudictList = readlines(fileAddr)[57:end];
 
-lines = readlines(fileAddr)[57:end]
+"""
+    createPronunciationDict(pronunciations::Vector{String}) -> Dict{String, String}
+
+Constructs a dictionary from a vector of strings, where each string contains a word and its phonetic pronunciation from the CMU Pronouncing Dictionary. This function is tailored for processing entries starting from a specified line in the CMU dictionary file to skip headers or non-relevant content.
+
+# Usage
+This function is used after reading lines from the CMU dictionary file, where the file's path is constructed using `joinpath`, and only lines containing word-pronunciation pairs are considered by slicing the array from a manually identified starting index.
+
+# Arguments
+- `pronunciations::Vector{String}`: A vector containing strings, each comprising a word followed by its pronunciation, extracted from the CMU Pronouncing Dictionary.
+
+# Returns
+- `Dict{String, String}`: A dictionary with the cleaned-up word as the key and its pronunciation as the value. Special characters and annotations within the word are removed for consistency.
+
+# Details
+- The function splits each entry into two parts: the word and its pronunciation, using the `limit=2` argument in `split` to ensure only the first whitespace is used as a delimiter.
+- Words are cleaned of any special characters (e.g., `{`, `}`, `'`, `(`, `)`, digits) that might be part of pronunciation annotations or denote special entries in the dictionary, ensuring that the dictionary keys consist only of the core word text.
+- The resulting dictionary maps cleaned words to their corresponding pronunciations, facilitating easy access to pronunciation information by word.
+
+# Example
+Given a file `cmudict-0.7b` containing CMU dictionary entries, after preprocessing to exclude non-word entries:
+
+```julia
+filename = "cmudict-0.7b"
+rawDataDir = "path/to/rawData"
+fileAddr = joinpath(rawDataDir, filename)
+cmudictList = readlines(fileAddr)[57:end]  # Skipping header lines
+
+cmudictDict = createPronunciationDict(cmudictList)
+```
+"""
+function createPronunciationDict(pronunciations::Vector{String})
+    dict = Dict{String,String}()
+    for entry in pronunciations
+        # Split the entry into word and pronunciation parts
+        parts = split(entry, limit=2)
+        word = parts[1]
+        pronunciation = parts[2]
+
+        # Clean up the word (remove special characters and annotations)
+        clean_word = replace(word, r"[{}()'0-9]" => "")
+
+        # Insert into the dictionary
+        dict[clean_word] = pronunciation
+    end
+    return dict
+end
+
+cmudictDict = createPronunciationDict(cmudictList)
