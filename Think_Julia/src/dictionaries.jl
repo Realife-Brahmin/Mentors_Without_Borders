@@ -838,4 +838,54 @@ function createPronunciationDict(pronunciations::Vector{String})
     return dict
 end
 
-cmudictDict = createPronunciationDict(cmudictList)
+cmudictDict = createPronunciationDict(cmudictList);
+
+"""
+Exercise 11-7 of Think Julia
+
+    findUniqueWords(d::Dict; verbose::Bool = false) -> Vector{String}
+
+Searches through a dictionary for unique words that are homophones of both words derived by removing their first or second letter. This function is inspired by a CarTalk Puzzle, which likely refers to the word "SCENT," a homophone of "CENT" and "SENT" when the first or second letter is removed.
+
+# Arguments
+- `d::Dict`: A dictionary where each key is a word (string) and the associated value is its phonetic transcription (or other comparable data).
+- `verbose::Bool=false`: If `true`, the function will print informative messages when it finds a word meeting the criteria.
+
+# Returns
+- `Vector{String}`: A list of words that are homophones with their derived words after removing the first or second letter.
+
+# Notes
+- The function iterates over the keys in the dictionary, checking each word against two derived forms: one with the first letter removed (`word1`) and one with the second letter removed (`word2`).
+- To be included in the return list, a word must be a homophone of both `word1` and `word2`, meaning the values corresponding to the words in the dictionary must be equal.
+- The search is based on the dictionary provided, so results are contingent on the completeness and accuracy of this dictionary.
+- While the original puzzle refers to words like "SCENT," this function also recognizes other 'trivial' words that meet the homophone criteria, such as "AAH", "AARGH", "LLANES", "LLOYD", "OOOH". However, these may not align with typical definitions of single syllable words that are common homophones.
+
+# Example
+Given a dictionary `d` with keys as words and values as their phonetic representations or other homophone-relevant data:
+```julia
+d = Dict("scent" => "sɛnt", "cent" => "sɛnt", "sent" => "sɛnt")
+uniqueWordsList = findUniqueWords(d, verbose=true)
+```
+"""
+function findUniqueWords(d::Dict;
+    verbose::Bool = false)
+
+    list = Vector{String}()
+
+    for word ∈ keys(d)
+        word1 = word[2:end] # first letter removed
+        word2 = word[1]*word[3:end] # second letter removed
+        if haskey(d, word1) && haskey(d, word2) && d[word] == d[word1] && d[word] == d[word2]
+            push!(list, word);
+            myprintln(verbose, "Found one Word $(word) is a homophone of both words made by removing its first OR second letter!")
+        end     
+    end
+
+    return list
+
+    # the authors of this CarTalk Puzzle probably had the word "SCENT" (a monosyllable word which is a homophone of  "CENT" and "SENT", which have been derived by removing the first and second letter from it, respectively) in mind.
+    # Other 'trivial' words I can see obeying these criteria in the list are "AAH", "AARGH", "LLANES", "LLOYD", "OOOH", although none of these are what I'd think of when thinking of 'words'.
+
+end
+
+findUniqueWords(cmudictDict);
