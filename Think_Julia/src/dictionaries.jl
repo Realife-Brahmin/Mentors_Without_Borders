@@ -1,8 +1,9 @@
 # dictionaries.jl
 include("setup.jl")
-# include("./HelperFunctions.jl");
-include("./functions.jl")
+
 include("./arrays.jl") # for speed comparision with array implementations
+include("./functions.jl")
+include("./strings.jl")
 
 # using BenchmarkTools
 # using Test
@@ -732,18 +733,33 @@ end
 
 wordsDict = array2Dict(wordsList);
 
-# first write rotateWord function (8-11) in strings.jl (not created yet) then come back to implment rotatePairs here. Feeling sleeply.
-# function rotatePairs(wordsArr;
-#     verbose::Bool = false)
 
-#     wordsDict = array2Dict(wordsArr)
-#     pairs = Dict{String, Vector{Tuple{String, Int}}}()
-#     # pairs = Dict()
-#     # pairs = Dict{String, Vector{(String, Int)}}
+function rotatePairs(wordsArr;
+    verbose::Bool = false)
 
-#     for words ∈ keys(wordsDict)
-#         for rotation = 1:26
-#             rotatedWord = rotateWord(word, rotation)
+    wordsDict = array2Dict(wordsArr)
+    pairs = Dict{String, Vector{Tuple{String, Int}}}()
 
 
-# end
+    for word ∈ keys(wordsDict)
+        for rotation = 1:26
+            rotatedWord = rotateWord(word, rotation, verbose=verbose)
+            if word ∈ keys(pairs)
+                myprintln(verbose, "Yes, word $(word) is already in the dictionary of known rotated pairs")
+                pairs[word] = push!(pairs[word], (rotatedWord, rotation))
+            else
+                myprintln(verbose, "No, word $(word) is not already in the dictionary of known rotated pairs")
+                pairs[word] = [(rotatedWord, rotation)]
+            end
+                
+            # don't search for existence, for now.
+            # wanna check data structure implementation first.
+            # push!(pairs[words], (rotatedWord, rotation))
+        end
+    end
+
+    return pairs
+
+end
+
+rotatePairs(wordsList)
