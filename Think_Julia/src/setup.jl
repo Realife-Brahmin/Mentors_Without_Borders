@@ -17,3 +17,7 @@ using LinearAlgebra
 using Test
 
 include("HelperFunctions.jl");
+
+wd = @__DIR__;
+rootdir = dirname(wd);
+rawDataDir = joinpath(rootdir, "rawData"); # dangerous?
