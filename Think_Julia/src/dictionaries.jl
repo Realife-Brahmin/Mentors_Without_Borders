@@ -134,7 +134,7 @@ testString = "pZbXvJUxqQKdYrMzVcsgaAeBnOhLjRkDyFmCwTtGpIuHlSfNiWvEoX";
     # global hD2 = histogramViaDictionaries2(testString)
 # end;
 
-hD2 = histogramViaDictionaries2(testString);
+# hD2 = histogramViaDictionaries2(testString);
 
 """
     printhist(h::Dict)
@@ -479,8 +479,8 @@ function fib(x::Int64, fibMemo::Dict{Int64,Int128}=Dict(0 => 0, 1 => 1);
 end
 fibMemo = Dict{Int64,Int128}(0 => 0, 1 => 1);  # Clearing the memoization cache
 
-@test fib(50, fibMemo, verbose=false) == 12586269025
-@test fib(100, fibMemo) == 354224848179261915075
+# @test fib(50, fibMemo, verbose=false) == 12586269025
+# @test fib(100, fibMemo) == 354224848179261915075
 
 # Start from Ex 11-2
 """
@@ -540,26 +540,26 @@ end
 
 # Ex 11-2 from Think Julia
 # Comparison between Dictionary lookup and Sorted List (using Binary Search) Lookup 
-begin
-    wordsDict = txt2Dict() # gets created slightly faster 7.9 ms
+# begin
+#     wordsDict = txt2Dict() # gets created slightly faster 7.9 ms
 
-    wordsList = listOfWords() # gets created slightly slower 10.5 ms
+#     wordsList = listOfWords() # gets created slightly slower 10.5 ms
 
-    nList = length(wordsList)
+#     nList = length(wordsList)
 
-    word = wordsList[rand(1:nList)]
-    # word = "zygote" # is in the list of words
-    # word = "zaza" # isn't in the list of words
+#     word = wordsList[rand(1:nList)]
+#     # word = "zygote" # is in the list of words
+#     # word = "zaza" # isn't in the list of words
 
-    @btime begin
-        inBisect(wordsList, word) # binary search takes abount 500 ns (sligthly variable)
-    end
+#     # @btime begin
+#         inBisect(wordsList, word) # binary search takes abount 500 ns (sligthly variable)
+#     # end
 
-    @btime begin
-        word ∈ keys(wordsDict) # dict search takes about 40 ns (slightly variable)
-    end
+#     # @btime begin
+#         word ∈ keys(wordsDict) # dict search takes about 40 ns (slightly variable)
+#     # end
 
-end
+# end
 
 # Ex 11-4 in ThinkJulia
 
@@ -692,7 +692,7 @@ end
 # @btime hasDuplicates(str) # 2 ms
 # @btime hasDuplicatesDict(str) # 1 mews wow! 
 
-wordsList = listOfWords();
+# wordsList = listOfWords();
 
 """
     array2Dict(arr; verbose::Bool=false) -> Dict{String,Int64}
@@ -786,7 +786,7 @@ end
 
 
 filename = "cmudict-0point7b-1.txt";
-# filename = "cmudict-0.7b"
+# filename = "cmudict-0point7b.txt"
 fileAddr = joinpath(rawDataDir, filename); # rawDataDir defined in setup.jl
 firstWordIdx = 57; # first word (words and pronncitation combo) is at this index (manually checked)
 cmudictList = readlines(fileAddr)[57:end];
@@ -838,6 +838,8 @@ function createPronunciationDict(pronunciations::Vector{String})
     end
     return dict
 end
+
+# cmudictDict = createPronunciationDict(cmudictList);
 
 """
     isAscii(s::String) -> Bool
@@ -921,4 +923,4 @@ function findUniqueWords(d::Dict;
 
 end
 
-uniqueWordsList = findUniqueWords(cmudictDict);
+# uniqueWordsList = findUniqueWords(cmudictDict);
