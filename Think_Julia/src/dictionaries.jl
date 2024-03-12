@@ -44,7 +44,7 @@ function histogramViaVectors(str::String)
 end
 
 """
-    histogramViaDictionaries1(str::String) -> Dict{Char,Int64}
+    histogramViaDictionaries0(str::String) -> Dict{Char,Int64}
 
 Creates a frequency histogram of the letters in a given string using a dictionary, accounting for lowercase English letters only.
 
@@ -62,13 +62,13 @@ Creates a frequency histogram of the letters in a given string using a dictionar
 # Examples
 ```julia
 # Create a histogram for a simple string
-histogram = histogramViaDictionaries1("hello")
+histogram = histogramViaDictionaries0("hello")
 
 # Include uppercase characters in the histogram
-histogram = histogramViaDictionaries1("Hello World!")
+histogram = histogramViaDictionaries0("Hello World!")
 ```
 """
-function histogramViaDictionaries1(str::String)
+function histogramViaDictionaries0(str::String)
     h = Dict{Char,Int64}()
     N = length(str)
     for i = 1:N
@@ -85,12 +85,12 @@ end
 """
 Ex 11-1 from "Think Julia"
 
-    histogramViaDictionaries2(str::String) -> Dict{Char,Int64}
+    histogramViaDictionaries(str::String) -> Dict{Char,Int64}
 
-Generates a frequency histogram of letters in a given string using a dictionary. This approach is a streamlined version of the method presented in `histogramViaDictionaries1`, utilizing the `get` function for more concise code.
+Generates a frequency histogram of letters in a given string using a dictionary. This approach is a streamlined version of the method presented in `histogramViaDictionaries0`, utilizing the `get` function for more concise code.
 
 # Context
-This function is an implementation of Exercise 11-1 in "Think Julia," where the goal is to create a histogram of characters in a string. Compared to `histogramViaDictionaries1`, this version simplifies the process of checking for the existence of a key in the dictionary and incrementing its value.
+This function is an implementation of Exercise 11-1 in "Think Julia," where the goal is to create a histogram of characters in a string. Compared to `histogramViaDictionaries0`, this version simplifies the process of checking for the existence of a key in the dictionary and incrementing its value.
 
 # Arguments
 - `str::String`: The input string from which to generate the histogram. The function is case-insensitive, focusing solely on lowercase English letters.
@@ -106,13 +106,13 @@ This function is an implementation of Exercise 11-1 in "Think Julia," where the 
 # Examples
 ```julia
 # Create a histogram from a simple string
-histogram = histogramViaDictionaries2("hello")
+histogram = histogramViaDictionaries("hello")
 
 # Create a histogram that includes uppercase characters
-histogram = histogramViaDictionaries2("Hello World!")
+histogram = histogramViaDictionaries("Hello World!")
 ```
 """
-function histogramViaDictionaries2(str::String)
+function histogramViaDictionaries(str::String)
     h = Dict{Char,Int64}()
     N = length(str)
     for i = 1:N
@@ -127,14 +127,14 @@ testString = "pZbXvJUxqQKdYrMzVcsgaAeBnOhLjRkDyFmCwTtGpIuHlSfNiWvEoX";
 #     global hV = histogramViaVectors(testString)
 # end;
 # @btime begin
-#     global hD1 = histogramViaDictionaries1(testString)
+#     global hD1 = histogramViaDictionaries0(testString)
 # end;
 
 # @btime begin
-    # global hD2 = histogramViaDictionaries2(testString)
+    # global hD2 = histogramViaDictionaries(testString)
 # end;
 
-# hD2 = histogramViaDictionaries2(testString);
+# hD2 = histogramViaDictionaries(testString);
 
 """
     printhist(h::Dict)
@@ -154,7 +154,7 @@ Prints the contents of a histogram (or any dictionary) to the console, displayin
 # Examples
 ```julia
 # Create a histogram from a string
-histogram = histogramViaDictionaries2("hello world")
+histogram = histogramViaDictionaries("hello world")
 
 # Print the histogram
 printhist(histogram)
