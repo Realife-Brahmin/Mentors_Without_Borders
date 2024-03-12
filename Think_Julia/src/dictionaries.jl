@@ -307,6 +307,21 @@ function printDictSorted2(h::Dict; returnType::String="printOnly")
 
 end
 
+function sortDictByKeys(h::Dict)
+    ks = keys(h)
+    ksSorted = sort!(collect(ks), rev=true) # collect 'collects' all keys in KeySet ks into a vector of type eltype(ks)
+    N = length(ksSorted)
+    arrVals = Vector()
+    for i = 1:N
+        # arrVals[i] = h[ksSorted[i]]
+        push!(arrVals, sort!(h[ksSorted[i]]))
+    end
+
+    z = zip(ksSorted, arrVals)
+
+    return z
+
+end
 # printhist(hD2)
 
 # @btime global d2Mat1 = printDictSorted(hD2, returnType="valuesOnly");
