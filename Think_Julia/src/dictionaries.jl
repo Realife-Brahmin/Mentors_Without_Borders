@@ -839,30 +839,54 @@ function createPronunciationDict(pronunciations::Vector{String})
     return dict
 end
 
-cmudictDict = createPronunciationDict(cmudictList);
+"""
+    isAscii(s::String) -> Bool
+
+Determines if a string is composed entirely of ASCII characters, which are those in the range of 0 to 127. This includes standard English letters, digits, and certain punctuation marks.
+
+# Arguments
+- `s::String`: The string to be checked.
+
+# Returns
+- `Bool`: Returns `true` if every character in the string is an ASCII character, `false` otherwise.
+
+# Notes
+- This function is particularly useful for ensuring that a string meets ASCII-only requirements before undergoing processing that may not support non-ASCII characters.
+- ASCII character validation is commonly required when interfacing with systems or protocols that are ASCII-specific.
+
+# Example
+- To verify that the string "Hello, World!" consists only of ASCII characters:
+```julia
+isAscii("Hello, World!") # Expected output: true
+```
+"""
+function isAscii(s::String)
+    all(isascii, s)
+end
 
 """
 Exercise 11-7 of Think Julia
 
     findUniqueWords(d::Dict; verbose::Bool = false) -> Vector{String}
 
-Searches through a dictionary for unique words that are homophones of both words derived by removing their first or second letter. This function is inspired by a CarTalk Puzzle, which likely refers to the word "SCENT," a homophone of "CENT" and "SENT" when the first or second letter is removed.
+Searches through a dictionary for unique words that are homophones of both words derived by removing their first or second letter. This function addresses a CarTalk Puzzle, which likely refers to words like "SCENT," a homophone of "CENT" and "SENT".
 
 # Arguments
-- `d::Dict`: A dictionary where each key is a word (string) and the associated value is its phonetic transcription (or other comparable data).
-- `verbose::Bool=false`: If `true`, the function will print informative messages when it finds a word meeting the criteria.
+- `d::Dict`: A dictionary with each key as a word and the associated value as its phonetic transcription or other comparable data.
+- `verbose::Bool=false`: Enables informative output during the function's execution.
 
 # Returns
-- `Vector{String}`: A list of words that are homophones with their derived words after removing the first or second letter.
+- `Vector{String}`: A list of words that are homophones with both derivations after removing either the first or second letter.
 
 # Notes
-- The function iterates over the keys in the dictionary, checking each word against two derived forms: one with the first letter removed (`word1`) and one with the second letter removed (`word2`).
-- To be included in the return list, a word must be a homophone of both `word1` and `word2`, meaning the values corresponding to the words in the dictionary must be equal.
-- The search is based on the dictionary provided, so results are contingent on the completeness and accuracy of this dictionary.
-- While the original puzzle refers to words like "SCENT," this function also recognizes other 'trivial' words that meet the homophone criteria, such as "AAH", "AARGH", "LLANES", "LLOYD", "OOOH". However, these may not align with typical definitions of single syllable words that are common homophones.
+- The function skips words that are two characters or shorter and words containing non-ASCII characters to avoid processing anomalies like "D�J�".
+- It checks each word against two derivations: `word1` with the first letter removed and `word2` with the second letter removed.
+- For inclusion in the output list, the original word must be a homophone of both `word1` and `word2`, indicated by equality of dictionary values.
+- The search is limited by the completeness and accuracy of the dictionary provided.
+- Trivial words or those not commonly recognized as single-syllable homophones are also identified but may not align with the puzzle's intended scope.
 
 # Example
-Given a dictionary `d` with keys as words and values as their phonetic representations or other homophone-relevant data:
+Given a dictionary `d` that includes words "scent", "cent", and "sent" with the same phonetic transcription "sɛnt":
 ```julia
 d = Dict("scent" => "sɛnt", "cent" => "sɛnt", "sent" => "sɛnt")
 uniqueWordsList = findUniqueWords(d, verbose=true)
@@ -875,21 +899,18 @@ function findUniqueWords(d::Dict;
 
     for word ∈ keys(d)
         # println(word)
-        if length(word) <= 2
+        if length(word) <= 2 || !isAscii(word)
+            # The second condition was added to avoid weird words like D�J� which don't behave as expected for me.
             continue;
         else
             word1 = word[2:end] # first letter removed
-            try
-                # Trying to avoid weird words like D�J� which don't behave as expected for me.
-                word2 = word[1]*word[3:end] # second letter removed
-                if haskey(d, word1) && haskey(d, word2) && d[word] == d[word1] && d[word] == d[word2]
-                    push!(list, word)
-                    myprintln(verbose, "Found one Word $(word) is a homophone of both words made by removing its first OR second letter!")
-                end
-            catch
-                println("Word $(word) is weird.")
+            # try
+
+            word2 = word[1]*word[3:end] # second letter removed
+            if haskey(d, word1) && haskey(d, word2) && d[word] == d[word1] && d[word] == d[word2]
+                push!(list, word)
+                myprintln(verbose, "Found one Word $(word) is a homophone of both words made by removing its first OR second letter!")
             end
-            
         end 
     end
 
