@@ -41,15 +41,24 @@ function sumall(args::Number ...)
     sum(args)
 end
 
-# sumall(1, 2.0, -22π+im*2.0)
+function mostFrequent(str::String)
 
-function hasmatch(t1, t2)
-    for (x, y) in zip(t1, t2)
-        if x == y 
-            return true
+    hist = histogramViaDictionaries(str)
+
+    charDict = Dict{Int, Vector{Char}}()
+    for (letter, value) in hist
+        @show letter, value
+        if !haskey(charDict, value)
+            charDict[value] = [letter]
+        else
+            charDict[value] = push!(charDict[value], letter)
         end
     end
-    return false
+    return charDict
 end
 
-hasmatch("Anne", "Penne")
+
+str = "helloAryan"
+hist = histogramViaDictionaries(str)
+charDict = invertDict(hist)
+
