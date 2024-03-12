@@ -61,4 +61,12 @@ end
 str = "helloAryan"
 hist = histogramViaDictionaries(str)
 charDict = invertDict(hist)
+sortedByFrequency = sortDictByKeys(charDict)
 
+function displayZip(z)
+    for (z1, z2) in z
+        println("$(z1) -- $(z2)")
+    end
+end
+
+display(sortedByFrequency)
