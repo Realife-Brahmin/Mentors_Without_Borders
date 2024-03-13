@@ -63,7 +63,7 @@ str = "QJLGqKRkGTBwfbGCnLsiZxAmwTGJEUcQZHoMUCXhyDAcrZRUGiOngXhEmPoccekrgGqWIPaFh
 str = lowercase(str)
 hist = histogramViaDictionaries(str);
 charDict = invertDict(hist);
-freq2charDic
+freq2charDict = sortDictByKeys(charDict);
 
 """
     displayZip(z)
@@ -95,6 +95,6 @@ function displayZip(z)
     for (z1, z2) in z
         println("$(z1) -- $(z2)")
     end
-endt = sortDictByKeys(charDict);
+end
 
 displayZip(freq2charDict)
