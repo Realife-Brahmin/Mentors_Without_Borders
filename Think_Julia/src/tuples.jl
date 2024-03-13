@@ -58,15 +58,43 @@ function mostFrequent(str::String)
 end
 
 
-str = "helloAryan"
-hist = histogramViaDictionaries(str)
-charDict = invertDict(hist)
-sortedByFrequency = sortDictByKeys(charDict)
+str = "helloAryan";
+str = "QJLGqKRkGTBwfbGCnLsiZxAmwTGJEUcQZHoMUCXhyDAcrZRUGiOngXhEmPoccekrgGqWIPaFhIeErjMBTFSXKCNjHgbmhFAqLqqP"
+str = lowercase(str)
+hist = histogramViaDictionaries(str);
+charDict = invertDict(hist);
+freq2charDic
 
+"""
+    displayZip(z)
+
+Iterates over a `zip` object or any iterable collection of pairs and prints each pair on a separate line, formatting them as `key -- value`.
+
+# Arguments
+- `z`: An iterable collection, typically a `zip` object, containing pairs of elements. Each pair is expected to be a tuple or any 2-element collection where the first element represents a key and the second element represents a value.
+
+# Operation
+- The function loops through each pair in the provided iterable, extracting the first and second elements of each pair.
+- It prints each pair in the format "key -- value", where `key` and `value` are placeholders for the actual contents of each pair.
+
+# Example
+To display key-value pairs from a sorted dictionary:
+```julia
+h = Dict("apple" => 3, "banana" => 2, "cherry" => 1)
+sortedPairs = sortDictByKeys(h)  # Assuming this function sorts `h` and returns a `zip` object
+displayZip(sortedPairs)
+```
+This would print:
+```julia
+banana -- 2
+apple -- 3
+cherry -- 1
+```
+"""
 function displayZip(z)
     for (z1, z2) in z
         println("$(z1) -- $(z2)")
     end
-end
+endt = sortDictByKeys(charDict);
 
-display(sortedByFrequency)
+displayZip(freq2charDict)
