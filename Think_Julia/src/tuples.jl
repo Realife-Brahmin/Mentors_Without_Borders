@@ -41,7 +41,55 @@ function sumall(args::Number ...)
     sum(args)
 end
 
-function mostFrequent(str::String)
+# function mostFrequent(str::String)
+
+#     hist = histogramViaDictionaries(str)
+
+#     charDict = Dict{Int, Vector{Char}}()
+#     for (letter, value) in hist
+#         if !haskey(charDict, value)
+#             charDict[value] = [letter]
+#         else
+#             charDict[value] = push!(charDict[value], letter)
+#         end
+#     end
+#     return charDict
+# end
+
+function readParagraphs(filename::String)
+    open(filename, "r") do file
+        paragraphs = Vector{String}()
+        current_paragraph = ""
+        for line in eachline(file)
+            if isempty(strip(line))  # Check for an empty line
+                if !isempty(current_paragraph)
+                    push!(paragraphs, current_paragraph)
+                    current_paragraph = ""
+                end
+            else
+                current_paragraph *= (isempty(current_paragraph) ? "" : " ") * line
+            end
+        end
+        # Check if the last paragraph needs to be added
+        if !isempty(current_paragraph)
+            push!(paragraphs, current_paragraph)
+        end
+        return paragraphs
+    end
+end
+
+function paragraphsToString(paragraphs::Vector{String}, 
+    delimiter::String="\n\n")
+    
+    return join(paragraphs, delimiter)
+
+end
+
+filename = "exampleText.txt"
+fileAddr = joinpath(rawDataDir, filename)
+paras = readParagraphs(fileAddr)
+paraString = paragraphsToString(paras)
+str = lowercase(paraString)
 
 """
     mostFrequent(str::String; output::String = "printOnly", verbose::Bool = false)
@@ -98,6 +146,8 @@ function mostFrequent(str::String;
     end
 
 end
+
+mostFrequent(str)
 
 """
     displayZip(z)
