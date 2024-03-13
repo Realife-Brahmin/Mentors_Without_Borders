@@ -307,13 +307,45 @@ function printDictSorted2(h::Dict; returnType::String="printOnly")
 
 end
 
-function sortDictByKeys(h::Dict)
+"""
+    sortDictByKeys(h::Dict; rev::Bool = true, verbose::Bool = false) -> Zip{Vector{K}, Vector{V}}
+
+Sorts a dictionary by its keys and pairs each key with its corresponding value(s), sorted as well. The keys are sorted in descending order by default, which can be changed with the `rev` parameter.
+
+# Arguments
+- `h::Dict`: The dictionary to be sorted. Keys must be of a sortable type. Values should be collections that can be sorted.
+- `rev::Bool=true`: Controls the sorting order of the keys. `true` for descending order, `false` for ascending order.
+- `verbose::Bool=false`: If set to `true`, enables verbose output. This flag is reserved for future use and does not affect the current implementation.
+
+# Returns
+- A `zip` object containing tuples of each key and its corresponding sorted value(s). The type of keys (`K`) and values (`V`) depend on the dictionary's content.
+
+# Notes
+- The function first collects and sorts the dictionary's keys based on the `rev` parameter.
+- Then, for each key, it sorts its associated value(s) and pairs the sorted key with its sorted value(s) into a `zip` object for easy iteration.
+- Although the `verbose` flag is included, the function does not currently produce additional output. It could be utilized in future enhancements for debugging or logging.
+
+# Example
+Suppose you have a dictionary `h` where keys are strings and values are arrays of integers:
+
+```julia
+h = Dict("apple" => [3, 2, 1], "banana" => [1, 3, 2], "cherry" => [2, 1, 3])
+sortedZippedPairs = sortDictByKeys(h, rev=false)
+```
+banana -- 2
+apple -- 3
+cherry -- 1
+
+"""
+function sortDictByKeys(h::Dict;
+    rev::Bool = true,
+    verbose::Bool = false)
+
     ks = keys(h)
-    ksSorted = sort!(collect(ks), rev=true) # collect 'collects' all keys in KeySet ks into a vector of type eltype(ks)
+    ksSorted = sort!(collect(ks), rev=rev) # collect 'collects' all keys in KeySet ks into a vector of type eltype(ks)
     N = length(ksSorted)
     arrVals = Vector()
     for i = 1:N
-        # arrVals[i] = h[ksSorted[i]]
         push!(arrVals, sort!(h[ksSorted[i]]))
     end
 
