@@ -43,27 +43,61 @@ end
 
 function mostFrequent(str::String)
 
+"""
+    mostFrequent(str::String; output::String = "printOnly", verbose::Bool = false)
+
+Analyzes a string to find the most frequent characters and their frequencies, allowing for different modes of output based on the `output` parameter.
+
+# Arguments
+- `str::String`: The input string to analyze for character frequencies.
+- `output::String="printOnly"`: Controls the function's output behavior. Options are:
+    - `"printOnly"`: The function will only print the sorted frequency data.
+    - `"returnOnly"`: The function returns the sorted frequency data without printing.
+    - `"printAndReturn"`: The function prints and returns the sorted frequency data.
+- `verbose::Bool=false`: If set to `true`, enables verbose output for additional insights during execution.
+
+# Returns
+- Depends on the `output` parameter. If `"returnOnly"` or `"printAndReturn"` is specified, it returns a `zip` object containing tuples of frequencies and characters sorted by frequency in descending order. Otherwise, it doesn't return a value.
+
+# Notes
+- The function comprises three main steps: generating a character frequency histogram from the input string, inverting this histogram to map frequencies to characters, and sorting this mapping by frequency in descending order.
+- Utilizes `myprintln` for conditional verbosity to provide step-by-step insights when `verbose` is `true`.
+- It's crucial to have `histogramViaDictionaries`, `invertDict`, and `sortDictByKeys` functions correctly implemented for `mostFrequent` to work as intended.
+
+# Example
+Analyze the string "hello world", with verbosity enabled, and print the frequency data:
+```julia
+mostFrequent("hello world", output="printOnly", verbose=true)
+```
+"""
+function mostFrequent(str::String;
+    output::String = "printOnly", 
+    verbose::Bool=false)
+
+    # Step 1: Generate histogram of character frequencies
     hist = histogramViaDictionaries(str)
+    myprintln(verbose, "Histogram generated.")
 
-    charDict = Dict{Int, Vector{Char}}()
-    for (letter, value) in hist
-        @show letter, value
-        if !haskey(charDict, value)
-            charDict[value] = [letter]
-        else
-            charDict[value] = push!(charDict[value], letter)
-        end
+    # Step 2: Invert the histogram dictionary
+    charDict = invertDict(hist)
+    myprintln(verbose, "Dictionary inverted.")
+
+    # Step 3: Sort the inverted dictionary by frequencies (keys) in descending order
+    freq2CharZip = sortDictByKeys(charDict; rev=true)
+    myprintln(verbose, "Dictionary sorted by keys in descending order.")
+
+    if output == "printOnly"
+        displayZip(freq2CharZip)
+    elseif output == "returnOnly"
+        return freq2CharZip
+    elseif output == "printAndReturn"
+        displayZip(freq2CharZip)
+        return freq2CharZip
+    else
+        @error "floc"
     end
-    return charDict
+
 end
-
-
-str = "helloAryan";
-str = "QJLGqKRkGTBwfbGCnLsiZxAmwTGJEUcQZHoMUCXhyDAcrZRUGiOngXhEmPoccekrgGqWIPaFhIeErjMBTFSXKCNjHgbmhFAqLqqP"
-str = lowercase(str)
-hist = histogramViaDictionaries(str);
-charDict = invertDict(hist);
-freq2charDict = sortDictByKeys(charDict);
 
 """
     displayZip(z)
