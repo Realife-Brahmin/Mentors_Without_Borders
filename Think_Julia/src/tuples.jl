@@ -41,21 +41,6 @@ function sumall(args::Number ...)
     sum(args)
 end
 
-# function mostFrequent(str::String)
-
-#     hist = histogramViaDictionaries(str)
-
-#     charDict = Dict{Int, Vector{Char}}()
-#     for (letter, value) in hist
-#         if !haskey(charDict, value)
-#             charDict[value] = [letter]
-#         else
-#             charDict[value] = push!(charDict[value], letter)
-#         end
-#     end
-#     return charDict
-# end
-
 function readParagraphs(filename::String)
     open(filename, "r") do file
         paragraphs = Vector{String}()
