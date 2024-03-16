@@ -176,6 +176,8 @@ freq2CharDict = mostFrequent(str, output="printAndReturn");
 
 displayZip(freq2CharDict)
 
+# Todo: Remove all single anagram entries from the dictionary.
+# then complete Exercise 12-3
 function anagramsViaDict(filename::String="words.txt";
     rawDataFolder::String="rawData/",
     extension::String=".txt",
