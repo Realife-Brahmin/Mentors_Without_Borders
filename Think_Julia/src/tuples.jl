@@ -92,6 +92,8 @@ paraString = paragraphsToString(paras)
 str = lowercase(paraString)
 
 """
+Exercise 12-2 of Think Julia
+
     mostFrequent(str::String; output::String = "printOnly", verbose::Bool = false)
 
 Analyzes a string to find the most frequent characters and their frequencies, allowing for different modes of output based on the `output` parameter.
@@ -117,6 +119,12 @@ Analyze the string "hello world", with verbosity enabled, and print the frequenc
 ```julia
 mostFrequent("hello world", output="printOnly", verbose=true)
 ```
+
+## TODO:
+- Make adjustments so that only letters are counted, and not whitespaces, numbers, commas, etc.
+- Add a feature of returning percentages instead of absolute numbers (total instances only counting letters)
+- Perhaps, there's a better way of displaying the percentages, like maybe a nice in-terminal bar graph?
+
 """
 function mostFrequent(str::String;
     output::String = "printOnly", 
@@ -147,7 +155,7 @@ function mostFrequent(str::String;
 
 end
 
-mostFrequent(str)
+freq2CharDict = mostFrequent(str, output="printAndReturn");
 
 """
     displayZip(z)
@@ -181,4 +189,4 @@ function displayZip(z)
     end
 end
 
-displayZip(freq2charDict)
+displayZip(freq2CharDict)
