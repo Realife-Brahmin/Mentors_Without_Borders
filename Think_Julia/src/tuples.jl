@@ -176,3 +176,31 @@ freq2CharDict = mostFrequent(str, output="printAndReturn");
 
 displayZip(freq2CharDict)
 
+function anagramsViaDict(filename::String="words.txt";
+    rawDataFolder::String="rawData/",
+    extension::String=".txt",
+    verbose::Bool = false)
+
+    wordsDict = txt2Dict(filename, rawDataFolder=rawDataFolder, extension=extension, verbose=verbose) # a dict which contains all words in words.txt as keys (and a dummy value of 1 for each key)
+
+    anagramsDict = Dict{String, Tuple{Int, Vector{String}}}()
+
+    for word ∈ keys(wordsDict)
+        baseWord = String(sort(collect(word)))
+        if haskey(anagramsDict, baseWord)
+            myprintln(verbose, "Word $(word) already has a known anagram.")
+            valOld = anagramsDict[baseWord]
+            numKnownAnagrams = valOld[1]
+            knownAnagramsList = valOld[2]
+            valNew = (numKnownAnagrams+1, push!(knownAnagramsList, word))
+            anagramsDict[baseWord] = valNew
+        else
+            anagramsDict[baseWord] = (1, [word])
+        end
+    end
+
+    return anagramsDict
+    
+end
+
+anagramsDict = anagramsViaDict()
