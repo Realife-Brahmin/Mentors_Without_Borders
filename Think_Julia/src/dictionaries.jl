@@ -565,6 +565,7 @@ function txt2Dict(filename::String="words.txt";
     rawDataFolder::String="rawData/",
     extension::String=".txt",
     verbose::Bool=false)::Dict{String, Int64}
+    
     if !contains(filename, ".")
         myprint(
             verbose,
