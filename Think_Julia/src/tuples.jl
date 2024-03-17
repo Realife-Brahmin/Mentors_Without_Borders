@@ -172,9 +172,9 @@ function mostFrequent(str::String;
 
 end
 
-freq2CharDict = mostFrequent(str, output="printAndReturn");
+freq2CharDict = mostFrequent(str, output="returnOnly");
 
-displayZip(freq2CharDict)
+# displayZip(freq2CharDict)
 
 # Todo: Remove all single anagram entries from the dictionary.
 # then complete Exercise 12-3
@@ -182,11 +182,14 @@ function anagramsViaDict(filename::String="words.txt";
     rawDataFolder::String="rawData/",
     extension::String=".txt",
     saveSingleInstances::Bool=false,
+    longestSetsFirst::Bool=true,
     verbose::Bool = false)
 
     wordsDict = txt2Dict(filename, rawDataFolder=rawDataFolder, extension=extension, verbose=verbose) # a dict which contains all words in words.txt as keys (and a dummy value of 1 for each key)
 
     anagramsDict = Dict{String, Tuple{Int, Vector{String}}}()
+
+    maxNumAnagrams = 1
 
     for word ∈ keys(wordsDict)
         baseWord = String(sort(collect(word)))
@@ -197,6 +200,7 @@ function anagramsViaDict(filename::String="words.txt";
             knownAnagramsList = valOld[2]
             valNew = (numKnownAnagrams+1, push!(knownAnagramsList, word))
             anagramsDict[baseWord] = valNew
+            maxNumAnagrams = max(numKnownAnagrams+1, maxNumAnagrams)
         else
             anagramsDict[baseWord] = (1, [word])
         end
@@ -212,8 +216,20 @@ function anagramsViaDict(filename::String="words.txt";
         end
     end
 
+    if longestSetsFirst
+        sortedAnagramSets = [Vector{Vector{String}}() for _ in 1:maxNumAnagrams]
+        for word ∈ keys(anagramsDict)
+            val = anagramsDict[word]
+            numKnownAnagrams = val[1]
+            knownAnagramList = val[2]
+            push!(sortedAnagramSets[numKnownAnagrams], knownAnagramList)
+        end
+
+        return sortedAnagramSets
+    end
+
     return anagramsDict
     
 end
 
-anagramsDict = anagramsViaDict()
+sortedAnagramDict = anagramsViaDict(longestSetsFirst=true);
