@@ -181,6 +181,7 @@ displayZip(freq2CharDict)
 function anagramsViaDict(filename::String="words.txt";
     rawDataFolder::String="rawData/",
     extension::String=".txt",
+    saveSingleInstances::Bool=false,
     verbose::Bool = false)
 
     wordsDict = txt2Dict(filename, rawDataFolder=rawDataFolder, extension=extension, verbose=verbose) # a dict which contains all words in words.txt as keys (and a dummy value of 1 for each key)
@@ -198,6 +199,16 @@ function anagramsViaDict(filename::String="words.txt";
             anagramsDict[baseWord] = valNew
         else
             anagramsDict[baseWord] = (1, [word])
+        end
+    end
+
+    if !saveSingleInstances
+        for word ∈ keys(anagramsDict)
+            val = anagramsDict[word]
+            numKnownAnagrams = val[1]
+            if numKnownAnagrams == 1
+                delete!(anagramsDict, word)
+            end
         end
     end
 
