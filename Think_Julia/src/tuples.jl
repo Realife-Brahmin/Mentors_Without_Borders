@@ -176,13 +176,14 @@ freq2CharDict = mostFrequent(str, output="returnOnly");
 
 # displayZip(freq2CharDict)
 
-# Todo: Remove all single anagram entries from the dictionary.
 # then complete Exercise 12-3
 function anagramsViaDict(filename::String="words.txt";
     rawDataFolder::String="rawData/",
     extension::String=".txt",
+    indexBy::String="Number of Anagrams",
     saveSingleInstances::Bool=false,
-    longestSetsFirst::Bool=true,
+    orderSets::Bool=true,
+    printResult::Bool=true,
     verbose::Bool = false)
 
     wordsDict = txt2Dict(filename, rawDataFolder=rawDataFolder, extension=extension, verbose=verbose) # a dict which contains all words in words.txt as keys (and a dummy value of 1 for each key)
@@ -190,6 +191,7 @@ function anagramsViaDict(filename::String="words.txt";
     anagramsDict = Dict{String, Tuple{Int, Vector{String}}}()
 
     maxNumAnagrams = 1
+    lengthOfLongestWord = 0;
 
     for word ∈ keys(wordsDict)
         baseWord = String(sort(collect(word)))
@@ -201,6 +203,7 @@ function anagramsViaDict(filename::String="words.txt";
             valNew = (numKnownAnagrams+1, push!(knownAnagramsList, word))
             anagramsDict[baseWord] = valNew
             maxNumAnagrams = max(numKnownAnagrams+1, maxNumAnagrams)
+            lengthOfLongestWord = max(lengthOfLongestWord, length(baseWord))
         else
             anagramsDict[baseWord] = (1, [word])
         end
@@ -216,20 +219,61 @@ function anagramsViaDict(filename::String="words.txt";
         end
     end
 
-    if longestSetsFirst
-        sortedAnagramSets = [Vector{Vector{String}}() for _ in 1:maxNumAnagrams]
-        for word ∈ keys(anagramsDict)
-            val = anagramsDict[word]
-            numKnownAnagrams = val[1]
-            knownAnagramList = val[2]
-            push!(sortedAnagramSets[numKnownAnagrams], knownAnagramList)
+    if orderSets
+        if indexBy == "Number of Anagrams"
+            sortedAnagramSets = [Vector{Vector{String}}() for _ in 1:maxNumAnagrams]
+
+            for word ∈ keys(anagramsDict)
+                val = anagramsDict[word]
+                numKnownAnagrams = val[1]
+                knownAnagramList = val[2]
+                push!(sortedAnagramSets[numKnownAnagrams], knownAnagramList)
+            end
+
+            myprintln(printResult, "Longest set(s) of Anagrams are $(maxNumAnagrams) anagrams long."*" Printing the set(s):")
+            [myprintln(printResult, "$(sortedAnagramSets[maxNumAnagrams][i])") for i in eachindex(sortedAnagramSets[maxNumAnagrams])]
+
+        elseif indexBy == "Length of Word"
+            sortedAnagramSets = [Vector{Tuple{Int, Vector{String}}}() for _ in 1:lengthOfLongestWord]
+
+            for word ∈ keys(anagramsDict)
+                lengthOfWord = length(word)
+                val = anagramsDict[word]
+                push!(sortedAnagramSets[lengthOfWord], val)
+            end
+
+            if printResult
+                bingo_length = 8
+                bingo_eligible_anagrams = sortedAnagramSets[bingo_length]
+                biggest_bingo_set_size = 0
+                biggest_bingo_sets = []
+                for (numKnownAnagrams, knownAnagramsList) in bingo_eligible_anagrams
+                    if numKnownAnagrams == biggest_bingo_set_size
+                        push!(biggest_bingo_sets, knownAnagramsList)
+                    elseif numKnownAnagrams > biggest_bingo_set_size
+                        biggest_bingo_set_size = numKnownAnagrams
+                        biggest_bingo_sets = [knownAnagramsList]
+                    end
+                end
+
+                # myprintln(printResult, "Longest sets of Scrabble \"bingo\" eligible ($(bingo_length)-lettered words) have $(biggest_bingo_set_size) anagrams." * " Printing the sets:")
+                # [myprintln(printResult, "$(biggest_bingo_sets[i])") for i in eachindex(biggest_bingo_sets)]
+            
+            end
+
+        else
+
+            @error "floc"
+
         end
 
         return sortedAnagramSets
+
     end
 
     return anagramsDict
     
 end
 
-sortedAnagramDict = anagramsViaDict(longestSetsFirst=true);
+anagrams = anagramsViaDict(orderSets=true, indexBy="Length of Word", printResult=true);
+# anagrams = anagramsViaDict(orderSets=true, indexBy="Number of Anagrams");
