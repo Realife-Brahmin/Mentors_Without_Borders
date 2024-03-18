@@ -328,25 +328,25 @@ end
 # anagrams = anagramsViaDict(orderSets=true, indexBy="Length of Word", printResult=true);
 # anagrams = anagramsViaDict(orderSets=true, indexBy="Number of Anagrams");
 
-# println("hello")
-function generateSwapPatterns(length::Int)
-    patterns = Vector{String}()
-    for i in 1:length-1
-        for j in i+1:length
-            # Initialize a bit pattern with all zeros
-            pattern = ['0' for _ in 1:length]
-            # Set the bits at positions i and j to 1
-            pattern[i] = '1'
-            pattern[j] = '1'
-            # Convert the pattern array to a string and store it
-            push!(patterns, join(pattern))
-        end
+function generateSwapPatterns(length::Int, numPositions::Int)
+    patterns = Vector{Vector{Int}}()
+    for combo in combinations(1:length, numPositions)
+        push!(patterns, collect(combo))
     end
     return patterns
 end
 
-swap_patterns = generateSwapPatterns(8)
+swap_patterns = generateSwapPatterns(8, 2)
+println(swap_patterns)
 
+function swapString(str::String, indices)
+    chars = collect(str)
+    charsS = chars
+    charsS[indices] = chars[indices[end:-1:1]]
+    strS = String(charsS)
+
+    return strS
+end
 
 function metathesisPairs(filename::String="words.txt";
     rawDataFolder::String="rawData/",
