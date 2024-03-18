@@ -336,10 +336,10 @@ function generateSwapPatterns(length::Int, numPositions::Int)
     return patterns
 end
 
-swap_patterns = generateSwapPatterns(8, 2)
-println(swap_patterns)
+# swap_patterns = generateSwapPatterns(8, 2)
+# println(swap_patterns)
 
-function swapString(str::String, indices)
+function swapTwoLetters(str::String, indices)
     chars = collect(str)
     charsS = chars
     charsS[indices] = chars[indices[end:-1:1]]
@@ -351,15 +351,40 @@ end
 function metathesisPairs(filename::String="words.txt";
     rawDataFolder::String="rawData/",
     extension::String=".txt",
-    verbose::Bool = false)
+    verbose::Bool = false,
+    dictionary::Dict=Dict("supes" => 1, "puses" => 1, "spues" => 1) )
 
-    pairs = Dict{String, String}()
+    pairsDict = Dict{String, Vector{String}}()
+    wordsDict = dictionary
+    # wordsDict = txt2Dict()
+    # wordsDict = txt2Dict(filename, rawDataFolder=rawDataFolder, extension=extension, verbose=verbose) # a dict which contains all words in words.txt as keys (and a dummy value of 1 for each key)
 
-    wordsDict = txt2Dict(filename, rawDataFolder=rawDataFolder, extension=extension, verbose=verbose) # a dict which contains all words in words.txt as keys (and a dummy value of 1 for each key)
+    swappingDict = Dict{Int, Vector{Vector{Int}}}()
 
-    for word ∈ keys(wordDict)
+    for word ∈ keys(wordsDict)
         n = length(word)
         if n >= 2
-            swapsPossible = binomial(n, 2)
+            if haskey(swappingDict, n)
+                swappingWays = swappingDict[n]
+            else
+                swappingWays = generateSwapPatterns(n, 2)
+                swappingDict[n] = swappingWays
+            end
+            for swappingWay ∈ swappingWays
+                wordS = swapTwoLetters(word, swappingWay)
+                if wordS != word && haskey(wordsDict, wordS) # don't wanna look for the same word in the dict
+                    if haskey(pairsDict, word)
+                        push!(pairsDict[word], wordS)
+                    else
+                        pairsDict[word] = [wordS]
+                    end
+                end
+            end
+        end
+    end
+
+    return pairsDict
             
 end
+
+pairsDict = metathesisPairs()
