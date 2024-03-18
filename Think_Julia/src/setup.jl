@@ -11,6 +11,7 @@ Pkg.instantiate()
 # Pkg.add("LinearAlgebra")
 
 using BenchmarkTools
+using Combinatorics
 using CSV
 using DataFrames
 using LinearAlgebra
