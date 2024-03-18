@@ -234,7 +234,8 @@ function anagramsViaDict(filename::String="words.txt";
             [myprintln(printResult, "$(sortedAnagramSets[maxNumAnagrams][i])") for i in eachindex(sortedAnagramSets[maxNumAnagrams])]
 
         elseif indexBy == "Length of Word"
-            sortedAnagramSets = [Vector{Tuple{Int, Vector{String}}}() for _ in 1:lengthOfLongestWord]
+
+            sortedAnagramSets = [Vector{Tuple{Int, Vector{String}}}() for _ in 1:lengthOfLongestWord];
 
             for word ∈ keys(anagramsDict)
                 lengthOfWord = length(word)
@@ -251,13 +252,13 @@ function anagramsViaDict(filename::String="words.txt";
                     if numKnownAnagrams == biggest_bingo_set_size
                         push!(biggest_bingo_sets, knownAnagramsList)
                     elseif numKnownAnagrams > biggest_bingo_set_size
-                        biggest_bingo_set_size = numKnownAnagrams
-                        biggest_bingo_sets = [knownAnagramsList]
+                        biggest_bingo_set_size = numKnownAnagrams;
+                        biggest_bingo_sets = [knownAnagramsList];
                     end
                 end
 
-                # myprintln(printResult, "Longest sets of Scrabble \"bingo\" eligible ($(bingo_length)-lettered words) have $(biggest_bingo_set_size) anagrams." * " Printing the sets:")
-                # [myprintln(printResult, "$(biggest_bingo_sets[i])") for i in eachindex(biggest_bingo_sets)]
+                myprintln(printResult, "Longest sets of Scrabble \"bingo\" eligible ($(bingo_length)-lettered words) have $(biggest_bingo_set_size) anagrams." * " Printing the sets:")
+                [myprintln(printResult, "$(biggest_bingo_sets[i])") for i in eachindex(biggest_bingo_sets)]
             
             end
 
@@ -279,5 +280,8 @@ function anagramsViaDict(filename::String="words.txt";
     
 end
 
+# anagrams = anagramsViaDict(orderSets=false);
 anagrams = anagramsViaDict(orderSets=true, indexBy="Length of Word", printResult=true);
 # anagrams = anagramsViaDict(orderSets=true, indexBy="Number of Anagrams");
+
+println("hello")
