@@ -269,9 +269,13 @@ function anagramsViaDict(filename::String="words.txt";
 
         return sortedAnagramSets
 
+    else
+
+        return anagramsDict
+    
     end
 
-    return anagramsDict
+    @error "floc"
     
 end
 
