@@ -176,7 +176,51 @@ freq2CharDict = mostFrequent(str, output="returnOnly");
 
 # displayZip(freq2CharDict)
 
-# then complete Exercise 12-3
+"""
+Exercise 12-3 of Think Julia
+
+    anagramsViaDict(filename::String="words.txt"; 
+                    rawDataFolder::String="rawData/",
+                    extension::String=".txt",
+                    indexBy::String="Number of Anagrams",
+                    saveSingleInstances::Bool=false,
+                    orderSets::Bool=true,
+                    printResult::Bool=true,
+                    verbose::Bool=false) -> Union{Dict, Vector}
+
+Analyzes a word list from a file to identify sets of anagrams, printing them or organizing them based on specified criteria. This function supports sorting anagrams by the number of anagrams in a set or by word length, and can print or return the organized sets. It fulfills Exercise 12-3 from "Think Julia", which focuses on identifying, sorting, and printing anagrams.
+
+# Arguments
+- `filename::String`: The name of the file containing the word list, defaulting to "words.txt".
+- `rawDataFolder::String`: The directory path to the raw data folder, defaulting to "rawData/".
+- `extension::String`: The file extension, defaulting to ".txt".
+- `indexBy::String`: Determines the sorting criteria of the anagram sets, options are "Number of Anagrams" or "Length of Word".
+- `saveSingleInstances::Bool`: If `false`, single-instance 'anagrams' are excluded from the result.
+- `orderSets::Bool`: If `true`, organizes anagram sets by the specified indexing criterion.
+- `printResult::Bool`: Controls whether notable anagram sets in perspective of the 'Think Julia' questions are printed.
+- `verbose::Bool`: Enables detailed logs of the function's execution process.
+
+# Returns
+- Depending on `orderSets`, returns either a dictionary mapping base words to tuples of anagram count and anagram list (`Dict`) or a vector of vectors organized according to `indexBy` criteria (`Vector`).
+
+# Notes
+- Implements a multi-step process including reading the word list, identifying anagrams, and optionally organizing them based on size or word length.
+- Utilizes auxiliary functions `txt2Dict`, `invertDict`, and `sortDictByKeys` for processing, requiring their correct implementation.
+- The function can identify the set of letters that forms the most bingos in Scrabble, as per Exercise 12-3's exploration of 8-letter anagrams.
+
+# Example
+Analyze and print sets of anagrams sorted by the number of anagrams from "words.txt":
+```julia
+anagramsViaDict(filename="words.txt", 
+                rawDataFolder="rawData/", 
+                extension=".txt", 
+                indexBy="Number of Anagrams", 
+                saveSingleInstances=false, 
+                orderSets=true, 
+                printResult=true, 
+                verbose=true)
+```
+"""
 function anagramsViaDict(filename::String="words.txt";
     rawDataFolder::String="rawData/",
     extension::String=".txt",
@@ -281,7 +325,7 @@ function anagramsViaDict(filename::String="words.txt";
 end
 
 # anagrams = anagramsViaDict(orderSets=false);
-anagrams = anagramsViaDict(orderSets=true, indexBy="Length of Word", printResult=true);
+# anagrams = anagramsViaDict(orderSets=true, indexBy="Length of Word", printResult=true);
 # anagrams = anagramsViaDict(orderSets=true, indexBy="Number of Anagrams");
 
-println("hello")
+# println("hello")
