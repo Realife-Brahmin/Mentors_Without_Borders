@@ -2,7 +2,7 @@
 
 julia_version = "1.10.0"
 manifest_format = "2.0"
-project_hash = "7b703282f9185d1bf0bc65588813986f3323d145"
+project_hash = "4ff2dfa43e83cb0666145f2d311c70629baed6e7"
 
 [[deps.Artifacts]]
 uuid = "56f22d72-fd6d-98f1-02f0-08ddc0907c33"
@@ -27,6 +27,11 @@ deps = ["TranscodingStreams", "Zlib_jll"]
 git-tree-sha1 = "59939d8a997469ee05c4b4944560a820f9ba0d73"
 uuid = "944b1d66-785c-5afd-91f1-9de20f533193"
 version = "0.7.4"
+
+[[deps.Combinatorics]]
+git-tree-sha1 = "08c8b6831dc00bfea825826be0bc8336fc369860"
+uuid = "861a8166-3701-5b0c-9a16-15d98fcdc6aa"
+version = "1.0.2"
 
 [[deps.Compat]]
 deps = ["TOML", "UUIDs"]
