@@ -328,6 +328,32 @@ end
 # anagrams = anagramsViaDict(orderSets=true, indexBy="Length of Word", printResult=true);
 # anagrams = anagramsViaDict(orderSets=true, indexBy="Number of Anagrams");
 
+"""
+    generateSwapPatterns(length::Int, numPositions::Int) -> Vector{Vector{Int}}
+
+Generates all unique combinations of positions for swapping in a string or array of a given length. This function is useful for identifying potential metathesis pairs or for systematically generating variations of a word by swapping characters.
+
+# Arguments
+- `length::Int`: The length of the string or array for which swap patterns are to be generated.
+- `numPositions::Int`: The number of positions to be swapped. For metathesis pairs, this would typically be 2, but can be set to any number less than or equal to `length`.
+
+# Returns
+- A vector of vectors, where each inner vector contains indices representing a unique combination of positions for swapping. The indices are 1-based, consistent with Julia's indexing.
+
+# Notes
+- This function leverages Julia's `Combinatorics` package for generating combinations, so make sure the package is installed and imported with `using Combinatorics`.
+- The function is designed to explore structural variations in words or arrays, aiding in tasks like generating anagrams, metathesis pairs, or other combinatorial manipulations of sequences.
+
+# Example
+Generate swap patterns for a 4-letter word, choosing 2 positions to swap:
+
+```julia
+swap_patterns = generateSwapPatterns(4, 2)
+println(swap_patterns)
+```
+This will output a list of all pairs of positions in a 4-character sequence that could be swapped, such as [[1, 2], [1, 3], [1, 4], [2, 3], [2, 4], [3, 4]].
+
+"""
 function generateSwapPatterns(length::Int, numPositions::Int)
     patterns = Vector{Vector{Int}}()
     for combo in combinations(1:length, numPositions)
@@ -340,6 +366,7 @@ end
 # println(swap_patterns)
 
 function swapTwoLetters(str::String, indices)
+
     chars = collect(str)
     charsS = chars
     charsS[indices] = chars[indices[end:-1:1]]
@@ -367,29 +394,21 @@ function metathesisPairs(filename::String="words.txt";
     for word ∈ keys(wordsDict)
 
         n = length(word)
-        myprintln(false, "*"^25)
-        myprintln(false, "We'll be looking for metathesisPairs for the word $(word)")
 
-        if n >= 2
+        if n >= 2 # cannot swap two letters for a single letter word
 
             if haskey(swappingDict, n)
-                myprintln(false, "Already have a swapping scheme for $(n) lettered strings")
                 swappingWays = swappingDict[n]
             else
-                myprintln(false, "Don't have a swapping scheme for $(n) lettered strings. Let's create one and save it for future.")
                 swappingWays = generateSwapPatterns(n, 2)
                 swappingDict[n] = swappingWays
             end
 
             for swappingWay ∈ swappingWays
-                myprintln(false, "We're gonna swap like this: $(swappingWay)")
+
                 wordS = swapTwoLetters(word, swappingWay)
-                if wordS == word
-                    myprintln(false, "Swapped word $(wordS) is the same as original $(word), so ignoring it.")
-                else 
-                    myprintln(false, "Swapped word $(wordS) is a distinct word in comparison to the original $(word), so checking for its presence in the dictionary")
-                end
-                if wordS != word && haskey(wordsDict, wordS) # don't wanna look for the same word in the dict
+
+                if wordS != word && haskey(wordsDict, wordS) # don't wanna look for the same word in the dict, or swapped words which don't exist
                     if haskey(pairsDict, word)
                         myprintln(false, "$(word) already has some existing metathesisPairs, so adding $(wordS) to that list")
                         push!(pairsDict[word], wordS)
@@ -397,13 +416,17 @@ function metathesisPairs(filename::String="words.txt";
                         pairsDict[word] = [wordS]
                         myprintln(false, "$(word) not in existing database, so adding it as a key and the swapped word $(wordS) as a val")
                     end
+
                 end
+
             end
+
         end
+
     end
 
     return pairsDict
             
 end
 
-pairsDict = metathesisPairs(verbose=true)
+pairsDict = metathesisPairs()
