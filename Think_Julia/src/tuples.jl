@@ -348,35 +348,54 @@ function swapTwoLetters(str::String, indices)
     return strS
 end
 
+# dictionary = Dict("supes" => 1, "puses" => 1, "spues" => 1) # for testing
+
+
 function metathesisPairs(filename::String="words.txt";
     rawDataFolder::String="rawData/",
     extension::String=".txt",
-    verbose::Bool = false,
-    dictionary::Dict=Dict("supes" => 1, "puses" => 1, "spues" => 1) )
+    verbose::Bool = false
+    # ,dictionary::Dict=Dict("supes" => 1, "puses" => 1, "spues" => 1) # for testing
+    )
 
     pairsDict = Dict{String, Vector{String}}()
-    wordsDict = dictionary
-    # wordsDict = txt2Dict()
-    # wordsDict = txt2Dict(filename, rawDataFolder=rawDataFolder, extension=extension, verbose=verbose) # a dict which contains all words in words.txt as keys (and a dummy value of 1 for each key)
+    # wordsDict = dictionary # for testing with 
+    wordsDict = txt2Dict(filename, rawDataFolder=rawDataFolder, extension=extension, verbose=verbose) # a dict which contains all words in words.txt as keys (and a dummy value of 1 for each key)
 
     swappingDict = Dict{Int, Vector{Vector{Int}}}()
 
     for word ∈ keys(wordsDict)
+
         n = length(word)
+        myprintln(false, "*"^25)
+        myprintln(false, "We'll be looking for metathesisPairs for the word $(word)")
+
         if n >= 2
+
             if haskey(swappingDict, n)
+                myprintln(false, "Already have a swapping scheme for $(n) lettered strings")
                 swappingWays = swappingDict[n]
             else
+                myprintln(false, "Don't have a swapping scheme for $(n) lettered strings. Let's create one and save it for future.")
                 swappingWays = generateSwapPatterns(n, 2)
                 swappingDict[n] = swappingWays
             end
+
             for swappingWay ∈ swappingWays
+                myprintln(false, "We're gonna swap like this: $(swappingWay)")
                 wordS = swapTwoLetters(word, swappingWay)
+                if wordS == word
+                    myprintln(false, "Swapped word $(wordS) is the same as original $(word), so ignoring it.")
+                else 
+                    myprintln(false, "Swapped word $(wordS) is a distinct word in comparison to the original $(word), so checking for its presence in the dictionary")
+                end
                 if wordS != word && haskey(wordsDict, wordS) # don't wanna look for the same word in the dict
                     if haskey(pairsDict, word)
+                        myprintln(false, "$(word) already has some existing metathesisPairs, so adding $(wordS) to that list")
                         push!(pairsDict[word], wordS)
                     else
                         pairsDict[word] = [wordS]
+                        myprintln(false, "$(word) not in existing database, so adding it as a key and the swapped word $(wordS) as a val")
                     end
                 end
             end
@@ -387,4 +406,4 @@ function metathesisPairs(filename::String="words.txt";
             
 end
 
-pairsDict = metathesisPairs()
+pairsDict = metathesisPairs(verbose=true)
