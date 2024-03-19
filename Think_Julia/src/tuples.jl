@@ -364,20 +364,85 @@ end
 
 # swap_patterns = generateSwapPatterns(8, 2)
 # println(swap_patterns)
+"""
+    swapTwoLetters(str::String, indices::Vector{Int}) -> String
 
-function swapTwoLetters(str::String, indices)
+Swaps two letters in a given string based on specified indices. This function is designed for string manipulation tasks that require exchanging the positions of two characters, such as generating metathesis pairs or exploring word variations.
 
+# Arguments
+- `str::String`: The input string from which two letters will be swapped.
+- `indices::Vector{Int}`: A vector containing exactly two integers that represent the indices of the characters in `str` to be swapped. Indices are 1-based, following Julia's indexing convention.
+
+# Returns
+- `String`: A new string with the specified characters swapped. The original string `str` remains unchanged.
+
+# Notes
+- The function validates that `indices` contains exactly two elements. An error is thrown if this condition is not met, ensuring correct usage.
+- It's important to ensure that the indices provided in `indices` are valid for the length of `str` to avoid indexing errors.
+- This function can be utilized in various contexts, including linguistic studies, puzzles, and games where character manipulation is needed.
+
+# Example
+Swap the first and last characters of the word "hello":
+```julia
+newStr = swapTwoLetters("hello", [1, 5])
+println(newStr)  # Output: "oellh"
+```
+"""
+function swapTwoLetters(str::String, indices::Vector{Int})
+    # Ensure the indices vector contains exactly two elements
+    if length(indices) != 2
+        error("Indices vector must contain exactly two elements.")
+    end
+
+    # Convert the string to a character array for mutability
     chars = collect(str)
-    charsS = chars
-    charsS[indices] = chars[indices[end:-1:1]]
-    strS = String(charsS)
+
+    # Swap the characters at the specified indices
+    chars[indices[1]], chars[indices[2]] = chars[indices[2]], chars[indices[1]]
+
+    # Convert the character array back to a string
+    strS = String(chars)
 
     return strS
 end
 
+
 # dictionary = Dict("supes" => 1, "puses" => 1, "spues" => 1) # for testing
 
+"""
+Exercise 12-4 of Think Julia
 
+    metathesisPairs(filename::String="words.txt";
+                    rawDataFolder::String="rawData/",
+                    extension::String=".txt",
+                    verbose::Bool=false) -> Dict{String, Vector{String}}
+
+Identifies and returns metathesis pairs from a specified word list. Metathesis pairs are words that can be transformed into each other by swapping two letters. This function reads words from a file, generates all possible two-letter swaps for each word, and checks if the swapped variant exists in the word list.
+
+# Arguments
+- `filename::String="words.txt"`: The name of the file containing the word list. Default is "words.txt".
+- `rawDataFolder::String="rawData/"`: The directory where the word list file is located. Default is "rawData/".
+- `extension::String=".txt"`: The file extension of the word list file. Default is ".txt".
+- `verbose::Bool=false`: If set to `true`, enables verbose output for debugging purposes. Note: Currently, verbose messages are set to always off in the implementation.
+
+# Returns
+- `Dict{String, Vector{String}}`: A dictionary where each key is a word from the word list, and the value is a vector of its metathesis pairs found in the same list.
+
+# Notes
+- The function leverages `txt2Dict` to read the word list and create a dictionary with all words as keys.
+- It uses `generateSwapPatterns` to systematically generate all two-letter swap combinations for words of various lengths.
+- `swapTwoLetters` is utilized to generate swapped word variants based on the combinations provided by `generateSwapPatterns`.
+- The function efficiently caches swap patterns for words of the same length to minimize redundant computations.
+- Words with less than two letters are automatically skipped, as they cannot form metathesis pairs.
+- For testing or demonstration, a specific dictionary of words can be provided as an argument (commented out in the provided code).
+
+# Example
+To find metathesis pairs in a file "words.txt" located in the "rawData/" directory:
+```julia
+metathesisPairs = metathesisPairs("words.txt", "rawData/", ".txt", verbose=true)
+println(metathesisPairs)
+```
+"""
 function metathesisPairs(filename::String="words.txt";
     rawDataFolder::String="rawData/",
     extension::String=".txt",
@@ -429,4 +494,4 @@ function metathesisPairs(filename::String="words.txt";
             
 end
 
-pairsDict = metathesisPairs()
+# pairsDict = metathesisPairs()
