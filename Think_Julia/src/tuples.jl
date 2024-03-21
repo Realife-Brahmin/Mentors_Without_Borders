@@ -495,3 +495,64 @@ function metathesisPairs(filename::String="words.txt";
 end
 
 # pairsDict = metathesisPairs()
+
+# Exercise 12-5 from Think Julia
+"""
+    generateChildrenWords(word::String; verbose::Bool = false) -> Vector{String}
+
+Generates a list of "children words" derived from a given word by removing one character at a time. Each child word is formed by omitting exactly one character from the original word, resulting in a set of words each one character shorter than the input.
+
+# Arguments
+- `word::String`: The input word from which children words will be generated.
+- `verbose::Bool=false`: If set to `true`, enables verbose output during the function execution. Currently, this parameter does not affect output but is reserved for future use.
+
+# Returns
+- `Vector{String}`: A vector containing all possible children words derived from the input word. The order of the children words in the vector corresponds to the order of removal of each character in the input word.
+
+# Notes
+- The function iterates over each character position in the input word, creating a new child word for each position by omitting the character at that position.
+- The size of the returned vector will always be equal to the length of the input word, as each character's removal results in one unique child word.
+- This function can be particularly useful in linguistic applications, such as generating word ladders or exploring word morphology.
+
+# Example
+Generate children words from the word "cat":
+```julia
+childrenWords = generateChildrenWords("cat")
+println(childrenWords)  # Output: ["at", "ct", "ca"]
+```
+"""
+function generateChildrenWords(word::String;
+    verbose::Bool = false)
+
+    childrenWords = String[]
+    chars = collect(word)
+    n = length(chars)
+
+    for idx ∈ 1:n
+        charsChild = chars[[1:idx-1; idx+1:n]]
+        childWord = String(charsChild)
+        push!(childrenWords, childWord)
+    end
+
+    return childrenWords
+
+end
+
+generateChildrenWords("hello");
+
+function longestValidWord(filename::String="words.txt";
+    rawDataFolder::String="rawData/",
+    extension::String=".txt",
+    verbose::Bool = false
+    # ,dictionary::Dict=Dict("supes" => 1, "puses" => 1, "spues" => 1) # for testing
+    )
+
+    pairsDict = Dict{String, Vector{String}}()
+    # wordsDict = dictionary # for testing with 
+    wordsDict = txt2Dict(filename, rawDataFolder=rawDataFolder, extension=extension, verbose=verbose) # a dict which contains all words in words.txt as keys (and a dummy value of 1 for each key)
+    merge!(wordsDict, Dict(zip(["a", "i", ""], ones(3))))
+
+    return wordsDict
+end
+    
+wordsDict1 = longestValidWord()
