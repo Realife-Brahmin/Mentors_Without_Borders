@@ -540,19 +540,86 @@ end
 
 generateChildrenWords("hello");
 
-function longestValidWord(filename::String="words.txt";
+function isWordValid(word::String, validOrNot::Dict, wordsDict::Dict)
+    if haskey(validOrNot, word)
+        validity = validOrNot[word]
+        return validity, validOrNot
+    else
+        if haskey(wordsDict, word) # it is a real word, so let's find its children
+
+            childrenWords = generateChildrenWords(word)
+            numValidChildren = 0
+
+            for childWord in childrenWords
+                childsValidity, validOrNot = isWordValid(childWord, validOrNot, wordsDict)
+                numValidChildren += Int(childsValidity)
+            end
+
+            if numValidChildren > 0
+                validity = true
+                validOrNot[word] = true
+            else
+                validity = false
+                validOrNot[word] = false
+            end
+
+            return validity, validOrNot
+
+        else # does not even exist
+            # return invalid, but don't bother changing validOrNot since the dict only contains words which exist in the first place
+            return false, validOrNot
+        end
+    end
+
+    @error "floc"
+end
+
+function validWords(filename::String="words.txt";
     rawDataFolder::String="rawData/",
     extension::String=".txt",
-    verbose::Bool = false
-    # ,dictionary::Dict=Dict("supes" => 1, "puses" => 1, "spues" => 1) # for testing
+    verbose::Bool = false,
+    printResult::Bool = true
+    # , dictionary::Dict=Dict(zip(["spit", "pit", "in", "it", "i", "zip", "sit", "tin", "twink", "win"], ones(10))) # for testing
     )
 
-    pairsDict = Dict{String, Vector{String}}()
-    # wordsDict = dictionary # for testing with 
     wordsDict = txt2Dict(filename, rawDataFolder=rawDataFolder, extension=extension, verbose=verbose) # a dict which contains all words in words.txt as keys (and a dummy value of 1 for each key)
-    merge!(wordsDict, Dict(zip(["a", "i", ""], ones(3))))
+    # wordsDict = dictionary # for testing with a smaller test dictionary 
 
-    return wordsDict
+    merge!(wordsDict, Dict(zip(["a", "i", ""], ones(3)))) # add the three entries as suggested by the author as the original dictionary doesn't have single lettered words, and because the empty string "" is convenient for the recursive algorithm to work
+
+    validOrNot = Dict{String, Bool}()
+    validOrNot[""] = true # the base case for validity
+
+    for word in keys(wordsDict)
+        
+        validity, validOrNot = isWordValid(word, validOrNot, wordsDict)
+        myprintln(verbose && validity, "Found a valid word: $(word)")
+
+    end
+
+    # make a separate dictionary which has only valid words as its keys
+    validDict = Dict(key => value for (key, value) in validOrNot if validOrNot[key] == true)
+
+    if printResult
+        longestLength = 0
+        longestValidWords = []
+        for validWord in keys(validDict)
+            n = length(validWord)
+            if n == longestLength
+                push!(longestValidWords, validWord)
+            elseif n > longestLength
+                longestLength = n
+                longestValidWords = [validWord]
+            end
+        end
+
+        myprintln(printResult, "Longest valid word(s) is(are) $(longestLength) letters long." * " Printing the word(s):")
+        [myprintln(printResult, "$(longestValidWords[i])") for i in eachindex(longestValidWords)]
+
+    end
+
+    return validDict
+
 end
     
-wordsDict1 = longestValidWord()
+validWords = validWords();
