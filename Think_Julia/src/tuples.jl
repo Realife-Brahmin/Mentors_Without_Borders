@@ -622,4 +622,4 @@ function validWords(filename::String="words.txt";
 
 end
     
-validWords = validWords();
+validDict = validWords();
