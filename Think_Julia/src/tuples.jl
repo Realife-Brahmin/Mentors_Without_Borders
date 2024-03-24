@@ -70,11 +70,11 @@ function paragraphsToString(paragraphs::Vector{String},
 
 end
 
-filename = "exampleText.txt"
-fileAddr = joinpath(rawDataDir, filename)
-paras = readParagraphs(fileAddr)
-paraString = paragraphsToString(paras)
-str = lowercase(paraString)
+# filename = "exampleText.txt"
+# fileAddr = joinpath(rawDataDir, filename)
+# paras = readParagraphs(fileAddr)
+# paraString = paragraphsToString(paras)
+# str = lowercase(paraString)
 
 """
     displayZip(z)
@@ -172,7 +172,7 @@ function mostFrequent(str::String;
 
 end
 
-freq2CharDict = mostFrequent(str, output="returnOnly");
+# freq2CharDict = mostFrequent(str, output="returnOnly");
 
 # displayZip(freq2CharDict)
 
@@ -684,4 +684,4 @@ function validWords(filename::String="words.txt";
 
 end
     
-validDict = validWords();
+# validDict = validWords();
