@@ -8,7 +8,7 @@ include("./functions.jl");
 include("./strings.jl");
 include("./tuples.jl");
 
-charsToRemove = ['.', ',', '{', '}', '[', ']']
+# charsToRemove = ['.', ',', '{', '}', '[', ']']
 
 function readParagraphs2(filename::String;
     charsToRemove::Vector{Char}=Char[],
@@ -36,17 +36,11 @@ function readParagraphs2(filename::String;
 
 end
 
-# function paragraphsToString(paragraphs::Vector{String},
-#     delimiter::String="\n\n")
-
-#     return join(paragraphs, delimiter)
-
-# end
 function readBook(filename::String;
     startLine::String="*** START OF THE PROJECT GUTENBERG EBOOK",
     endLine::String="*** END OF THE PROJECT GUTENBERG EBOOK",
-    charsToRemove::Vector{Char}=['.', ',', ''', '`', '"', ';', '-', ':', '{', '}', '[', ']'],
-    # charsToRemove::Vector{Char}=Char[],
+    charsToRemove::Vector{Char}=['.', ',', ''', '`', '"', '“',
+    ';', '-', ':', '{', '}', '[', ']', '!'],
     verbose::Bool=false)
 
     joinedCharsToRemove = join(charsToRemove)
@@ -65,11 +59,10 @@ function readBook(filename::String;
 
             if reading && !isempty(line)
                 # Remove specified unwanted characters one by one
-                # cleanLine = replace(line, r"[$(join(charsToRemove))]" => "")
-                cleanLine = replace(line, r"$(joinedCharsToRemove)" => "")
+                cleanLine = replace(line, charsToRemove => " ")
                 # Convert to lowercase
                 cleanLine = lowercase(cleanLine)
-
+                cleanLine = strip(cleanLine)
                 if !isempty(cleanLine)
                     push!(bookLines, cleanLine)
                 end
@@ -123,6 +116,8 @@ function words2Dict(words::Vector{String})
     return wordDict
 end
 
+# Example usage:
+# charsToRemove = ['.', ',', '\'', '`', '"', ';', '-', ':', '{', '}', '[', ']', '!', '?', '—']  # Add other characters as needed
 
 
 # filename = "emma-2021-12-14.txt"
@@ -132,8 +127,15 @@ end
 # str = lowercase(paraString)
 
 filename = "emma-2021-12-14.txt"
+# filename = "emma-2021-12-14-mini.txt"
 fileAddr = joinpath(rawDataDir, filename)
-bookLines = readBook(fileAddr)
+# charsToRemove = ['.', ',', ''', '`', '"', '“', '”',
+    # ';', '-', '—', ':', '{', '}', '[', ']', '!']
+bookLines = readBook(fileAddr, charsToRemove=punctuationChars)
+
+bookWords = bookLines2Words(bookLines, charsToRemove)
+bookDict = words2Dict(bookWords)
+# bookLines = readBook(fileAddr)
 
 # Print the first few lines to verify
 # println(bookLines[1:5])
