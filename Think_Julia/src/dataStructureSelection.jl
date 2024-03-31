@@ -80,8 +80,18 @@ function readBook(filename::String;
     end
 end
 
+function getAllPunctuationChars()
+    basic_punctuations = [char for char in Char(0x21):Char(0x7E) if ispunct(char)]
+    # Add specific additional punctuation characters
+    additional_punctuations = [
+        Char(0x2013), Char(0x2014),  # en dash and em dash
+        Char(0x2018), Char(0x2019),  # left and right single curly quotes
+        Char(0x201C), Char(0x201D)   # left and right double curly quotes
+    ]
+    return vcat(basic_punctuations, additional_punctuations)
+end
 
-
+punctuationChars = getAllPunctuationChars()
 
 
 
