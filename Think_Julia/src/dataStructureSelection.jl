@@ -93,6 +93,36 @@ end
 
 punctuationChars = getAllPunctuationChars()
 
+function bookLines2Words(bookLines::Vector{String}, charsToRemove::Vector{Char})
+    words = Vector{String}()
+
+    # Define a regex pattern for characters to remove
+    pattern = "[" * join(escape_string.(string.(charsToRemove))) * "]"
+
+    # Iterate over each line and split into words
+    for line in bookLines
+        # Remove specified unwanted characters
+        cleanLine = replace(line, Regex(pattern) => "")
+        # Convert to lowercase
+        cleanLine = lowercase(cleanLine)
+        # Split the line into words, strip whitespace and punctuation, and filter only alphabetic
+        lineWords = split(cleanLine, r"\s+"; keepempty=false)
+        append!(words, lineWords)
+    end
+
+    return words
+end
+
+function words2Dict(words::Vector{String})
+    wordDict = Dict{String,Int}()
+
+    for word in words
+        wordDict[word] = get(wordDict, word, 0) + 1
+    end
+
+    return wordDict
+end
+
 
 
 # filename = "emma-2021-12-14.txt"
