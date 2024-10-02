@@ -61,9 +61,22 @@ dotwice1(printtwice,"Spam")
 
 
 
-
 # Define a new function called dofour that takes a function object and a value and calls the function four times, 
 # passing the value as a parameter. There should be only two statements in the body of this function, not four.
+
+function dofour(f,b)
+    f(b)         
+end
+dofour(printtwice,"spam")
+
+
+
+
+
+
+
+
+
 function printnames(s)
     println(s)
     println(s)
