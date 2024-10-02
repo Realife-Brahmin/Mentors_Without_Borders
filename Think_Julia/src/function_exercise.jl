@@ -42,19 +42,24 @@ dotwice1(rightjustify,"movies")
 # dotwice(rightjustify,"movies")
 # dotwice(rightjustify)
 
+
+
 # Copy the definition of printtwice from earlier in this chapter to your script.
 
-function printtwice(s)       #represents variable string
-    println(s)
-    println(s)
-end
-# Use the modified version of dotwice to call printtwice twice, passing "spam" as an argument.
-function dotwice()
-    printtwice("Spam")      #can write any string name
-    printtwice("Spam")
+function printtwice(bruce)
+    println(bruce)
+    println(bruce)
 end
 
-dotwice()
+# Use the modified version of dotwice to call printtwice twice, passing "spam" as an argument.
+
+function dotwice1(f,a)
+    f(a)
+    f(a)
+end
+dotwice1(printtwice,"Spam")
+
+
 
 
 # Define a new function called dofour that takes a function object and a value and calls the function four times, 
