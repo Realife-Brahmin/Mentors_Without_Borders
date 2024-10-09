@@ -89,9 +89,7 @@ function checkfermat(a::Int, b::Int, c::Int, n::Int)
     end
 end
 
-checkfermat(5,6,7,3)
-
-
+checkfermat(5,6,7,2)
 # 2.Write a function that prompts the user to input values for a, b, c and n, converts them to integers, 
 # and uses checkfermat to check whether they violate Fermat’s theorem
 
