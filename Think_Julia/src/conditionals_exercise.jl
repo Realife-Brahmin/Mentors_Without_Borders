@@ -124,7 +124,7 @@ function istriangle(a::Int, b::Int, c::Int)
     end
 end
 
-istriangle(1,1,1)
+istriangle(2,2,2)
 
 # Exercise5-4
 #  2. Write a function that prompts the user to input three stick lengths, converts them to integers, 
