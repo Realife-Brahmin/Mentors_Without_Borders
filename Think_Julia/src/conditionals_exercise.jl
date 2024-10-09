@@ -67,7 +67,7 @@ function convert_seconds_to_time(seconds_since_epoch)
     return day_since_epoch, hours, minutes, seconds   
 end
 
-seconds_since_epoch =  1700000000     #setting the actual number of seconds since epoch#
+seconds_since_epoch =  1700000000     # the setting the actual number of seconds since epoch#
 
 day_since_epoch, hours, minutes, seconds = convert_seconds_to_time(seconds_since_epoch)
 
