@@ -70,38 +70,40 @@ end
 dofour(printtwice,"spam")
 
 
+# function printnames(s)
+#     println(s)
+#     println(s)
+    
+# end
 
+# function dofour(j,s)
+# end
+# dofour()
 
+# Exercise 3-4
+# Write a function printgrid that draws a grid like the following:
+function printgrid(n::Int,c::Int)
+    # width = "+ - - - - + - - - - +" 
+    width =( "+"* (" -"^n) * " ")^c *"+"
+    # length = "|         |         |"
+    length =( "|"* ("  "^n) * " ")^c *"|"
 
+    # println(width)
+    # for i in 1:4
+    #     println(length)
+    # end
+    # println(width)
+    # for i in 1:4
+    #     println(length)
+    # end
+    # println(width)
 
-
-
-
-function printnames(s)
-    println(s)
-    println(s)
     
 end
 
-function dofour(printnames,s)
-end
-    dofour()
+printgrid(2,3)
 
-    # Exercise 3-4
-    # Write a function printgrid that draws a grid like the following:
-    function printgrid()
-        width = "+ - - - - + - - - - +" 
-        length = "|         |         |"
-        println(width)
-        for i in 1:4
-            println(length)
-        end
-        println(width)
-        for i in 1:4
-            println(length)
-        end
-        println(length)
-    end
+
 
 
 
