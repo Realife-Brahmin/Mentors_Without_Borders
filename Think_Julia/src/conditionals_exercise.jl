@@ -23,7 +23,7 @@ printn(0,5)
 # Exercise 5-1
 # As an exercise, draw a stack diagram for printn called with s = "Hello" and n = 2. Then write a function called
 #  do_n that takes a function object and a number, n, as arguments, and that calls the given function n
-#  times.
+#  times
 
 # implementing printn function
 function printn(s,n)
@@ -46,7 +46,7 @@ do_n(() -> printn("Hello", 2), 3)
 
 # Exercise 5-2
 # 1.Write a script that reads the current time and converts it to a time of day in hours, minutes, and seconds, 
-# plus the number of days since the epoch.
+# plus the number of days since the epoch
 
 function convert_seconds_to_time(seconds_since_epoch)
 
@@ -93,7 +93,7 @@ checkfermat(5,6,7,3)
 
 
 # 2.Write a function that prompts the user to input values for a, b, c and n, converts them to integers, 
-# and uses checkfermat to check whether they violate Fermat’s theorem.
+# and uses checkfermat to check whether they violate Fermat’s theorem
 
 function input_values()
     println("Enter positive integer for a:")
