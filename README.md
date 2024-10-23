@@ -15,7 +15,7 @@ Before you begin, ensure you have the following installed:
 Students who wish to be a part of the free course may [email](mailto:aryan.r.jha@gmail.com) me for the Slack Channel link.
 
 ## How does the course work?
-- The course is almost entirely done asynchronously. While there is a weekly contact hour (Saturday 12 Noon Pacific Time), it is reserved for doubts in exercise problems, troubleshooting sessions, etc.
+- The course is almost entirely done asynchronously. While there is a weekly contact hour (Tuesday 10PM Pacific Time), it is reserved for doubts in exercise problems, troubleshooting sessions, etc.
 - Primary mode of continuous interaction throughout the week with me will be via Slack messaging.
 
 ## Intended Outcome of the course
